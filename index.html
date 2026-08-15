@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAPHAEL-WA-BOT</title>
+    <title>Raphael-WA-BOT</title>
     <!-- Estilos visuales con diseño oscuro, azul y morado -->
     <style>
         * {
@@ -30,31 +30,63 @@
             font-size: 2.5rem;
             color: #c084fc;
             margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         header p {
             font-size: 1.1rem;
             color: #93c5fd;
             max-width: 600px;
-            margin: 0 auto 20px auto;
+            margin: 0 auto 15px auto;
+        }
+
+        /* Estilos de los botones */
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 30px;
         }
 
         .btn {
             display: inline-block;
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
             color: white;
             padding: 12px 30px;
             border-radius: 30px;
             text-decoration: none;
             font-weight: bold;
-            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
             transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
         }
 
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(168, 85, 247, 0.6);
         }
+
+        /* Botón 1: Principal (Azul/Morado) */
+        .btn-primary {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+        }
+        .btn-primary:hover { box-shadow: 0 6px 20px rgba(168, 85, 247, 0.6); }
+
+        /* Botón 2: Canal (Verde WhatsApp) */
+        .btn-whatsapp {
+            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        }
+        .btn-whatsapp:hover { box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6); }
+
+        /* Botón 3: Gmail (Rojo) */
+        .btn-gmail {
+            background: linear-gradient(135deg, #db4437 0%, #ff6347 100%);
+            box-shadow: 0 4px 15px rgba(219, 68, 55, 0.4);
+        }
+        .btn-gmail:hover { box-shadow: 0 6px 20px rgba(219, 68, 55, 0.6); }
 
         .container {
             max-width: 900px;
@@ -100,6 +132,7 @@
             color: #6b7280;
             margin-top: 60px;
             border-top: 1px solid #1f2937;
+            font-size: 0.9rem;
         }
     </style>
 </head>
@@ -107,9 +140,20 @@
 
     <!-- Cabecera Principal -->
     <header>
-        <h1>RAPHAEL-WA-BOT</h1>
+        <h1>🤖 RAPHAEL-WA-BOT</h1>
         <p>El mejor bot para automatizar y divertirte en tus grupos de WhatsApp de manera rápida y sencilla.</p>
-        <a href="https://chat.whatsapp.com/Jfhq7IpeQRHKcQeaIbELWj?s=cl&p=a&ilr=1" class="btn" target="_blank">Grupo De WhatsApp!</a>
+        
+        <!-- Contenedor de los tres botones -->
+        <div class="btn-container">
+            <!-- Botón 1: Chat Privado (Cambié el texto a algo más activo) -->
+            <a href="https://chat.whatsapp.com/Jfhq7IpeQRHKcQeaIbELWj?s=cl&p=a&ilr=1" class="btn btn-primary" target="_blank">¡Probar Bot Personalmente!</a>
+            
+            <!-- Botón 2: Canal de WhatsApp -->
+            <a href="https://whatsapp.com/channel/0029Vb7rONuAu3aRrzGtHL2r" class="btn btn-whatsapp" target="_blank">📢 Unirse al Canal</a>
+            
+            <!-- Botón 3: Contacto de Gmail -->
+            <a href="mailto:raphaelbotwa.com" class="btn btn-gmail" target="_blank">📧 Contactar por Gmail</a>
+        </div>
     </header>
 
     <!-- Contenido y Características -->
@@ -136,7 +180,7 @@
 
     <!-- Pie de página -->
     <footer>
-        <p>&copy; By Ares Arcane ©  ֺᨳ︪︩፝֟͝    ␥ ⃟𝐑𝐚𝐩𝐡𝐚𝐞𝐥 ²⁰²⁶ ©</p>
+        <p>&copy; 2026 RAPHAEL-WA-BOT. Creado y desarrollado por Komodo ©.</p>
     </footer>
 
 </body>
