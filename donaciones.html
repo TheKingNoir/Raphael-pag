@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donaciones - Raphael-WA-BOT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0b0f19;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        /* 🛠️ Estilos del Menú Lateral */
+        .menu-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .menu-btn:hover {
+            background: #4f46e5;
+        }
+
+        .menu-btn:active {
+            transform: scale(0.92);
+        }
+
+        .side-menu {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #111827;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 1001;
+            border-right: 2px solid #4f46e5;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .side-menu a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .side-menu a:hover {
+            color: #c084fc;
+            background: #1f2937;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 36px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 2px solid #4f46e5;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #c084fc;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            color: #93c5fd;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #c084fc;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .donations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .donation-card {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: border-color 0.2s;
+        }
+
+        .donation-card:hover {
+            border-color: #6366f1;
+        }
+
+        .donation-card h3 {
+            color: #93c5fd;
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .donation-card p {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+        }
+
+        .donation-data {
+            background: #1e293b;
+            padding: 10px;
+            border-radius: 6px;
+            color: #38bdf8;
+            font-family: monospace;
+            font-size: 0.95rem;
+            word-break: break-all;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #030712;
+            color: #6b7280;
+            margin-top: 60px;
+            border-top: 1px solid #1f2937;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botón para abrir el menú lateral -->
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+    <!-- Panel del Menú Lateral -->
+    <div id="sideMenu" class="side-menu">
+        <a href="javascript:void(0)" class="close-btn" onclick="toggleMenu()">&times;</a>
+        <a href="index.html">🏠 Inicio</a>
+        <a href="comandos.html">🛠️ Comandos</a>
+        <a href="https://whatsapp.com/channel/0029Vb7rONuAu3aRrzGtHL2r" target="_blank">🌐 Vincular</a>
+        <a href="donaciones.html">💰 Donaciones</a>
+    </div>
+
+    <header>
+        <h1>💰 Apoya el Proyecto</h1>
+        <p>Tu colaboración ayuda a mantener Raphael-WA-BOT activo y mejorando cada día.</p>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title">Métodos de Pago</h2>
+        
+        <div class="donations-grid">
+            <!-- 🅿️ PayPal -->
+            <div class="donation-card">
+                <h3>🅿️ PayPal</h3>
+                <p>Apoya mediante transferencia internacional segura.</p>
+                <div class="donation-data">Enlace o correo de PayPal</div>
+            </div>
+            
+            <!-- 🪙 Binance -->
+            <div class="donation-card">
+                <h3>🪙 Binance</h3>
+                <p>Envía criptomonedas de manera rápida.</p>
+                <div class="donation-data">Correo o Binance Pay ID</div>
+            </div>
+            
+            <!-- 📱 PagoMóvil -->
+            <div class="donation-card">
+                <h3>📱 PagoMóvil</h3>
+                <p>Disponible para aportes nacionales.</p>
+                <div class="donation-data">Banco / Teléfono / Cédula</div>
+            </div>
+
+            <!-- 💳 Zinli -->
+            <div class="donation-card">
+                <h3>💳 Zinli</h3>
+                <p>Transferencia directa mediante Zinli.</p>
+                <div class="donation-data">Correo de Zinli</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 RAPHAEL-WA-BOT ° Hecho y Desarrollado Por Ares Arcane.©</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("sideMenu");
+            if (menu.style.width === "250px") {
+                menu.style.width = "0";
+            } else {
+                menu.style.width = "250px";
+            }
+        }
+
+        document.addEventListener("click", function(event) {
+            const menu = document.getElementById("sideMenu");
+            const menuBtn = document.querySelector(".menu-btn");
+            
+            if (menu.style.width === "250px" && !menu.contains(event.target) && !menuBtn.contains(event.target)) {
+                menu.style.width = "0";
+            }
+        });
+    </script>
+</body>
+</html>
