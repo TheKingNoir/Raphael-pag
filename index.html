@@ -44,27 +44,30 @@
             display: flex;
             gap: 15px;
             justify-content: center;
-            flex-wrap: wrap;
+            flex-wrap: wrap; /* Esto permite que se acomoden si la pantalla es estrecha */
             margin-top: 30px;
         }
 
         .btn {
             display: inline-block;
             color: white;
-            padding: 12px 30px;
+            padding: 12px 20px;
+            width: 250px;           /* ANCHO FIJO para todos */
+            text-align: center;     /* Centra el texto dentro del botón */
             border-radius: 30px;
             text-decoration: none;
             font-weight: bold;
             transition: transform 0.2s, box-shadow 0.2s;
             border: none;
             cursor: pointer;
-            font-size: 1rem;
+            font-size: 0.95rem;
         }
 
         .btn:hover {
             transform: translateY(-2px);
         }
 
+        /* Colores originales conservados */
         .btn-primary {
             background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
             box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
@@ -140,7 +143,6 @@
 <body>
 
     <header>
-        <!-- IMAGEN DEL BOT -->
         <img src="https://i.postimg.cc/pLnt0xVZ/Picsart-26-08-15-20-00-38-488.jpg" alt="Foto de Raphael Bot" style="width: 150px; height: 150px; border-radius: 50%; margin-bottom: 20px; border: 3px solid #6366f1; box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);">
         
         <h1>🟢 RAPHAEL-WA-BOT 🪽</h1>
@@ -150,7 +152,7 @@
             <a href="https://chat.whatsapp.com/Jfhq7IpeQRHKcQeaIbELWj?s=cl&p=a&ilr=1" class="btn btn-primary" target="_blank">¡Probar Bot Personalmente!</a>
             <a href="https://whatsapp.com/channel/0029Vb7rONuAu3aRrzGtHL2r" class="btn btn-whatsapp" target="_blank">📢 Unirse al Canal</a>
             <a href="mailto:raphaelbotwa@gmail.com@gmail.com" class="btn btn-gmail" target="_blank">📧 Contactar por Gmail</a>
-            <a href="https://github.com/TheKingNoir" class="btn btn-github" target="_blank">💻 GitHub</a>
+            <a href="https://github.com/TU_USUARIO" class="btn btn-github" target="_blank">💻 GitHub</a>
         </div>
     </header>
 
