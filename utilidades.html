@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Utilidades - Raphael-WA-BOT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0b0f19;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        /* 🔙 Botón para volver */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            z-index: 1000;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #4f46e5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            padding: 50px 20px;
+            text-align: center;
+            border-bottom: 2px solid #4f46e5;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #c084fc;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #93c5fd;
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .command-card {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: border-color 0.2s;
+        }
+
+        .command-card:hover {
+            border-color: #6366f1;
+        }
+
+        .command-card code {
+            color: #38bdf8;
+            background: #1e293b;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1.05rem;
+        }
+
+        .command-usage {
+            color: #fbbf24;
+            font-size: 0.9rem;
+            margin-left: 5px;
+        }
+
+        .command-card p {
+            margin-top: 10px;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        .command-aliases {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .command-aliases span {
+            color: #94a3b8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #030712;
+            color: #6b7280;
+            margin-top: 60px;
+            border-top: 1px solid #1f2937;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botón para regresar al índice general -->
+    <a href="comandos.html" class="back-btn">⬅️ Volver</a>
+
+    <header>
+        <h1>🛠️ Utilidades</h1>
+        <p>Comandos de <em>Utilidades</em> para tareas generales.</p>
+    </header>
+
+    <div class="container">
+        <div class="commands-grid">
+            
+            <div class="command-card"><div><code>menu</code><span class="command-usage">_&lt;category&gt;_</span></div><p>Ver el menú de comandos.</p><div class="command-aliases"><span>Alias:</span> allmenu, help, menu, ayuda</div></div>
+            
+            <div class="command-card"><div><code>status</code><span class="command-usage"></span></div><p>Ver el estado del bot.</p><div class="command-aliases"><span>Alias:</span> status, estado</div></div>
+            
+            <div class="command-card"><div><code>ping</code><span class="command-usage"></span></div><p>Medir el tiempo de respuesta del bot.</p><div class="command-aliases"><span>Alias:</span> ping, p, speed</div></div>
+            
+            <div class="command-card"><div><code>chatgpt</code><span class="command-usage">_&lt;query&gt;_</span></div><p>Realizar peticiones a ChatGPT.</p><div class="command-aliases"><span>Alias:</span> ia, chatgpt</div></div>
+            
+            <div class="command-card"><div><code>delete</code><span class="command-usage">_&lt;cite / message&gt;_</span></div><p>Eliminar un mensaje.</p><div class="command-aliases"><span>Alias:</span> del, delete</div></div>
+            
+            <div class="command-card"><div><code>getpic</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Ver la foto de perfil de un usuario.</p><div class="command-aliases"><span>Alias:</span> pfp, getpic</div></div>
+            
+            <div class="command-card"><div><code>tourl</code><span class="command-usage">_&lt;cite / image|video&gt;_</span></div><p>Convertir una imagen en un enlace.</p><div class="command-aliases"><span>Alias:</span> tourl</div></div>
+            
+            <div class="command-card"><div><code>say</code><span class="command-usage">_&lt;text&gt;_</span></div><p>Repetir un mensaje como el bot.</p><div class="command-aliases"><span>Alias:</span> say, decir</div></div>
+            
+            <div class="command-card"><div><code>translate</code><span class="command-usage">_&lt;language / text&gt;_</span></div><p>Traducir texto al idioma especificado.</p><div class="command-aliases"><span>Alias:</span> translate, trad, traducir</div></div>
+            
+            <div class="command-card"><div><code>get</code><span class="command-usage">_&lt;url&gt;_</span></div><p>Realizar solicitudes GET a páginas web.</p><div class="command-aliases"><span>Alias:</span> get, fetch</div></div>
+            
+            <div class="command-card"><div><code>hd</code><span class="command-usage">_&lt;cite / image&gt;_</span></div><p>Mejorar la calidad de una imagen.</p><div class="command-aliases"><span>Alias:</span> hd, enhance, remini</div></div>
+            
+            <div class="command-card"><div><code>inspect</code><span class="command-usage">_&lt;url&gt;_</span></div><p>Ver información de grupos y canales de WhatsApp.</p><div class="command-aliases"><span>Alias:</span> inspect, inspeccionar</div></div>
+            
+            <div class="command-card"><div><code>read</code><span class="command-usage">_&lt;cite / image|video&gt;_</span></div><p>Convertir imagen/video de una vista a contenido.</p><div class="command-aliases"><span>Alias:</span> readviewonce, read, readvo</div></div>
+            
+            <div class="command-card"><div><code>screenshot</code><span class="command-usage">_&lt;url&gt;_</span></div><p>Capturar una página web.</p><div class="command-aliases"><span>Alias:</span> ss, screenshot, web</div></div>
+            
+            <div class="command-card"><div><code>fakereply</code><span class="command-usage">_&lt;mention / text&gt;_</span></div><p>Envia un mensaje con una respuesta falsa de alguien.</p><div class="command-aliases"><span>Alias:</span> fakereply, fake, fitnah</div></div>
+            
+            <div class="command-card"><div><code>testwelcome</code><span class="command-usage"></span></div><p>Probar el mensaje de bienvenida o despedida.</p><div class="command-aliases"><span>Alias:</span> testwelcome, testgoodbye</div></div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>Raphael-WA-BOT - Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
