@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - Raphael-WA-BOT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0b0f19;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        /* 🔙 Botón para volver */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            z-index: 1000;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #4f46e5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            padding: 50px 20px;
+            text-align: center;
+            border-bottom: 2px solid #4f46e5;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #c084fc;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #93c5fd;
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .command-card {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: border-color 0.2s;
+        }
+
+        .command-card:hover {
+            border-color: #6366f1;
+        }
+
+        .command-card code {
+            color: #38bdf8;
+            background: #1e293b;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1.05rem;
+        }
+
+        .command-usage {
+            color: #fbbf24;
+            font-size: 0.9rem;
+            margin-left: 5px;
+        }
+
+        .command-card p {
+            margin-top: 10px;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        .command-aliases {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .command-aliases span {
+            color: #94a3b8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #030712;
+            color: #6b7280;
+            margin-top: 60px;
+            border-top: 1px solid #1f2937;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botón para regresar al índice general -->
+    <a href="comandos.html" class="back-btn">⬅️ Volver</a>
+
+    <header>
+        <h1>👤 Perfiles</h1>
+        <p>Comandos de <em>Perfil</em> para personalizar tu cuenta.</p>
+    </header>
+
+    <div class="container">
+        <div class="commands-grid">
+            
+            <div class="command-card"><div><code>profile</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Ver tu perfil o el de un usuario.</p><div class="command-aliases"><span>Alias:</span> profile, perfil</div></div>
+            
+            <div class="command-card"><div><code>afk</code><span class="command-usage">_&lt;reason&gt;_</span></div><p>Activar el modo AFK para que el bot avise cuando te mencionen.</p><div class="command-aliases"><span>Alias:</span> afk</div></div>
+            
+            <div class="command-card"><div><code>level</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Ver tu nivel y experiencia actual.</p><div class="command-aliases"><span>Alias:</span> level, lvl</div></div>
+            
+            <div class="command-card"><div><code>leaderboard</code><span class="command-usage">_&lt;page&gt;_</span></div><p>Top de usuarios con más experiencia.</p><div class="command-aliases"><span>Alias:</span> lboard, lb, leaderboard</div></div>
+            
+            <div class="command-card"><div><code>setbirth</code><span class="command-usage">_&lt;day/month/year|month/day&gt;_</span></div><p>Establecer tu fecha de cumpleaños.</p><div class="command-aliases"><span>Alias:</span> setbirth</div></div>
+            
+            <div class="command-card"><div><code>delbirth</code><span class="command-usage"></span></div><p>Borrar tu fecha de cumpleaños.</p><div class="command-aliases"><span>Alias:</span> delbirth</div></div>
+            
+            <div class="command-card"><div><code>setgenre</code><span class="command-usage">_&lt;man|women&gt;_</span></div><p>Establecer tu género.</p><div class="command-aliases"><span>Alias:</span> setgenre</div></div>
+            
+            <div class="command-card"><div><code>delgenre</code><span class="command-usage"></span></div><p>Eliminar tu género del perfil.</p><div class="command-aliases"><span>Alias:</span> delgenre</div></div>
+            
+            <div class="command-card"><div><code>setdesc</code><span class="command-usage">_&lt;text&gt;_</span></div><p>Establecer tu descripción de perfil.</p><div class="command-aliases"><span>Alias:</span> setdescription, setdesc</div></div>
+            
+            <div class="command-card"><div><code>deldesc</code><span class="command-usage"></span></div><p>Eliminar tu descripción de perfil.</p><div class="command-aliases"><span>Alias:</span> setdescription, setdesc</div></div>
+            
+            <div class="command-card"><div><code>sethobby</code><span class="command-usage"></span></div><p>Establecer tu pasatiempo.</p><div class="command-aliases"><span>Alias:</span> setpasatiempo, sethobby</div></div>
+            
+            <div class="command-card"><div><code>delhobby</code><span class="command-usage"></span></div><p>Eliminar tu pasatiempo del perfil.</p><div class="command-aliases"><span>Alias:</span> setpasatiempo, removehobby</div></div>
+            
+            <div class="command-card"><div><code>marry</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Casarte con alguien.</p><div class="command-aliases"><span>Alias:</span> marry, casarse</div></div>
+            
+            <div class="command-card"><div><code>divorce</code><span class="command-usage"></span></div><p>Divorciarte de tu pareja.</p><div class="command-aliases"><span>Alias:</span> divorce</div></div>
+            
+            <div class="command-card"><div><code>setfavourite</code><span class="command-usage">_&lt;waifu&gt;_</span></div><p>Establecer tu claim favorito.</p><div class="command-aliases"><span>Alias:</span> setfav, setfavourite</div></div>
+            
+            <div class="command-card"><div><code>delfav</code><span class="command-usage">_&lt;waifu&gt;_</span></div><p>Borrar tu claim favorito.</p><div class="command-aliases"><span>Alias:</span> deletefav, delfav</div></div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>Raphael-WA-BOT - Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
