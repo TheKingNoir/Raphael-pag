@@ -151,12 +151,25 @@
             background: #1e293b;
             padding: 25px;
             border-radius: 8px;
-            min-height: 200px;
+            min-height: 220px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             border: 1px dashed #475569;
+        }
+
+        .phone-input {
+            padding: 10px;
+            width: 80%;
+            max-width: 300px;
+            border-radius: 6px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: white;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1rem;
         }
 
         footer {
@@ -169,6 +182,8 @@
             font-size: 0.9rem;
         }
     </style>
+    <!-- Incluimos Socket.IO para la comunicación en tiempo real con tu VPS -->
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 </head>
 <body>
 
@@ -180,7 +195,6 @@
         <a href="javascript:void(0)" class="close-btn" onclick="toggleMenu()">&times;</a>
         <a href="index.html">🏠 Inicio</a>
         <a href="comandos.html">🛠️ Comandos</a>
-        <a href="vincular.html">🌐 Vincular</a>
         <a href="donaciones.html">💰 Donaciones</a>
     </div>
 
@@ -201,12 +215,17 @@
 
             <!-- Contenedor del Código QR -->
             <div id="qr-section" class="auth-box">
-                <p style="color: #94a3b8;">📷 Aquí se cargará el código QR del servidor...</p>
+                <div id="qr-content">
+                    <p style="color: #94a3b8;">🔄 Conectando con el servidor...</p>
+                </div>
             </div>
 
             <!-- Contenedor del Código de Emparejamiento -->
             <div id="code-section" class="auth-box" style="display: none;">
-                <p style="color: #94a3b8;">🔢 Aquí se mostrará el código de 8 dígitos...</p>
+                <p style="color: #94a3b8; margin-bottom: 15px;">🔢 Ingresa tu número con código de país</p>
+                <input type="text" id="phone-input" class="phone-input" placeholder="Ej: 584123456789">
+                <button class="method-btn" onclick="requestPairingCode()">Obtener Código</button>
+                <div id="display-code" style="margin-top: 20px; font-size: 1.3rem; color: #38bdf8; font-weight: bold;"></div>
             </div>
         </div>
     </div>
@@ -216,6 +235,10 @@
     </footer>
 
     <script>
+        // Cambia esta URL por la IP o dominio de tu VPS y el puerto donde corre tu bot
+        const SOCKET_URL = "https://tu-vps-ip-o-dominio.com:3000"; 
+        const socket = io(SOCKET_URL, { autoConnect: false });
+
         function toggleMenu() {
             const menu = document.getElementById("sideMenu");
             if (menu.style.width === "250px") {
@@ -232,12 +255,62 @@
             if (method === 'qr') {
                 qrSection.style.display = 'flex';
                 codeSection.style.display = 'none';
+                
+                // Conectar al socket para pedir el QR
+                if (!socket.connected) socket.connect();
             } else {
                 qrSection.style.display = 'none';
                 codeSection.style.display = 'flex';
+                if (socket.connected) socket.disconnect();
             }
         }
 
+        // Escuchar eventos del servidor de la VPS para el QR
+        socket.on('connect', () => {
+            document.getElementById('qr-content').innerHTML = '<p style="color: #38bdf8;">Esperando código QR del bot...</p>';
+        });
+
+        socket.on('qr', (qrImageSrc) => {
+            // El servidor envía la imagen del QR o los datos para generarla
+            document.getElementById('qr-content').innerHTML = `<img src="${qrImageSrc}" alt="Código QR de WhatsApp" style="max-width: 200px; border-radius: 8px;">`;
+        });
+
+        socket.on('disconnect', () => {
+            document.getElementById('qr-content').innerHTML = '<p style="color: #ef4444;">Desconectado del servidor.</p>';
+        });
+
+        function requestPairingCode() {
+            const phoneNumber = document.getElementById('phone-input').value.trim();
+            const displayDiv = document.getElementById('display-code');
+
+            if (!phoneNumber) {
+                alert("Por favor, ingresa un número de teléfono válido.");
+                return;
+            }
+
+            displayDiv.innerHTML = "⏳ Solicitando código...";
+
+            // Realizamos una petición HTTP a tu VPS para pedir el código de emparejamiento
+            fetch(`${SOCKET_URL}/pairing-code`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ phone: phoneNumber })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.code) {
+                    displayDiv.innerHTML = `🔑 Tu código es: <span style="color: #c084fc; background: #0f172a; padding: 5px 10px; border-radius: 4px;">${data.code}</span>`;
+                } else {
+                    displayDiv.innerHTML = `<span style="color: #ef4444;">Error al generar el código.</span>`;
+                }
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                displayDiv.innerHTML = `<span style="color: #ef4444;">No se pudo conectar con la VPS.</span>`;
+            });
+        }
+
+        // Cerrar menú al hacer clic fuera
         document.addEventListener("click", function(event) {
             const menu = document.getElementById("sideMenu");
             const menuBtn = document.querySelector(".menu-btn");
@@ -249,3 +322,4 @@
     </script>
 </body>
 </html>
+
