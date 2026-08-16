@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gacha - Raphael-WA-BOT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0b0f19;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        /* 🔙 Botón para volver */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            z-index: 1000;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #4f46e5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            padding: 50px 20px;
+            text-align: center;
+            border-bottom: 2px solid #4f46e5;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #c084fc;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #93c5fd;
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .command-card {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: border-color 0.2s;
+        }
+
+        .command-card:hover {
+            border-color: #6366f1;
+        }
+
+        .command-card code {
+            color: #38bdf8;
+            background: #1e293b;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1.05rem;
+        }
+
+        .command-usage {
+            color: #fbbf24;
+            font-size: 0.9rem;
+            margin-left: 5px;
+        }
+
+        .command-card p {
+            margin-top: 10px;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        .command-aliases {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .command-aliases span {
+            color: #94a3b8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #030712;
+            color: #6b7280;
+            margin-top: 60px;
+            border-top: 1px solid #1f2937;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botón para regresar al índice general -->
+    <a href="comandos.html" class="back-btn">⬅️ Volver</a>
+
+    <header>
+        <h1>✨ Gacha</h1>
+        <p>Comandos de <em>Gacha</em> para reclamar e intercambiar personajes.</p>
+    </header>
+
+    <div class="container">
+        <div class="commands-grid">
+            
+            <div class="command-card"><div><code>rollwaifu</code><span class="command-usage"></span></div><p>Waifu o husbando aleatorio.</p><div class="command-aliases"><span>Alias:</span> rollwaifu, rw, roll</div></div>
+            
+            <div class="command-card"><div><code>claim</code><span class="command-usage">_&lt;cite / waifu&gt;_</span></div><p>Reclamar un personaje.</p><div class="command-aliases"><span>Alias:</span> claim, c, reclamar</div></div>
+            
+            <div class="command-card"><div><code>harem</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Ver tus personajes reclamados.</p><div class="command-aliases"><span>Alias:</span> harem, waifus, claims</div></div>
+            
+            <div class="command-card"><div><code>charimage</code><span class="command-usage">_&lt;waifu&gt;_</span></div><p>Ver una imagen aleatoria de un personaje.</p><div class="command-aliases"><span>Alias:</span> charimage, waifuimage, cimage, wimage</div></div>
+            
+            <div class="command-card"><div><code>charinfo</code><span class="command-usage">_&lt;waifu&gt;_</span></div><p>Ver información de un personaje.</p><div class="command-aliases"><span>Alias:</span> charinfo, winfo, waifuinfo</div></div>
+            
+            <div class="command-card"><div><code>deletewaifu</code><span class="command-usage">_&lt;waifu&gt;_</span></div><p>Eliminar un personaje reclamado.</p><div class="command-aliases"><span>Alias:</span> delchar, deletewaifu, delwaifu</div></div>
+            
+            <div class="command-card"><div><code>favboard</code><span class="command-usage"></span></div><p>Ver el top de personajes favoritos.</p><div class="command-aliases"><span>Alias:</span> favtop, favoritetop, favboard</div></div>
+            
+            <div class="command-card"><div><code>gachainfo</code><span class="command-usage"></span></div><p>Ver tu información de gacha.</p><div class="command-aliases"><span>Alias:</span> gachainfo, ginfo, infogacha</div></div>
+            
+            <div class="command-card"><div><code>giveallharem</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Regalar todos tus personajes a otro usuario.</p><div class="command-aliases"><span>Alias:</span> giveallharem</div></div>
+            
+            <div class="command-card"><div><code>givechar</code><span class="command-usage">_&lt;waifu / mention&gt;_</span></div><p>Regalar un personaje a otro usuario.</p><div class="command-aliases"><span>Alias:</span> givechar, givewaifu, regalar</div></div>
+            
+            <div class="command-card"><div><code>haremshop</code><span class="command-usage">_&lt;page&gt;_</span></div><p>Ver los personajes en venta.</p><div class="command-aliases"><span>Alias:</span> wshop, haremshop, tiendawaifus</div></div>
+            
+            <div class="command-card"><div><code>buychar</code><span class="command-usage">_&lt;waifu&gt;_</span></div><p>Comprar un personaje en venta.</p><div class="command-aliases"><span>Alias:</span> buyc, buycharacter, buychar</div></div>
+            
+            <div class="command-card"><div><code>sell</code><span class="command-usage">_&lt;value&gt; &lt;waifu&gt;_</span></div><p>Poner un personaje a la venta.</p><div class="command-aliases"><span>Alias:</span> sell, vender</div></div>
+            
+            <div class="command-card"><div><code>removesale</code><span class="command-usage">_&lt;waifu&gt;_</span></div><p>Eliminar un personaje en venta.</p><div class="command-aliases"><span>Alias:</span> removesale, removerventa</div></div>
+            
+            <div class="command-card"><div><code>trade</code><span class="command-usage">_&lt;your character / character 2&gt;_</span></div><p>Intercambiar un personaje con otro usuario.</p><div class="command-aliases"><span>Alias:</span> trade, intercambiar</div></div>
+            
+            <div class="command-card"><div><code>robwaifu</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Robar un personaje a otro usuario.</p><div class="command-aliases"><span>Alias:</span> robwaifu, robarwaifu</div></div>
+            
+            <div class="command-card"><div><code>vote</code><span class="command-usage">_&lt;waifu&gt;_</span></div><p>Votar por un personaje para subir su valor.</p><div class="command-aliases"><span>Alias:</span> vote, votar</div></div>
+            
+            <div class="command-card"><div><code>waifusboard</code><span class="command-usage">_&lt;page&gt;_</span></div><p>Ver el top de personajes con mayor valor.</p><div class="command-aliases"><span>Alias:</span> waifusboard, waifustop, topwaifus, wtop</div></div>
+            
+            <div class="command-card"><div><code>serieinfo</code><span class="command-usage">_&lt;name&gt;_</span></div><p>Información de un anime.</p><div class="command-aliases"><span>Alias:</span> serieinfo, ainfo, animeinfo</div></div>
+            
+            <div class="command-card"><div><code>serielist</code><span class="command-usage"></span></div><p>Listar series del bot.</p><div class="command-aliases"><span>Alias:</span> serielist, slist, animelist</div></div>
+            
+            <div class="command-card"><span><code>setfavourite</code><span class="command-usage">_&lt;waifu&gt;_</span></div><p>Establecer tu claim favorito.</p><div class="command-aliases"><span>Alias:</span> setfav, setfavourite</div></div>
+            
+            <div class="command-card"><div><code>deletefav</code><span class="command-usage">_&lt;waifu&gt;_</span></div><p>Borrar tu claim favorito.</p><div class="command-aliases"><span>Alias:</span> deletefav, delfav</div></div>
+            
+            <div class="command-card"><div><code>setclaimmsg</code><span class="command-usage">_&lt;text&gt;_</span></div><p>Modificar el mensaje al reclamar un personaje.</p><div class="command-aliases"><span>Alias:</span> setclaim, setclaimmsg</div></div>
+            
+            <div class="command-card"><div><code>delclaimmsg</code><span class="command-usage"></span></div><p>Restablecer el mensaje al reclamar un personaje.</p><div class="command-aliases"><span>Alias:</span> delclaimmsg, resetclaimmsg</div></div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>Raphael-WA-BOT - Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
+
