@@ -145,14 +145,43 @@
             margin-bottom: 15px;
         }
 
-        .donation-data {
+        .donation-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             background: #1e293b;
-            padding: 10px;
+            padding: 10px 15px;
             border-radius: 6px;
+            margin-bottom: 10px;
+        }
+
+        .donation-data {
             color: #38bdf8;
             font-family: monospace;
             font-size: 0.95rem;
             word-break: break-all;
+            margin-right: 10px;
+        }
+
+        .copy-btn {
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: bold;
+            transition: background 0.2s, transform 0.1s;
+            white-space: nowrap;
+        }
+
+        .copy-btn:hover {
+            background: #4f46e5;
+        }
+
+        .copy-btn:active {
+            transform: scale(0.92);
         }
 
         footer {
@@ -189,33 +218,67 @@
         <h2 class="section-title">Métodos de Pago</h2>
         
         <div class="donations-grid">
+            
             <!-- 🅿️ PayPal -->
             <div class="donation-card">
                 <h3>🅿️ PayPal</h3>
-                <p>Apoya mediante transferencia internacional segura.</p>
-                <div class="donation-data">Enlace o correo de PayPal</div>
+                <p>Correo para transferencias internacionales:</p>
+                <div class="donation-row">
+                    <span id="paypalData" class="donation-data">tu-correo@gmail.com</span>
+                    <button class="copy-btn" onclick="copyToClipboard('paypalData', this)">Copiar</button>
+                </div>
             </div>
             
             <!-- 🪙 Binance -->
             <div class="donation-card">
                 <h3>🪙 Binance</h3>
-                <p>Envía criptomonedas de manera rápida.</p>
-                <div class="donation-data">Correo o Binance Pay ID</div>
+                <p>Binance Pay ID / Correo:</p>
+                <div class="donation-row">
+                    <span id="binanceData" class="donation-data">123456789</span>
+                    <button class="copy-btn" onclick="copyToClipboard('binanceData', this)">Copiar</button>
+                </div>
             </div>
             
             <!-- 📱 PagoMóvil -->
             <div class="donation-card">
                 <h3>📱 PagoMóvil</h3>
-                <p>Disponible para aportes nacionales.</p>
-                <div class="donation-data">Banco / Teléfono / Cédula</div>
+                <p>Datos bancarios nacionales:</p>
+                
+                <div class="donation-row">
+                    <div>
+                        <small style="color: #94a3b8; display: block; font-size: 0.75rem;">TELÉFONO</small>
+                        <span id="pmTelefono" class="donation-data">04121234567</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyToClipboard('pmTelefono', this)">Copiar</button>
+                </div>
+
+                <div class="donation-row">
+                    <div>
+                        <small style="color: #94a3b8; display: block; font-size: 0.75rem;">CÉDULA</small>
+                        <span id="pmCedula" class="donation-data">V-12345678</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyToClipboard('pmCedula', this)">Copiar</button>
+                </div>
+
+                <div class="donation-row">
+                    <div>
+                        <small style="color: #94a3b8; display: block; font-size: 0.75rem;">BANCO</small>
+                        <span id="pmBanco" class="donation-data">Banco (0102)</span>
+                    </div>
+                    <button class="copy-btn" onclick="copyToClipboard('pmBanco', this)">Copiar</button>
+                </div>
             </div>
 
             <!-- 💳 Zinli -->
             <div class="donation-card">
                 <h3>💳 Zinli</h3>
-                <p>Transferencia directa mediante Zinli.</p>
-                <div class="donation-data">Correo de Zinli</div>
+                <p>Correo de cuenta Zinli:</p>
+                <div class="donation-row">
+                    <span id="zinliData" class="donation-data">tu-correo@zinli.com</span>
+                    <button class="copy-btn" onclick="copyToClipboard('zinliData', this)">Copiar</button>
+                </div>
             </div>
+
         </div>
     </div>
 
@@ -233,6 +296,24 @@
             }
         }
 
+        // 📋 Función para copiar texto y dar retroalimentación visual en el botón
+        function copyToClipboard(elementId, btnElement) {
+            const text = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = btnElement.innerText;
+                btnElement.innerText = "¡Copiado!";
+                btnElement.style.background = "#10b981"; // Color verde de éxito
+                
+                setTimeout(() => {
+                    btnElement.innerText = originalText;
+                    btnElement.style.background = "#6366f1";
+                }, 2000);
+            }).catch(err => {
+                console.error("Error al copiar: ", err);
+            });
+        }
+
+        // 🖱️ Cerrar el menú al hacer clic fuera
         document.addEventListener("click", function(event) {
             const menu = document.getElementById("sideMenu");
             const menuBtn = document.querySelector(".menu-btn");
