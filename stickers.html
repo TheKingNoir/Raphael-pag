@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stickers - Raphael-WA-BOT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0b0f19;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        /* 🔙 Botón para volver */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            z-index: 1000;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #4f46e5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            padding: 50px 20px;
+            text-align: center;
+            border-bottom: 2px solid #4f46e5;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #c084fc;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #93c5fd;
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .command-card {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: border-color 0.2s;
+        }
+
+        .command-card:hover {
+            border-color: #6366f1;
+        }
+
+        .command-card code {
+            color: #38bdf8;
+            background: #1e293b;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1.05rem;
+        }
+
+        .command-usage {
+            color: #fbbf24;
+            font-size: 0.9rem;
+            margin-left: 5px;
+        }
+
+        .command-card p {
+            margin-top: 10px;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        .command-aliases {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .command-aliases span {
+            color: #94a3b8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #030712;
+            color: #6b7280;
+            margin-top: 60px;
+            border-top: 1px solid #1f2937;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botón para regresar al índice general -->
+    <a href="comandos.html" class="back-btn">⬅️ Volver</a>
+
+    <header>
+        <h1>🎨 Stickers</h1>
+        <p>Comandos de <em>Stickers</em> para crear y gestionar paquetes.</p>
+    </header>
+
+    <div class="container">
+        <div class="commands-grid">
+            
+            <div class="command-card"><div><code>sticker</code><span class="command-usage">_&lt;cite / image|video&gt;_</span></div><p>Convertir una imagen o video a sticker.</p><div class="command-aliases"><span>Alias:</span> sticker, s</div></div>
+            
+            <div class="command-card"><div><code>stickers</code><span class="command-usage">_&lt;query|url&gt;_</span></div><p>Buscar y descargar packs de stickers.</p><div class="command-aliases"><span>Alias:</span> stickerpack, spack, stickers</div></div>
+            
+            <div class="command-card"><div><code>toimg</code><span class="command-usage">_&lt;cite / sticker&gt;_</span></div><p>Convertir un sticker a imagen o GIF.</p><div class="command-aliases"><span>Alias:</span> toimg, toimage</div></div>
+            
+            <div class="command-card"><div><code>brat</code><span class="command-usage">_&lt;text|mention&gt;_</span></div><p>Crear un sticker estilo brat con texto.</p><div class="command-aliases"><span>Alias:</span> brat</div></div>
+            
+            <div class="command-card"><div><code>bratv</code><span class="command-usage">_&lt;text|mention&gt;_</span></div><p>Crear un video-sticker estilo brat.</p><div class="command-aliases"><span>Alias:</span> bratv</div></div>
+            
+            <div class="command-card"><div><code>newpack</code><span class="command-usage">_&lt;name pack&gt;_</span></div><p>Crear un nuevo paquete de stickers.</p><div class="command-aliases"><span>Alias:</span> newpack, newstickerpack</div></div>
+            
+            <div class="command-card"><div><code>getpack</code><span class="command-usage">_&lt;name pack&gt;_</span></div><p>Descargar un paquete de stickers.</p><div class="command-aliases"><span>Alias:</span> getpack, pack, stickerpack</div></div>
+            
+            <div class="command-card"><div><code>delpack</code><span class="command-usage">_&lt;name pack&gt;_</span></div><p>Eliminar un paquete de stickers.</p><div class="command-aliases"><span>Alias:</span> delpack</div></div>
+            
+            <div class="command-card"><div><code>packlist</code><span class="command-usage"></span></div><p>Listar tus paquetes de stickers.</p><div class="command-aliases"><span>Alias:</span> packlist, stickerpacks</div></div>
+            
+            <div class="command-card"><div><code>addsticker</code><span class="command-usage">_&lt;name pack&gt;_</span></div><p>Agregar un sticker a un paquete.</p><div class="command-aliases"><span>Alias:</span> addsticker, stickeradd</div></div>
+            
+            <div class="command-card"><div><code>delsticker</code><span class="command-usage">_&lt;name pack&gt;_</span></div><p>Eliminar un sticker de un paquete.</p><div class="command-aliases"><span>Alias:</span> stickerdel, delsticker</div></div>
+            
+            <div class="command-card"><div><code>setmeta</code><span class="command-usage">_&lt;author|pack&gt;_</span></div><p>Establecer el pack y autor por defecto para tus stickers.</p><div class="command-aliases"><span>Alias:</span> setstickermeta, setmeta</div></div>
+            
+            <div class="command-card"><div><code>delmeta</code><span class="command-usage"></span></div><p>Restablecer el pack y autor por defecto para tus stickers.</p><div class="command-aliases"><span>Alias:</span> delmeta, delstickermeta</div></div>
+            
+            <div class="command-card"><div><code>setpackname</code><span class="command-usage">_&lt;name pack / new name pack&gt;_</span></div><p>Cambiar el nombre de un paquete de stickers.</p><div class="command-aliases"><span>Alias:</span> setstickerpackname, setpackname, packname</div></div>
+            
+            <div class="command-card"><div><code>setpackdesc</code><span class="command-usage">_&lt;name pack / desc&gt;_</span></div><p>Establecer la descripción de un paquete de stickers.</p><div class="command-aliases"><span>Alias:</span> setstickerpackdesc, setpackdesc, packdesc</div></div>
+            
+            <div class="command-card"><div><code>setpackprivate</code><span class="command-usage">_&lt;name pack&gt;_</span></div><p>Establecer un paquete de stickers como privado.</p><div class="command-aliases"><span>Alias:</span> setpackprivate, setpackpriv, packprivate</div></div>
+            
+            <div class="command-card"><div><code>setpackpublic</code><span class="command-usage">_&lt;name pack&gt;_</span></div><p>Establecer un paquete de stickers como público.</p><div class="command-aliases"><span>Alias:</span> setpackpublic, setpackpub, packpublic</div></div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>Raphael-WA-BOT - Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
+
