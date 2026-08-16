@@ -334,15 +334,24 @@
     </footer>
 
     <script>
-        // Script para el menú lateral
+        // Script para el menú lateral y cierre al hacer clic fuera
         function toggleMenu() {
-            var menu = document.getElementById("sideMenu");
+            const menu = document.getElementById("sideMenu");
             if (menu.style.width === "250px") {
                 menu.style.width = "0";
             } else {
                 menu.style.width = "250px";
             }
         }
+
+        document.addEventListener("click", function(event) {
+            const menu = document.getElementById("sideMenu");
+            const menuBtn = document.querySelector(".menu-btn");
+            
+            if (menu.style.width === "250px" && !menu.contains(event.target) && !menuBtn.contains(event.target)) {
+                menu.style.width = "0";
+            }
+        });
     </script>
 </body>
 </html>
