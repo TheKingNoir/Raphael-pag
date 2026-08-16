@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anime - Raphael-WA-BOT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0b0f19;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        /* 🔙 Botón para volver */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            z-index: 1000;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #4f46e5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            padding: 50px 20px;
+            text-align: center;
+            border-bottom: 2px solid #4f46e5;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #c084fc;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #93c5fd;
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .command-card {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: border-color 0.2s;
+        }
+
+        .command-card:hover {
+            border-color: #6366f1;
+        }
+
+        .command-card code {
+            color: #38bdf8;
+            background: #1e293b;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1.05rem;
+        }
+
+        .command-usage {
+            color: #fbbf24;
+            font-size: 0.9rem;
+            margin-left: 5px;
+        }
+
+        .command-card p {
+            margin-top: 10px;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        .command-aliases {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .command-aliases span {
+            color: #94a3b8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #030712;
+            color: #6b7280;
+            margin-top: 60px;
+            border-top: 1px solid #1f2937;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botón para regresar al índice general -->
+    <a href="comandos.html" class="back-btn">⬅️ Volver</a>
+
+    <header>
+        <h1>🌸 Anime</h1>
+        <p>Comandos de <em>Anime</em> para reaccionar con tus amigos.</p>
+    </header>
+
+    <div class="container">
+        <div class="commands-grid">
+            
+            <div class="command-card"><div><code>ppcouple</code><span class="command-usage"></span></div><p>Generar imágenes para amistades o parejas.</p><div class="command-aliases"><span>Alias:</span> ppcp, ppcouple</div></div>
+            
+            <div class="command-card"><div><code>angry</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Estar enojado.</p><div class="command-aliases"><span>Alias:</span> angry, enojado, enojada</div></div>
+            
+            <div class="command-card"><div><code>bath</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Bañarse.</p><div class="command-aliases"><span>Alias:</span> bath, bañarse</div></div>
+            
+            <div class="command-card"><div><code>bite</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Morder a alguien.</p><div class="command-aliases"><span>Alias:</span> bite, morder</div></div>
+            
+            <div class="command-card"><div><code>bleh</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Sacar la lengua.</p><div class="command-aliases"><span>Alias:</span> bleh, meh</div></div>
+            
+            <div class="command-card"><div><code>blowkiss</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Mandar un besito.</p><div class="command-aliases"><span>Alias:</span> blowkiss, besito</div></div>
+            
+            <div class="command-card"><div><code>blush</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Sonrojarse.</p><div class="command-aliases"><span>Alias:</span> blush, sonrojarse</div></div>
+            
+            <div class="command-card"><div><code>bonk</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Dar un golpe divertido.</p><div class="command-aliases"><span>Alias:</span> bonk, golpe</div></div>
+            
+            <div class="command-card"><div><code>bored</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Estar aburrido.</p><div class="command-aliases"><span>Alias:</span> bored, aburrido, aburrida</div></div>
+            
+            <div class="command-card"><div><code>bully</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Molestar a alguien.</p><div class="command-aliases"><span>Alias:</span> bully, molestar</div></div>
+            
+            <div class="command-card"><div><code>call</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Llamar a alguien.</p><div class="command-aliases"><span>Alias:</span> call, llamar</div></div>
+            
+            <div class="command-card"><div><code>clap</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Aplaudir.</p><div class="command-aliases"><span>Alias:</span> clap, aplaudir</div></div>
+            
+            <div class="command-card"><div><code>coffee</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Tomar café.</p><div class="command-aliases"><span>Alias:</span> coffee, cafe</div></div>
+            
+            <div class="command-card"><div><code>cold</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Tener frío.</p><div class="command-aliases"><span>Alias:</span> cold</div></div>
+            
+            <div class="command-card"><div><code>comfort</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Consolar a alguien.</p><div class="command-aliases"><span>Alias:</span> comfort, consolar</div></div>
+            
+            <div class="command-card"><div><code>cook</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Cocinar algo delicioso.</p><div class="command-aliases"><span>Alias:</span> cook, cocinar</div></div>
+            
+            <div class="command-card"><div><code>cringe</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Sentirse avergonzado o incómodo.</p><div class="command-aliases"><span>Alias:</span> cringe, avergonzarse, asco</div></div>
+            
+            <div class="command-card"><div><code>cry</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Llorar.</p><div class="command-aliases"><span>Alias:</span> cry, llorar</div></div>
+            
+            <div class="command-card"><div><code>cuddle</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Acurrucarse con alguien.</p><div class="command-aliases"><span>Alias:</span> cuddle, acurrucarse</div></div>
+            
+            <div class="command-card"><div><code>curious</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Mostrar curiosidad.</p><div class="command-aliases"><span>Alias:</span> curious, curioso, curiosa</div></div>
+            
+            <div class="command-card"><div><code>dance</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Bailar.</p><div class="command-aliases"><span>Alias:</span> dance, bailar</div></div>
+            
+            <div class="command-card"><div><code>dramatic</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Drama.</p><div class="command-aliases"><span>Alias:</span> dramatic, drama</div></div>
+            
+            <div class="command-card"><div><code>draw</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Dibujar.</p><div class="command-aliases"><span>Alias:</span> draw, dibujar</div></div>
+            
+            <div class="command-card"><div><code>drunk</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Estar borracho.</p><div class="command-aliases"><span>Alias:</span> drunk, ebrio, ebria</div></div>
+            
+            <div class="command-card"><div><code>eat</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Comer algo delicioso.</p><div class="command-aliases"><span>Alias:</span> eat, nom, comer</div></div>
+            
+            <div class="command-card"><div><code>facepalm</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Darte una palmada en la cara.</p><div class="command-aliases"><span>Alias:</span> facepalm</div></div>
+            
+            <div class="command-card"><div><code>gaming</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Jugar videojuegos.</p><div class="command-aliases"><span>Alias:</span> gaming, jugar</div></div>
+            
+            <div class="command-card"><div><code>greet</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Saludar a alguien.</p><div class="command-aliases"><span>Alias:</span> greet, hola</div></div>
+            
+            <div class="command-card"><div><code>handhold</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Tomar de la mano.</p><div class="command-aliases"><span>Alias:</span> handhold, tomar</div></div>
+            
+            <div class="command-card"><div><code>happy</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Saltar de felicidad.</p><div class="command-aliases"><span>Alias:</span> happy, feliz</div></div>
+            
+            <div class="command-card"><div><code>heat</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Tener calor.</p><div class="command-aliases"><span>Alias:</span> heat, calor</div></div>
+            
+            <div class="command-card"><div><code>highfive</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Dar un choca esos cinco.</p><div class="command-aliases"><span>Alias:</span> highfive, chocar</div></div>
+            
+            <div class="command-card"><div><code>hug</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Dar un abrazo.</p><div class="command-aliases"><span>Alias:</span> hug, abrazar</div></div>
+            
+            <div class="command-card"><div><code>impregnate</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Embarazar a alguien.</p><div class="command-aliases"><span>Alias:</span> impregnate, embarazar, preg, preñar</div></div>
+            
+            <div class="command-card"><div><code>jump</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Saltar.</p><div class="command-aliases"><span>Alias:</span> jump, saltar</div></div>
+            
+            <div class="command-card"><div><code>kill</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Toma tu arma y mata a alguien.</p><div class="command-aliases"><span>Alias:</span> kill, matar</div></div>
+            
+            <div class="command-card"><div><code>kiss</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Dar un beso.</p><div class="command-aliases"><span>Alias:</span> kiss, muak</div></div>
+            
+            <div class="command-card"><div><code>kisscheek</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Beso en la mejilla.</p><div class="command-aliases"><span>Alias:</span> kisscheek, beso, besar</div></div>
+            
+            <div class="command-card"><div><code>laugh</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Reírse de alguien.</p><div class="command-aliases"><span>Alias:</span> laugh, reír</div></div>
+            
+            <div class="command-card"><div><code>lewd</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Hacer algo lascivo.</p><div class="command-aliases"><span>Alias:</span> lewd</div></div>
+            
+            <div class="command-card"><div><code>lick</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Lamer a alguien.</p><div class="command-aliases"><span>Alias:</span> lick, lamer</div></div>
+            
+            <div class="command-card"><div><code>love</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Sentirse enamorado.</p><div class="command-aliases"><span>Alias:</span> love, amor</div></div>
+            
+            <div class="command-card"><div><code>nope</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Negarse a hacer algo.</p><div class="command-aliases"><span>Alias:</span> nope, nop</div></div>
+            
+            <div class="command-card"><div><code>pat</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Acariciar a alguien.</p><div class="command-aliases"><span>Alias:</span> pat, acariciar</div></div>
+            
+            <div class="command-card"><div><code>peek</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Espiar a alguien.</p><div class="command-aliases"><span>Alias:</span> peek</div></div>
+            
+            <div class="command-card"><div><code>poke</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Dar un golpecito a alguien.</p><div class="command-aliases"><span>Alias:</span> poke, picar</div></div>
+            
+            <div class="command-card"><div><code>pout</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Hacer pucheros.</p><div class="command-aliases"><span>Alias:</span> pout, mueca</div></div>
+            
+            <div class="command-card"><div><code>psycho</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Tener un ataque de locura.</p><div class="command-aliases"><span>Alias:</span> psycho, loco, loca</div></div>
+            
+            <div class="command-card"><div><code>punch</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Dar un puñetazo.</p><div class="command-aliases"><span>Alias:</span> punch, golpear</div></div>
+            
+            <div class="command-card"><div><code>push</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Empujar a alguien.</p><div class="command-aliases"><span>Alias:</span> push, empujar</div></div>
+            
+            <div class="command-card"><div><code>run</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Correr.</p><div class="command-aliases"><span>Alias:</span> run, correr</div></div>
+            
+            <div class="command-card"><div><code>sad</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Expresar tristeza.</p><div class="command-aliases"><span>Alias:</span> sad, triste</div></div>
+            
+            <div class="command-card"><div><code>scared</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Estar asustado.</p><div class="command-aliases"><span>Alias:</span> scared, asustado, asustada</div></div>
+            
+            <div class="command-card"><div><code>scream</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Gritar.</p><div class="command-aliases"><span>Alias:</span> scream, gritar</div></div>
+            
+            <div class="command-card"><div><code>seduce</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Seducir a alguien.</p><div class="command-aliases"><span>Alias:</span> seduce, seducir</div></div>
+            
+            <div class="command-card"><div><code>shy</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Sentir timidez.</p><div class="command-aliases"><span>Alias:</span> shy, timido, timida</div></div>
+            
+            <div class="command-card"><div><code>sing</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Cantar.</p><div class="command-aliases"><span>Alias:</span> sing, cantar</div></div>
+            
+            <div class="command-card"><div><code>slap</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Dar una bofetada.</p><div class="command-aliases"><span>Alias:</span> slap, bofetada</div></div>
+            
+            <div class="command-card"><div><code>sleep</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Tumbarse a dormir.</p><div class="command-aliases"><span>Alias:</span> sleep, dormir</div></div>
+            
+            <div class="command-card"><div><code>smile</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Sonreír.</p><div class="command-aliases"><span>Alias:</span> smile, sonreir</div></div>
+            
+            <div class="command-card"><div><code>smoke</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Fumar.</p><div class="command-aliases"><span>Alias:</span> smoke, fumar</div></div>
+            
+            <div class="command-card"><div><code>smug</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Actuar presumido.</p><div class="command-aliases"><span>Alias:</span> smug, presumir</div></div>
+            
+            <div class="command-card"><div><code>sniff</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Oler a alguien.</p><div class="command-aliases"><span>Alias:</span> sniff, oler</div></div>
+            
+            <div class="command-card"><div><code>snuggle</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Acurrucarse con alguien.</p><div class="command-aliases"><span>Alias:</span> snuggle, acurrucar, acurrucarse</div></div>
+            
+            <div class="command-card"><div><code>spit</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Escupir.</p><div class="command-aliases"><span>Alias:</span> spit, escupir</div></div>
+            
+            <div class="command-card"><div><code>stare</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Mirar fijamente a alguien.</p><div class="command-aliases"><span>Alias:</span> stare, mirar</div></div>
+            
+            <div class="command-card"><div><code>step</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Pisar a alguien.</p><div class="command-aliases"><span>Alias:</span> step, pisar</div></div>
+            
+            <div class="command-card"><div><code>think</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Pensar en algo.</p><div class="command-aliases"><span>Alias:</span> think, pensar</div></div>
+            
+            <div class="command-card"><div><code>thinkhard</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Pensar intensamente.</p><div class="command-aliases"><span>Alias:</span> thinkhard</div></div>
+            
+            <div class="command-card"><div><code>tickle</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Hacer cosquillas.</p><div class="command-aliases"><span>Alias:</span> tickle, cosquillas</div></div>
+            
+            <div class="command-card"><div><code>trip</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Tropezar con alguien.</p><div class="command-aliases"><span>Alias:</span> trip, tropezar</div></div>
+            
+            <div class="command-card"><div><code>walk</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Caminar.</p><div class="command-aliases"><span>Alias:</span> walk, caminar</div></div>
+            
+            <div class="command-card"><div><code>wave</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Saludar con la mano.</p><div class="command-aliases"><span>Alias:</span> wave, saludar</div></div>
+            
+            <div class="command-card"><div><code>wink</code><span class="command-usage">_&lt;mention&gt;_</span></div><p>Guiñar un ojo.</p><div class="command-aliases"><span>Alias:</span> wink, guiñar</div></div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>Raphael-WA-BOT - Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
