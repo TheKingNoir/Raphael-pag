@@ -32,11 +32,15 @@
             border-radius: 8px;
             z-index: 1000;
             box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
-            transition: background 0.2s;
+            transition: background 0.2s, transform 0.1s;
         }
 
         .menu-btn:hover {
             background: #4f46e5;
+        }
+
+        .menu-btn:active {
+            transform: scale(0.92);
         }
 
         .side-menu {
@@ -114,7 +118,8 @@
             border-radius: 30px;
             text-decoration: none;
             font-weight: bold;
-            transition: transform 0.2s, box-shadow 0.2s;
+            /* 📱 Transición optimizada para la respuesta al tacto */
+            transition: transform 0.1s ease, box-shadow 0.1s ease, opacity 0.1s ease;
             border: none;
             cursor: pointer;
             font-size: 0.95rem;
@@ -122,6 +127,12 @@
 
         .btn:hover {
             transform: translateY(-2px);
+        }
+
+        /* 👆 Efecto al tocar la pantalla en dispositivos móviles */
+        .btn:active {
+            transform: scale(0.95) translateY(0);
+            opacity: 0.85;
         }
 
         .btn-primary {
