@@ -1,1 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Economía - Raphael-WA-BOT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
+        body {
+            background-color: #0b0f19;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        /* 🔙 Botón para volver */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 8px;
+            z-index: 1000;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
+            transition: background 0.2s;
+        }
+
+        .back-btn:hover {
+            background: #4f46e5;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            padding: 50px 20px;
+            text-align: center;
+            border-bottom: 2px solid #4f46e5;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #c084fc;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: #93c5fd;
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+        }
+
+        .command-card {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: border-color 0.2s;
+        }
+
+        .command-card:hover {
+            border-color: #6366f1;
+        }
+
+        .command-card code {
+            color: #38bdf8;
+            background: #1e293b;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 1.05rem;
+        }
+
+        .command-usage {
+            color: #fbbf24;
+            font-size: 0.9rem;
+            margin-left: 5px;
+        }
+
+        .command-card p {
+            margin-top: 10px;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+        }
+
+        .command-aliases {
+            margin-top: 10px;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .command-aliases span {
+            color: #94a3b8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #030712;
+            color: #6b7280;
+            margin-top: 60px;
+            border-top: 1px solid #1f2937;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botón para regresar al índice general -->
+    <a href="comandos.html" class="back-btn">⬅️ Volver</a>
+
+    <header>
+        <h1>💰 Economía</h1>
+        <p>Comandos de <em>Economía</em> para ganar dinero y divertirte con tus amigos.</p>
+    </header>
+
+    <div class="container">
+        <div class="commands-grid">
+            
+            <div class="command-card"><div><code>work</code><span class="command-usage"></span></div><p>Ganar coins trabajando.</p><div class="command-aliases"><span>Alias:</span> w, work, chambear, trabajar</div></div>
+            
+            <div class="command-card"><div><code>balance</code><span class="command-usage">&lt;mention&gt;</span></div><p>Ver cuántos coins tienes.</p><div class="command-aliases"><span>Alias:</span> balance, bal, coins, bank</div></div>
+            
+            <div class="command-card"><div><code>deposit</code><span class="command-usage">&lt;amount|all&gt;</span></div><p>Depositar tus coins en el banco.</p><div class="command-aliases"><span>Alias:</span> dep, deposit, d, depositar</div></div>
+            
+            <div class="command-card"><div><code>withdraw</code><span class="command-usage">&lt;amount|all&gt;</span></div><p>Retirar tus coins del banco.</p><div class="command-aliases"><span>Alias:</span> withdraw, with, retirar</div></div>
+            
+            <div class="command-card"><div><code>shop</code><span class="command-usage">&lt;page&gt;</span></div><p>Ver la tienda del bot.</p><div class="command-aliases"><span>Alias:</span> shop, tienda, buy, comprar, inventory, inv, inventario</div></div>
+            
+            <div class="command-card"><div><code>heal</code><span class="command-usage"></span></div><p>Curar salud para salir de aventuras.</p><div class="command-aliases"><span>Alias:</span> heal, curar, pocion, potion</div></div>
+            
+            <div class="command-card"><div><code>invoke</code><span class="command-usage"></span></div><p>Hacer ritos de invocación.</p><div class="command-aliases"><span>Alias:</span> ritual, invoke, invocar</div></div>
+            
+            <div class="command-card"><div><code>einfo</code><span class="command-usage"></span></div><p>Ver tu información de economía y cooldowns.</p><div class="command-aliases"><span>Alias:</span> infoeconomy, cooldowns, economyinfo, einfo</div></div>
+            
+            <div class="command-card"><div><code>coinflip</code><span class="command-usage">&lt;amount / face|cross&gt;</span></div><p>Apostar coins en un cara o cruz.</p><div class="command-aliases"><span>Alias:</span> cf, flip, coinflip</div></div>
+            
+            <div class="command-card"><div><code>casino</code><span class="command-usage">&lt;amount&gt;</span></div><p>Apostar coins en el casino.</p><div class="command-aliases"><span>Alias:</span> apostar, casino</div></div>
+            
+            <div class="command-card"><div><code>slot</code><span class="command-usage">&lt;amount&gt;</span></div><p>Apostar coins en el casino.</p><div class="command-aliases"><span>Alias:</span> slot</div></div>
+            
+            <div class="command-card"><div><code>roulette</code><span class="command-usage">&lt;amount / red|black|green&gt;</span></div><p>Apostar coins en una ruleta.</p><div class="command-aliases"><span>Alias:</span> rt, roulette, ruleta</div></div>
+            
+            <div class="command-card"><div><code>ppt</code><span class="command-usage">&lt;mention / stone|paper|scissors&gt;</span></div><p>Jugar piedra, papel o tijera con el bot o un usuario.</p><div class="command-aliases"><span>Alias:</span> ppt, pvp</div></div>
+            
+            <div class="command-card"><div><code>tictactoe</code><span class="command-usage">&lt;hall&gt;</span></div><p>Iniciar o unirte a una partida de TicTacToe.</p><div class="command-aliases"><span>Alias:</span> tictactoe, ttc, ttt, xo</div></div>
+            
+            <div class="command-card"><div><code>delttt</code><span class="command-usage"></span></div><p>Abandonar tu partida de TicTacToe activa.</p><div class="command-aliases"><span>Alias:</span> delttt, delttc, delxo</div></div>
+            
+            <div class="command-card"><div><code>ahorcado</code><span class="command-usage"></span></div><p>Iniciar un juego de ahorcado.</p><div class="command-aliases"><span>Alias:</span> ahorcado, hangman</div></div>
+            
+            <div class="command-card"><div><code>acertijo</code><span class="command-usage"></span></div><p>Adivinar un acertijo y ganar coins.</p><div class="command-aliases"><span>Alias:</span> acertijo, riddle, adivinanza</div></div>
+            
+            <div class="command-card"><div><code>movie</code><span class="command-usage"></span></div><p>Adivinar una película en emojis y ganar coins.</p><div class="command-aliases"><span>Alias:</span> movie, peli, advp, pelicula</div></div>
+            
+            <div class="command-card"><div><code>trivia</code><span class="command-usage"></span></div><p>Responder una pregunta de trivia y ganar coins.</p><div class="command-aliases"><span>Alias:</span> trivia</div></div>
+            
+            <div class="command-card"><div><code>flag</code><span class="command-usage"></span></div><p>Adivina el país por sus emojis y gana coins.</p><div class="command-aliases"><span>Alias:</span> flag, country</div></div>
+            
+            <div class="command-card"><div><code>math</code><span class="command-usage">&lt;difficulty&gt;</span></div><p>Iniciar un juego de matemáticas.</p><div class="command-aliases"><span>Alias:</span> math, mates</div></div>
+            
+            <div class="command-card"><div><code>crime</code><span class="command-usage"></span></div><p>Ganar coins rápido.</p><div class="command-aliases"><span>Alias:</span> crime, crimen</div></div>
+            
+            <div class="command-card"><div><code>slut</code><span class="command-usage"></span></div><p>Ganar coins con trabajos de riesgo.</p><div class="command-aliases"><span>Alias:</span> slut, prostituirse</div></div>
+            
+            <div class="command-card"><div><code>steal</code><span class="command-usage">&lt;mention&gt;</span></div><p>Intentar robar coins a un usuario.</p><div class="command-aliases"><span>Alias:</span> robar, steal, rob</div></div>
+            
+            <div class="command-card"><div><code>givecoins</code><span class="command-usage">&lt;amount|all / mention&gt;</span></div><p>Dar coins a un usuario.</p><div class="command-aliases"><span>Alias:</span> givecoins, pay, coinsgive</div></div>
+            
+            <div class="command-card"><div><code>daily</code><span class="command-usage"></span></div><p>Reclamar tu recompensa diaria.</p><div class="command-aliases"><span>Alias:</span> daily, diario</div></div>
+            
+            <div class="command-card"><div><code>weekly</code><span class="command-usage"></span></div><p>Reclamar tu recompensa semanal.</p><div class="command-aliases"><span>Alias:</span> weekly, semanal</div></div>
+            
+            <div class="command-card"><div><code>monthly</code><span class="command-usage"></span></div><p>Reclamar tu recompensa mensual.</p><div class="command-aliases"><span>Alias:</span> monthly, mensual</div></div>
+            
+            <div class="command-card"><div><code>coffer</code><span class="command-usage"></span></div><p>Reclamar tu cofre diario.</p><div class="command-aliases"><span>Alias:</span> cofre, coffer</div></div>
+            
+            <div class="command-card"><div><code>economyboard</code><span class="command-usage">&lt;page&gt;</span></div><p>Ver el ranking de usuarios con más coins.</p><div class="command-aliases"><span>Alias:</span> economyboard, eboard, baltop</div></div>
+            
+            <div class="command-card"><div><code>adventure</code><span class="command-usage"></span></div><p>Ir de aventuras para ganar coins.</p><div class="command-aliases"><span>Alias:</span> adventure, aventura</div></div>
+            
+            <div class="command-card"><div><code>hunt</code><span class="command-usage"></span></div><p>Cazar animales para ganar coins.</p><div class="command-aliases"><span>Alias:</span> cazar, hunt</div></div>
+            
+            <div class="command-card"><div><code>fish</code><span class="command-usage"></span></div><p>Ganar coins pescando.</p><div class="command-aliases"><span>Alias:</span> pescar, fish</div></div>
+            
+            <div class="command-card"><div><code>mine</code><span class="command-usage"></span></div><p>Realizar trabajos de minería y ganar coins.</p><div class="command-aliases"><span>Alias:</span> mine, minar</div></div>
+            
+            <div class="command-card"><div><code>dungeon</code><span class="command-usage"></span></div><p>Explorar mazmorras para ganar coins.</p><div class="command-aliases"><span>Alias:</span> dungeon, mazmorra</div></div>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>Raphael-WA-BOT - Todos los derechos reservados.</p>
+    </footer>
+</body>
+</html>
