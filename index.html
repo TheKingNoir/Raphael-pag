@@ -18,6 +18,63 @@
             line-height: 1.6;
         }
 
+        /* Estilos del Menú Lateral */
+        .menu-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
+            transition: background 0.2s;
+        }
+
+        .menu-btn:hover {
+            background: #4f46e5;
+        }
+
+        .side-menu {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #111827;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 1001;
+            border-right: 2px solid #4f46e5;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .side-menu a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .side-menu a:hover {
+            color: #c084fc;
+            background: #1f2937;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 36px;
+        }
+
         header {
             background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
             padding: 60px 20px;
@@ -141,6 +198,18 @@
 </head>
 <body>
 
+    <!-- Botón para abrir el menú lateral -->
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+    <!-- Panel del Menú Lateral -->
+    <div id="sideMenu" class="side-menu">
+        <a href="javascript:void(0)" class="close-btn" onclick="toggleMenu()">&times;</a>
+        <a href="#">🏠 Inicio</a>
+        <a href="#">🌐 Vincular</a>
+        <a href="#">⚙️ Comandos</a>
+        <a href="#">📧 Contacto</a>
+    </div>
+
     <header>
         <!-- IMAGEN CUADRADA CON BORDES SUAVES -->
         <img src="https://i.postimg.cc/pLnt0xVZ/Picsart-26-08-15-20-00-38-488.jpg" alt="Foto de Raphael Bot" style="width: 150px; height: 150px; border-radius: 15px; margin-bottom: 20px; border: 3px solid #6366f1; box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);">
@@ -180,6 +249,18 @@
     <footer>
         <p>&copy; 2026 RAPHAEL-WA-BOT ° Hecho y Desarrollado Por Ares Arcane.©</p>
     </footer>
+
+    <!-- Script JavaScript para controlar el menú -->
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("sideMenu");
+            if (menu.style.width === "250px") {
+                menu.style.width = "0";
+            } else {
+                menu.style.width = "250px";
+            }
+        }
+    </script>
 
 </body>
 </html>
