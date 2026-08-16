@@ -18,7 +18,6 @@
             line-height: 1.6;
         }
 
-        /* 🛠️ Estilos del Menú Lateral */
         .menu-btn {
             position: fixed;
             top: 20px;
@@ -37,10 +36,6 @@
 
         .menu-btn:hover {
             background: #4f46e5;
-        }
-
-        .menu-btn:active {
-            transform: scale(0.92);
         }
 
         .side-menu {
@@ -91,14 +86,6 @@
             color: #c084fc;
             margin-bottom: 10px;
             text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        header p {
-            font-size: 1.1rem;
-            color: #93c5fd;
-            max-width: 600px;
-            margin: 0 auto;
         }
 
         .container {
@@ -111,7 +98,6 @@
             text-align: center;
             color: #c084fc;
             margin-bottom: 30px;
-            font-size: 2rem;
         }
 
         .donations-grid {
@@ -125,23 +111,10 @@
             border: 1px solid #1f2937;
             padding: 25px;
             border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: border-color 0.2s;
-        }
-
-        .donation-card:hover {
-            border-color: #6366f1;
         }
 
         .donation-card h3 {
             color: #93c5fd;
-            margin-bottom: 10px;
-            font-size: 1.3rem;
-        }
-
-        .donation-card p {
-            color: #cbd5e1;
-            font-size: 0.95rem;
             margin-bottom: 15px;
         }
 
@@ -171,164 +144,130 @@
             border-radius: 6px;
             cursor: pointer;
             font-size: 0.85rem;
-            font-weight: bold;
-            transition: background 0.2s, transform 0.1s;
             white-space: nowrap;
-        }
-
-        .copy-btn:hover {
-            background: #4f46e5;
-        }
-
-        .copy-btn:active {
-            transform: scale(0.92);
         }
 
         footer {
             text-align: center;
             padding: 30px;
-            background-color: #030712;
             color: #6b7280;
             margin-top: 60px;
-            border-top: 1px solid #1f2937;
-            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
 
-    <!-- Botón para abrir el menú lateral -->
     <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
-    <!-- Panel del Menú Lateral -->
     <div id="sideMenu" class="side-menu">
         <a href="javascript:void(0)" class="close-btn" onclick="toggleMenu()">&times;</a>
         <a href="index.html">🏠 Inicio</a>
         <a href="comandos.html">🛠️ Comandos</a>
         <a href="vincular.html">🌐 Vincular</a>
-        
     </div>
 
     <header>
-        <h1>💰 Apoya el Proyecto</h1>
-        <p>Tu colaboración ayuda a mantener Raphael-WA-BOT activo y mejorando cada día.</p>
+        <h1>💰 APOYA EL PROYECTO</h1>
+        <p>Tu colaboración ayuda a mantener Raphael-WA-BOT activo.</p>
     </header>
 
     <div class="container">
-        <h2 class="section-title">Métodos de Pago</h2>
+        <h2 class="section-title">METODOS DE PAGO</h2>
         
         <div class="donations-grid">
             
             <!-- 🅿️ PayPal -->
             <div class="donation-card">
-                <h3>🅿️ PayPal</h3>
-                <p>Correo para transferencias internacionales:</p>
+                <h3>🅿️ PAYPAL</h3>
+                <p style="margin-bottom: 5px;">CORREO:</p>
                 <div class="donation-row">
-                    <span id="paypalData" class="donation-data">ero02sennin21@gmail.com</span>
-                    <button class="copy-btn" onclick="copyToClipboard('paypalData', this)">Copiar</button>
+                    <span id="ppCorreo" class="donation-data">ero02sennin21@gmail.com</span>
+                    <button class="copy-btn" onclick="copyToClipboard('ppCorreo', this)">Copiar</button>
+                </div>
+                <p style="margin-bottom: 5px;">LINK:</p>
+                <div class="donation-row">
+                    <span id="ppLink" class="donation-data">paypal.me/noi0221</span>
+                    <button class="copy-btn" onclick="copyToClipboard('ppLink', this)">Copiar</button>
                 </div>
             </div>
             
             <!-- 🪙 Binance -->
             <div class="donation-card">
-                <h3>🪙 Binance</h3>
-                <p>BINANCE ID:</p>
+                <h3>🪙 BINANCE</h3>
+                <p style="margin-bottom: 5px;">BINANCE ID:</p>
                 <div class="donation-row">
-                    <span id="binanceData" class="donation-data">582632586</span>
-                    <button class="copy-btn" onclick="copyToClipboard('binanceData', this)">Copiar</button>
+                    <span id="bnId" class="donation-data">582632586</span>
+                    <button class="copy-btn" onclick="copyToClipboard('bnId', this)">Copiar</button>
+                </div>
+                <p style="margin-bottom: 5px;">CORREO:</p>
+                <div class="donation-row">
+                    <span id="bnCorreo" class="donation-data">ero02sennin21@gmail.com</span>
+                    <button class="copy-btn" onclick="copyToClipboard('bnCorreo', this)">Copiar</button>
                 </div>
             </div>
-             
-            <div class="donation-row">
-                <p>CORREO:</p>
-                    <span id="binanceData" class="donation-data">ero02sennin21@gmail.com</span>
-                    <button class="copy-btn" onclick="copyToClipboard('binanceData', this)">Copiar</button>
-                </div>
-        </div>
             
             <!-- 📱 PagoMóvil -->
             <div class="donation-card">
-                <h3>📱 PagoMóvil</h3>
-                <p>Datos bancarios nacionales:</p>
-                
+                <h3>📱 PAGOMOVIL</h3>
                 <div class="donation-row">
                     <div>
-                        <small style="color: #94a3b8; display: block; font-size: 0.75rem;">TELÉFONO</small>
-                        <span id="pmTelefono" class="donation-data">04125891414</span>
+                        <small style="display: block; font-size: 0.7rem; color: #94a3b8;">TELÉFONO</small>
+                        <span id="pmTel" class="donation-data">04125891414</span>
                     </div>
-                    <button class="copy-btn" onclick="copyToClipboard('pmTelefono', this)">Copiar</button>
+                    <button class="copy-btn" onclick="copyToClipboard('pmTel', this)">Copiar</button>
                 </div>
-
                 <div class="donation-row">
                     <div>
-                        <small style="color: #94a3b8; display: block; font-size: 0.75rem;">CÉDULA</small>
-                        <span id="pmCedula" class="donation-data">V-30160921</span>
+                        <small style="display: block; font-size: 0.7rem; color: #94a3b8;">CÉDULA</small>
+                        <span id="pmCed" class="donation-data">V-30160921</span>
                     </div>
-                    <button class="copy-btn" onclick="copyToClipboard('pmCedula', this)">Copiar</button>
+                    <button class="copy-btn" onclick="copyToClipboard('pmCed', this)">Copiar</button>
                 </div>
-
                 <div class="donation-row">
                     <div>
-                        <small style="color: #94a3b8; display: block; font-size: 0.75rem;">BANCO</small>
-                        <span id="pmBanco" class="donation-data">BDV (0102)</span>
+                        <small style="display: block; font-size: 0.7rem; color: #94a3b8;">BANCO</small>
+                        <span id="pmBan" class="donation-data">BDV (0102)</span>
                     </div>
-                    <button class="copy-btn" onclick="copyToClipboard('pmBanco', this)">Copiar</button>
+                    <button class="copy-btn" onclick="copyToClipboard('pmBan', this)">Copiar</button>
                 </div>
             </div>
 
             <!-- 💳 Zinli -->
             <div class="donation-card">
                 <h3>💳 Zinli</h3>
-                <p>Correo de cuenta Zinli:</p>
+                <p style="margin-bottom: 5px;">CORREO:</p>
                 <div class="donation-row">
-                    <span id="zinliData" class="donation-data">ero02sennin21@gmail.com</span>
-                    <button class="copy-btn" onclick="copyToClipboard('zinliData', this)">Copiar</button>
+                    <span id="znCorreo" class="donation-data">ero02sennin21@gmail.com</span>
+                    <button class="copy-btn" onclick="copyToClipboard('znCorreo', this)">Copiar</button>
+                </div>
+                <p style="margin-bottom: 5px;">NÚMERO DE CUENTA ZL:</p>
+                <div class="donation-row">
+                    <span id="znNum" class="donation-data">3-002-39108926-06</span>
+                    <button class="copy-btn" onclick="copyToClipboard('znNum', this)">Copiar</button>
                 </div>
             </div>
-
         </div>
     </div>
 
     <footer>
-        <p>&copy; 2026 RAPHAEL-WA-BOT ° Hecho y Desarrollado Por Ares Arcane.©</p>
+        <p>&copy; 2026 RAPHAEL-WA-BOT</p>
     </footer>
 
     <script>
         function toggleMenu() {
             const menu = document.getElementById("sideMenu");
-            if (menu.style.width === "250px") {
-                menu.style.width = "0";
-            } else {
-                menu.style.width = "250px";
-            }
+            menu.style.width = (menu.style.width === "250px") ? "0" : "250px";
         }
 
-        // 📋 Función para copiar texto y dar retroalimentación visual en el botón
-        function copyToClipboard(elementId, btnElement) {
-            const text = document.getElementById(elementId).innerText;
+        function copyToClipboard(id, btn) {
+            const text = document.getElementById(id).innerText;
             navigator.clipboard.writeText(text).then(() => {
-                const originalText = btnElement.innerText;
-                btnElement.innerText = "¡Copiado!";
-                btnElement.style.background = "#10b981"; // Color verde de éxito
-                
-                setTimeout(() => {
-                    btnElement.innerText = originalText;
-                    btnElement.style.background = "#6366f1";
-                }, 2000);
-            }).catch(err => {
-                console.error("Error al copiar: ", err);
+                const original = btn.innerText;
+                btn.innerText = "¡Copiado!";
+                btn.style.background = "#10b981";
+                setTimeout(() => { btn.innerText = original; btn.style.background = "#6366f1"; }, 2000);
             });
         }
-
-        // 🖱️ Cerrar el menú al hacer clic fuera
-        document.addEventListener("click", function(event) {
-            const menu = document.getElementById("sideMenu");
-            const menuBtn = document.querySelector(".menu-btn");
-            
-            if (menu.style.width === "250px" && !menu.contains(event.target) && !menuBtn.contains(event.target)) {
-                menu.style.width = "0";
-            }
-        });
     </script>
 </body>
 </html>
