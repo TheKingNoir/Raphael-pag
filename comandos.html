@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comandos - Raphael-WA-BOT</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0b0f19;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        /* Estilos del Menú Lateral */
+        .menu-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
+            transition: background 0.2s;
+        }
+
+        .menu-btn:hover {
+            background: #4f46e5;
+        }
+
+        .side-menu {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #111827;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 1001;
+            border-right: 2px solid #4f46e5;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .side-menu a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .side-menu a:hover {
+            color: #c084fc;
+            background: #1f2937;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 36px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 2px solid #4f46e5;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            color: #c084fc;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #c084fc;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .command-card {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .command-card code {
+            color: #38bdf8;
+            background: #1e293b;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .command-card p {
+            margin-top: 8px;
+            color: #94a3b8;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #030712;
+            color: #6b7280;
+            margin-top: 60px;
+            border-top: 1px solid #1f2937;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botón para abrir el menú lateral -->
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+    <!-- Panel del Menú Lateral (Actualizado con enlaces reales) -->
+    <div id="sideMenu" class="side-menu">
+        <a href="javascript:void(0)" class="close-btn" onclick="toggleMenu()">&times;</a>
+        <a href="index.html">🏠 Inicio</a>
+        <a href="comandos.html">🛠️ Comandos</a>
+        <a href="https://whatsapp.com/channel/0029Vb7rONuAu3aRrzGtHL2r" target="_blank">📢 Canal</a>
+        <a href="mailto:raphaelbotwa@gmail.com">📧 Contacto</a>
+    </div>
+
+    <header>
+        <h1>🛠️ Lista de Comandos</h1>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title">Comandos Disponibles</h2>
+        
+        <div class="command-card">
+            <code>.menu</code>
+            <p>Muestra la lista interactiva de todos los comandos disponibles del bot.</p>
+        </div>
+        
+        <div class="command-card">
+            <code>.play [nombre]</code>
+            <p>Busca y descarga música o audios directamente en tu chat de WhatsApp.</p>
+        </div>
+        
+        <div class="command-card">
+            <code>.sticker</code>
+            <p>Convierte cualquier imagen o video corto en un sticker animado o estático.</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 RAPHAEL-WA-BOT ° Hecho y Desarrollado Por Ares Arcane.©</p>
+    </footer>
+
+    <!-- Script JavaScript para controlar el menú -->
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("sideMenu");
+            if (menu.style.width === "250px") {
+                menu.style.width = "0";
+            } else {
+                menu.style.width = "250px";
+            }
+        }
+    </script>
+
+</body>
+</html>
