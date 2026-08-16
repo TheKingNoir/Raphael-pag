@@ -220,7 +220,7 @@
         <div class="btn-container">
             <a href="https://chat.whatsapp.com/Jfhq7IpeQRHKcQeaIbELWj?s=cl&p=a&ilr=1" class="btn btn-primary" target="_blank">¡Probar Bot Personalmente!</a>
             <a href="https://whatsapp.com/channel/0029Vb7rONuAu3aRrzGtHL2r" class="btn btn-whatsapp" target="_blank">Unirse al Canal</a>
-            <a href="mailto:raphaelbotwa@gmail.com@gmail.com" class="btn btn-gmail" target="_blank">Contactar por Gmail</a>
+            <a href="mailto:raphaelbotwa@gmail.com" class="btn btn-gmail" target="_blank">Contactar por Gmail</a>
             <a href="https://github.com/TheKingNoir" class="btn btn-github" target="_blank">GitHub</a>
         </div>
     </header>
@@ -259,27 +259,17 @@
                 menu.style.width = "250px";
             }
         }
-        <script>
-    function toggleMenu() {
-        const menu = document.getElementById("sideMenu");
-        if (menu.style.width === "250px") {
-            menu.style.width = "0";
-        } else {
-            menu.style.width = "250px";
-        }
-    }
 
-    // 🖱️ Cerrar el menú al hacer clic fuera de él
-    document.addEventListener("click", function(event) {
-        const menu = document.getElementById("sideMenu");
-        const menuBtn = document.querySelector(".menu-btn");
-        
-        if (menu.style.width === "250px" && !menu.contains(event.target) && !menuBtn.contains(event.target)) {
-            menu.style.width = "0";
-        }
-    });
-</script>
-    
+        // 🖱️ Cerrar el menú al hacer clic fuera de él
+        document.addEventListener("click", function(event) {
+            const menu = document.getElementById("sideMenu");
+            const menuBtn = document.querySelector(".menu-btn");
+            
+            if (menu.style.width === "250px" && !menu.contains(event.target) && !menuBtn.contains(event.target)) {
+                menu.style.width = "0";
+            }
+        });
+    </script>
 
 </body>
 </html>
