@@ -211,8 +211,8 @@
                 <h3>💷 PATREON</h3>
                 <p style="margin-bottom: 5px;">LINK DE SUSCRIPCIÓN:</p>
                 <div class="donation-row">
-                    <span id="ppLink" class="donation-data">https://www.patreon.com/16621508/join"</span>
-                    <button class="copy-btn" onclick="copyToClipboard('bnId', this)">Copiar</button>
+                    <span id="patreonLink" class="donation-data">https://www.patreon.com/16621508/join</span>
+                    <button class="copy-btn" onclick="copyToClipboard('patreonLink', this)">Copiar</button>
                 </div>
             </div>
 
@@ -221,8 +221,8 @@
                 <h3>😺 KO-FI</h3>
                 <p style="margin-bottom: 5px;">LINK DE SUSCRIPCIÓN:</p>
                 <div class="donation-row">
-                    <span id="ppLink" class="donation-data">https://ko-fi.com/aresarcane/tiers"</span>
-                    <button class="copy-btn" onclick="copyToClipboard('bnId', this)">Copiar</button>
+                    <span id="kofiLink" class="donation-data">https://ko-fi.com/aresarcane/tiers</span>
+                    <button class="copy-btn" onclick="copyToClipboard('kofiLink', this)">Copiar</button>
                 </div>
             </div>
             
@@ -288,6 +288,17 @@
                 setTimeout(() => { btn.innerText = original; btn.style.background = "#6366f1"; }, 2000);
             });
         }
+
+        // Script para cerrar el menú al hacer clic fuera de él
+        document.addEventListener("click", function(event) {
+            const menu = document.getElementById("sideMenu");
+            const menuBtn = document.querySelector(".menu-btn");
+            
+            // Si el menú está abierto y el clic no fue ni en el menú ni en el botón de hamburguesa
+            if (menu.style.width === "250px" && !menu.contains(event.target) && !menuBtn.contains(event.target)) {
+                menu.style.width = "0";
+            }
+        });
     </script>
 </body>
 </html>
