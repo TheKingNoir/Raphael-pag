@@ -94,7 +94,7 @@
             letter-spacing: 1px;
         }
 
-        /* 🏃 Estilos de la marquesina de texto en movimiento */
+        /* 🏃 Estilos corregidos para evitar el solapamiento del texto */
         .marquee-container {
             width: 100%;
             max-width: 650px;
@@ -110,14 +110,13 @@
 
         .marquee-track {
             display: inline-flex;
-            width: 200%;
-            animation: marqueeScroll 18s linear infinite;
+            white-space: nowrap;
+            animation: marqueeScroll 20s linear infinite;
         }
 
         .marquee-track span {
-            width: 50%;
             display: inline-block;
-            text-align: center;
+            padding-right: 50px;
             font-size: 0.95rem;
             font-weight: bold;
             color: #93c5fd;
@@ -259,7 +258,7 @@
         
         <h1>RAPHAEL-WA-BOT</h1>
         
-        <!-- 🟢 Barra con texto en movimiento ubicada debajo del título -->
+        <!-- 🟢 Barra con texto en movimiento corregida -->
         <div class="marquee-container">
             <div class="marquee-track">
                 <span>🟢 Activo las 24 horas  ★ ⛩️ Gacha, Economía y Descargas ★ 👻 Stickers y Personalización ★ 🛡️ Moderación y Seguridad ★</span>
