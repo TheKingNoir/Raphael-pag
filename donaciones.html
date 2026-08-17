@@ -147,6 +147,25 @@
             white-space: nowrap;
         }
 
+        .link-btn {
+            background: #0ea5e9;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.2s;
+        }
+
+        .link-btn:hover {
+            background: #0284c7;
+            color: white;
+        }
+
         footer {
             text-align: center;
             padding: 30px;
@@ -187,7 +206,7 @@
                 <p style="margin-bottom: 5px;">LINK:</p>
                 <div class="donation-row">
                     <span id="ppLink" class="donation-data">paypal.me/noir0221</span>
-                    <button class="copy-btn" onclick="copyToClipboard('ppLink', this)">Copiar</button>
+                    <a href="https://paypal.me/noir0221" target="_blank" class="link-btn">Ir al Link</a>
                 </div>
             </div>
             
@@ -212,7 +231,7 @@
                 <p style="margin-bottom: 5px;">LINK DE SUSCRIPCIÓN:</p>
                 <div class="donation-row">
                     <span id="patreonLink" class="donation-data">https://www.patreon.com/16621508/join</span>
-                    <button class="copy-btn" onclick="copyToClipboard('patreonLink', this)">Copiar</button>
+                    <a href="https://www.patreon.com/16621508/join" target="_blank" class="link-btn">Ir al Link</a>
                 </div>
             </div>
 
@@ -222,7 +241,7 @@
                 <p style="margin-bottom: 5px;">LINK DE SUSCRIPCIÓN:</p>
                 <div class="donation-row">
                     <span id="kofiLink" class="donation-data">https://ko-fi.com/aresarcane/tiers</span>
-                    <button class="copy-btn" onclick="copyToClipboard('kofiLink', this)">Copiar</button>
+                    <a href="https://ko-fi.com/aresarcane/tiers" target="_blank" class="link-btn">Ir al Link</a>
                 </div>
             </div>
             
@@ -289,12 +308,10 @@
             });
         }
 
-        // Script para cerrar el menú al hacer clic fuera de él
         document.addEventListener("click", function(event) {
             const menu = document.getElementById("sideMenu");
             const menuBtn = document.querySelector(".menu-btn");
             
-            // Si el menú está abierto y el clic no fue ni en el menú ni en el botón de hamburguesa
             if (menu.style.width === "250px" && !menu.contains(event.target) && !menuBtn.contains(event.target)) {
                 menu.style.width = "0";
             }
