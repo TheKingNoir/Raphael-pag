@@ -86,17 +86,30 @@
             border-bottom: 2px solid #4f46e5;
         }
 
-        /* ✨ ESTILO MEJORADO DEL NOMBRE DEL BOT */
+        /* ✨ NOMBRE DEL BOT CON GRADIENTE SUAVE Y ANIMADO */
         header h1 {
             font-size: 3rem;
             margin-bottom: 10px;
             text-transform: uppercase;
             letter-spacing: 2px;
-            background: linear-gradient(to right, #c084fc, #ffffff, #c084fc);
+            
+            /* Gradiente de azul a rojo eléctrico */
+            background: linear-gradient(90deg, #3b82f6, #ef4444, #3b82f6);
+            background-size: 200% auto;
+            
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            filter: drop-shadow(0 0 10px rgba(192, 132, 252, 0.5));
+            
+            /* Animación suave y pausada */
+            animation: shine 6s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.4));
+        }
+
+        @keyframes shine {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         /* ✨ MARCO DELGADO CON LUZ ACTIVA LUMINOSA */
@@ -106,7 +119,7 @@
             height: 160px;
             margin: 0 auto 25px auto;
             border-radius: 20px;
-            padding: 2px; /* Más delgado */
+            padding: 2px;
             overflow: hidden;
             display: flex;
             justify-content: center;
@@ -119,14 +132,13 @@
             position: absolute;
             width: 200%;
             height: 200%;
-            /* Tonos azul eléctrico y fucsia luminoso */
             background: conic-gradient(transparent, #3b82f6, #ec4899, #3b82f6, transparent);
             animation: rotate-border 3s linear infinite;
         }
 
         .profile-container img {
             position: relative;
-            width: calc(100% - 4px); /* Ajustado para el borde de 2px */
+            width: calc(100% - 4px);
             height: calc(100% - 4px);
             border-radius: 19px;
             z-index: 1;
@@ -238,12 +250,11 @@
     </div>
 
     <header>
-        <!-- ✨ Contenedor con marco de luz activo -->
         <div class="profile-container">
             <img src="https://files.yuki-wabot.my.id/cdn/nxjZFw0J.jpeg" alt="Foto de Raphael Bot">
         </div>
         
-        <h1>RAPHAEL-BOT</h1>
+        <h1>RAPHAEL-WA-BOT</h1>
         
         <div class="marquee-container">
             <div class="marquee-track">
