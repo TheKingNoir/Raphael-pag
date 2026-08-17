@@ -86,15 +86,49 @@
             border-bottom: 2px solid #4f46e5;
         }
 
+        /* ✨ ESTILO MEJORADO DEL NOMBRE DEL BOT */
         header h1 {
-            font-size: 2.5rem;
-            color: #c084fc;
+            font-size: 3rem;
             margin-bottom: 10px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            background: linear-gradient(to right, #c084fc, #ffffff, #c084fc);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            filter: drop-shadow(0 0 10px rgba(192, 132, 252, 0.5));
         }
 
-        /* 🏃 Estilos de la marquesina con espacio equilibrado */
+        /* ✨ MARCO CON LUCES EN MOVIMIENTO */
+        .profile-container {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 25px auto;
+            border-radius: 20px;
+            padding: 4px; /* Grosor del borde */
+            background: linear-gradient(45deg, #6366f1, #a855f7, #c084fc, #6366f1);
+            background-size: 300% 300%;
+            animation: gradient-border 3s ease infinite;
+            box-shadow: 0 0 20px rgba(99, 102, 241, 0.3);
+        }
+
+        .profile-container img {
+            width: 100%;
+            height: 100%;
+            border-radius: 17px;
+            display: block;
+            object-fit: cover;
+            background-color: #0b0f19;
+        }
+
+        @keyframes gradient-border {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 🏃 Estilos de la marquesina */
         .marquee-container {
             width: 100%;
             max-width: 650px;
@@ -116,7 +150,7 @@
 
         .marquee-track span {
             display: inline-block;
-            padding-right: 40px; /* Espacio equilibrado entre bloques */
+            padding-right: 40px;
             font-size: 0.82rem;
             font-weight: bold;
             color: #93c5fd;
@@ -166,84 +200,24 @@
             opacity: 0.85;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
-        }
-        .btn-primary:hover { box-shadow: 0 6px 20px rgba(168, 85, 247, 0.6); }
+        .btn-primary { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4); }
+        .btn-whatsapp { background: linear-gradient(135deg, #059669 0%, #10b981 100%); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); }
+        .btn-gmail { background: linear-gradient(135deg, #db4437 0%, #ff6347 100%); box-shadow: 0 4px 15px rgba(219, 68, 55, 0.4); }
+        .btn-github { background: linear-gradient(135deg, #333 0%, #000 100%); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); }
 
-        .btn-whatsapp {
-            background: linear-gradient(135deg, #059669 0%, #10b981 100%);
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
-        }
-        .btn-whatsapp:hover { box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6); }
-
-        .btn-gmail {
-            background: linear-gradient(135deg, #db4437 0%, #ff6347 100%);
-            box-shadow: 0 4px 15px rgba(219, 68, 55, 0.4);
-        }
-        .btn-gmail:hover { box-shadow: 0 6px 20px rgba(219, 68, 55, 0.6); }
-
-        .btn-github {
-            background: linear-gradient(135deg, #333 0%, #000 100%);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-        }
-        .btn-github:hover { box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6); }
-
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .section-title {
-            text-align: center;
-            color: #c084fc;
-            margin-bottom: 30px;
-            font-size: 2rem;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-        }
-
-        .feature-card {
-            background-color: #111827;
-            border: 1px solid #1f2937;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            transition: border-color 0.2s;
-        }
-
-        .feature-card:hover {
-            border-color: #6366f1;
-        }
-
-        .feature-card h3 {
-            color: #93c5fd;
-            margin-bottom: 10px;
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px;
-            background-color: #030712;
-            color: #6b7280;
-            margin-top: 60px;
-            border-top: 1px solid #1f2937;
-            font-size: 0.9rem;
-        }
+        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+        .section-title { text-align: center; color: #c084fc; margin-bottom: 30px; font-size: 2rem; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .feature-card { background-color: #111827; border: 1px solid #1f2937; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); transition: border-color 0.2s; }
+        .feature-card:hover { border-color: #6366f1; }
+        .feature-card h3 { color: #93c5fd; margin-bottom: 10px; }
+        footer { text-align: center; padding: 30px; background-color: #030712; color: #6b7280; margin-top: 60px; border-top: 1px solid #1f2937; font-size: 0.9rem; }
     </style>
 </head>
 <body>
 
-    <!-- Botón para abrir el menú lateral -->
     <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
-    <!-- Panel del Menú Lateral con archivos independientes -->
     <div id="sideMenu" class="side-menu">
         <a href="javascript:void(0)" class="close-btn" onclick="toggleMenu()">&times;</a>
         <a href="index.html">🏠 Inicio</a>
@@ -253,12 +227,13 @@
     </div>
 
     <header>
-        <!-- Imagen cuadrada con bordes suaves -->
-        <img src="https://files.yuki-wabot.my.id/cdn/nxjZFw0J.jpeg" alt="Foto de Raphael Bot" style="width: 150px; height: 150px; border-radius: 15px; margin-bottom: 20px; border: 3px solid #6366f1; box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);">
+        <!-- ✨ Contenedor con marco animado -->
+        <div class="profile-container">
+            <img src="https://files.yuki-wabot.my.id/cdn/nxjZFw0J.jpeg" alt="Foto de Raphael Bot">
+        </div>
         
         <h1>RAPHAEL-WA-BOT</h1>
         
-        <!-- 🟢 Barra con texto en movimiento optimizada -->
         <div class="marquee-container">
             <div class="marquee-track">
                 <span>🟢 Activo las 24 horas   ★   ⛩️ Gacha, Economía y Descargas   ★   👻 Stickers y Personalización   ★   🛡️ Moderación y Seguridad   ★</span>
@@ -278,18 +253,15 @@
 
     <div class="container">
         <h2 class="section-title">Características Principales</h2>
-        
         <div class="features-grid">
             <div class="feature-card">
                 <h3>⚡ Respuestas Rápidas</h3>
                 <p>Procesa comandos y consultas al instante las 24 horas del día, sin interrupciones.</p>
             </div>
-            
             <div class="feature-card">
                 <h3>🛠️ Moderación de Grupos</h3>
                 <p>Mantén el orden en tus chats con herramientas automáticas y seguras para administradores.</p>
             </div>
-            
             <div class="feature-card">
                 <h3>🎵 Descargas y Utilidades</h3>
                 <p>Descarga contenido multimedia y usa herramientas interactivas directamente en el chat.</p>
@@ -304,23 +276,15 @@
     <script>
         function toggleMenu() {
             const menu = document.getElementById("sideMenu");
-            if (menu.style.width === "250px") {
-                menu.style.width = "0";
-            } else {
-                menu.style.width = "250px";
-            }
+            menu.style.width = (menu.style.width === "250px") ? "0" : "250px";
         }
-
-        // 🖱️ Cerrar el menú al hacer clic fuera de él
         document.addEventListener("click", function(event) {
             const menu = document.getElementById("sideMenu");
             const menuBtn = document.querySelector(".menu-btn");
-            
             if (menu.style.width === "250px" && !menu.contains(event.target) && !menuBtn.contains(event.target)) {
                 menu.style.width = "0";
             }
         });
     </script>
-
 </body>
 </html>
