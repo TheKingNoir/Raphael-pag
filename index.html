@@ -94,6 +94,40 @@
             letter-spacing: 1px;
         }
 
+        /* 🏃 Estilos de la marquesina de texto en movimiento */
+        .marquee-container {
+            width: 100%;
+            max-width: 650px;
+            margin: 15px auto 20px auto;
+            background: rgba(17, 24, 39, 0.8);
+            border: 1px solid #4f46e5;
+            border-radius: 30px;
+            overflow: hidden;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            padding: 10px 0;
+        }
+
+        .marquee-track {
+            display: inline-flex;
+            width: 200%;
+            animation: marqueeScroll 18s linear infinite;
+        }
+
+        .marquee-track span {
+            width: 50%;
+            display: inline-block;
+            text-align: center;
+            font-size: 0.95rem;
+            font-weight: bold;
+            color: #93c5fd;
+        }
+
+        @keyframes marqueeScroll {
+            0% { transform: translateX(0%); }
+            100% { transform: translateX(-50%); }
+        }
+
         header p {
             font-size: 1.1rem;
             color: #93c5fd;
@@ -118,7 +152,6 @@
             border-radius: 30px;
             text-decoration: none;
             font-weight: bold;
-            /* 📱 Transición optimizada para la respuesta al tacto */
             transition: transform 0.1s ease, box-shadow 0.1s ease, opacity 0.1s ease;
             border: none;
             cursor: pointer;
@@ -129,7 +162,6 @@
             transform: translateY(-2px);
         }
 
-        /* 👆 Efecto al tocar la pantalla en dispositivos móviles */
         .btn:active {
             transform: scale(0.95) translateY(0);
             opacity: 0.85;
@@ -226,6 +258,15 @@
         <img src="https://files.yuki-wabot.my.id/cdn/nxjZFw0J.jpeg" alt="Foto de Raphael Bot" style="width: 150px; height: 150px; border-radius: 15px; margin-bottom: 20px; border: 3px solid #6366f1; box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);">
         
         <h1>RAPHAEL-WA-BOT</h1>
+        
+        <!-- 🟢 Barra con texto en movimiento ubicada debajo del título -->
+        <div class="marquee-container">
+            <div class="marquee-track">
+                <span>🟢 Activo las 24 horas  ★ ⛩️ Gacha, Economía y Descargas ★ 👻 Stickers y Personalización ★ 🛡️ Moderación y Seguridad ★</span>
+                <span>🟢 Activo las 24 horas  ★ ⛩️ Gacha, Economía y Descargas ★ 👻 Stickers y Personalización ★ 🛡️ Moderación y Seguridad ★</span>
+            </div>
+        </div>
+
         <p>El mejor bot para automatizar y divertirte en tus grupos de WhatsApp de manera rápida y sencilla.</p>
         
         <div class="btn-container">
