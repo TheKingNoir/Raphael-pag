@@ -95,7 +95,7 @@
 
         /* 📋 Formulario de Personalización */
         .container {
-            max-width: 600px;
+            max-width: 650px;
             margin: 40px auto;
             padding: 30px;
             background-color: #111827;
@@ -105,14 +105,24 @@
         }
 
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .form-group label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 6px;
             color: #93c5fd;
             font-weight: bold;
+            font-size: 1.05rem;
+        }
+
+        /* 💡 Estilos para las instrucciones */
+        .instruction-text {
+            font-size: 0.88rem;
+            color: #9ca3af;
+            margin-bottom: 10px;
+            line-height: 1.4;
+            font-style: italic;
         }
 
         .form-group input {
@@ -131,16 +141,20 @@
             box-shadow: 0 0 8px rgba(192, 132, 252, 0.3);
         }
 
-        /* 🖼️ Contenedor para la Vista Previa de la Imagen */
+        /* 🖼️ Cuadro de Vista Previa más grande y ubicado arriba */
         .preview-container {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: rgba(11, 15, 25, 0.5);
+            border-radius: 12px;
+            border: 1px solid #1f2937;
         }
 
         .preview-box {
-            width: 120px;
-            height: 120px;
-            margin: 10px auto 0 auto;
+            width: 180px;
+            height: 180px;
+            margin: 12px auto 0 auto;
             border-radius: 15px;
             border: 2px dashed #4f46e5;
             overflow: hidden;
@@ -148,6 +162,7 @@
             justify-content: center;
             align-items: center;
             background-color: #0b0f19;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
         }
 
         .preview-box img {
@@ -205,32 +220,37 @@
     </header>
 
     <div class="container">
-        <div class="form-group">
-            <label for="botName">🤖 Nombre del Bot:</label>
-            <input type="text" id="botName" placeholder="Ej. Raphael-WA-BOT" value="Raphael-WA-BOT">
-        </div>
-
-        <div class="form-group">
-            <label for="botPrefix">⚡ Prefijo de Comandos:</label>
-            <input type="text" id="botPrefix" placeholder="Ej. !, ., /" value="!">
-        </div>
-
-        <div class="form-group">
-            <label for="ownerNumber">👑 Número del Dueño (Owner):</label>
-            <input type="text" id="ownerNumber" placeholder="Ej. +5491123456789" value="">
-        </div>
-
-        <div class="form-group">
-            <label for="botImage">🔗 Enlace de la Foto del Bot:</label>
-            <input type="text" id="botImage" placeholder="Pega el enlace de tu imagen aquí" value="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg" oninput="actualizarVistaPrevia()">
-        </div>
-
-        <!-- 🖼️ Cuadro de Vista Previa -->
+        
+        <!-- 🖼️ Sección de Imagen al principio con cuadro más grande -->
         <div class="preview-container">
             <label>👀 Vista Previa de la Imagen:</label>
             <div class="preview-box">
                 <img id="imagePreview" src="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg" alt="Vista previa de la foto del bot">
             </div>
+        </div>
+
+        <div class="form-group">
+            <label for="botImage">🖼️ Imagen:</label>
+            <p class="instruction-text">Ve a un grupo donde este el bot, envía la imagen que deseas, responde con el comando /tourl a esa imagen y pega el link aquí.</p>
+            <input type="text" id="botImage" placeholder="Pega el link aquí" value="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg" oninput="actualizarVistaPrevia()">
+        </div>
+
+        <div class="form-group">
+            <label for="botName">🤖 Nombre del bot:</label>
+            <p class="instruction-text">Pega un nombre corto y sin espacios aquí ejemplo: Raphael-Bot</p>
+            <input type="text" id="botName" placeholder="Ej. Raphael-Bot" value="Raphael-WA-BOT">
+        </div>
+
+        <div class="form-group">
+            <label for="botPrefix">⚡ Prefijo:</label>
+            <p class="instruction-text">Elije un signo que te guste e incluso un emoji para usar como prefijo para activar tus comandos.</p>
+            <input type="text" id="botPrefix" placeholder="Ej. !" value="!">
+        </div>
+
+        <div class="form-group">
+            <label for="ownerNumber">👑 Dueño:</label>
+            <p class="instruction-text">Escribe el número que deseas tener como dueño del bot sin espacios ejemplo: +587777777</p>
+            <input type="text" id="ownerNumber" placeholder="Ej. +587777777" value="">
         </div>
 
         <button class="btn-save" onclick="guardarConfiguracion()">Guardar Cambios</button>
