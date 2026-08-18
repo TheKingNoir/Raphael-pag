@@ -266,6 +266,17 @@
             menu.style.width = (menu.style.width === "250px") ? "0" : "250px";
         }
 
+        // 🖱️ Evento para cerrar el menú si se hace clic fuera de él
+        document.addEventListener("click", function(event) {
+            const menu = document.getElementById("sideMenu");
+            const menuBtn = document.querySelector(".menu-btn");
+            
+            // Si el menú está abierto y el clic no fue ni en el menú ni en el botón de abrir...
+            if (menu.style.width === "250px" && !menu.contains(event.target) && !menuBtn.contains(event.target)) {
+                menu.style.width = "0";
+            }
+        });
+
         // Función para actualizar la imagen en tiempo real al escribir el link
         function actualizarVistaPrevia() {
             const imageUrl = document.getElementById("botImage").value;
