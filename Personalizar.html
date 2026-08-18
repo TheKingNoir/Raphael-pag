@@ -131,6 +131,31 @@
             box-shadow: 0 0 8px rgba(192, 132, 252, 0.3);
         }
 
+        /* 🖼️ Contenedor para la Vista Previa de la Imagen */
+        .preview-container {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .preview-box {
+            width: 120px;
+            height: 120px;
+            margin: 10px auto 0 auto;
+            border-radius: 15px;
+            border: 2px dashed #4f46e5;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #0b0f19;
+        }
+
+        .preview-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .btn-save {
             display: block;
             width: 100%;
@@ -170,6 +195,7 @@
         <a href="index.html">🏠 Inicio</a>
         <a href="comandos.html">🛠️ Comandos</a>
         <a href="vincular.html">🌐 Vincular</a>
+        <a href="personalizar.html">✨ Personalizar</a>
         <a href="donaciones.html">💰 Donaciones</a>
     </div>
 
@@ -190,8 +216,21 @@
         </div>
 
         <div class="form-group">
+            <label for="ownerNumber">👑 Número del Dueño (Owner):</label>
+            <input type="text" id="ownerNumber" placeholder="Ej. +5491123456789" value="">
+        </div>
+
+        <div class="form-group">
             <label for="botImage">🔗 Enlace de la Foto del Bot:</label>
-            <input type="text" id="botImage" placeholder="Pega el enlace de tu imagen aquí" value="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
+            <input type="text" id="botImage" placeholder="Pega el enlace de tu imagen aquí" value="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg" oninput="actualizarVistaPrevia()">
+        </div>
+
+        <!-- 🖼️ Cuadro de Vista Previa -->
+        <div class="preview-container">
+            <label>👀 Vista Previa de la Imagen:</label>
+            <div class="preview-box">
+                <img id="imagePreview" src="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg" alt="Vista previa de la foto del bot">
+            </div>
         </div>
 
         <button class="btn-save" onclick="guardarConfiguracion()">Guardar Cambios</button>
@@ -207,14 +246,23 @@
             menu.style.width = (menu.style.width === "250px") ? "0" : "250px";
         }
 
+        // Función para actualizar la imagen en tiempo real al escribir el link
+        function actualizarVistaPrevia() {
+            const imageUrl = document.getElementById("botImage").value;
+            const previewImg = document.getElementById("imagePreview");
+            if(imageUrl.trim() !== "") {
+                previewImg.src = imageUrl;
+            }
+        }
+
         function guardarConfiguracion() {
             const name = document.getElementById("botName").value;
             const prefix = document.getElementById("botPrefix").value;
+            const owner = document.getElementById("ownerNumber").value;
             const image = document.getElementById("botImage").value;
 
-            alert(`¡Configuración guardada con éxito!\n\nNombre: ${name}\nPrefijo: ${prefix}\nImagen: ${image}`);
+            alert(`¡Configuración guardada con éxito!\n\nNombre: ${name}\nPrefijo: ${prefix}\nDueño: ${owner}\nImagen: ${image}`);
         }
     </script>
 </body>
 </html>
-
