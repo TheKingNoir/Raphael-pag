@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personalizar Bot - Raphael-WA-BOT</title>
+    
+    <!-- 🖼️ Favicon -->
+    <link rel="icon" type="image/jpeg" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
+    <link rel="apple-touch-icon" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0b0f19;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        /* 🛠️ Estilos del Menú Lateral */
+        .menu-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .menu-btn:hover {
+            background: #4f46e5;
+        }
+
+        .side-menu {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #111827;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 1001;
+            border-right: 2px solid #4f46e5;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .side-menu a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .side-menu a:hover {
+            color: #c084fc;
+            background: #1f2937;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 36px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 2px solid #4f46e5;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #c084fc;
+            margin-bottom: 10px;
+        }
+
+        /* 📋 Formulario de Personalización */
+        .container {
+            max-width: 600px;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #93c5fd;
+            font-weight: bold;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #4f46e5;
+            background-color: #0b0f19;
+            color: #e2e8f0;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #c084fc;
+            box-shadow: 0 0 8px rgba(192, 132, 252, 0.3);
+        }
+
+        .btn-save {
+            display: block;
+            width: 100%;
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
+            transition: transform 0.1s ease;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #030712;
+            color: #6b7280;
+            margin-top: 60px;
+            border-top: 1px solid #1f2937;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+    <div id="sideMenu" class="side-menu">
+        <a href="javascript:void(0)" class="close-btn" onclick="toggleMenu()">&times;</a>
+        <a href="index.html">🏠 Inicio</a>
+        <a href="comandos.html">🛠️ Comandos</a>
+        <a href="vincular.html">🌐 Vincular</a>
+        <a href="personalizar.html">✨ Personalizar</a>
+        <a href="donaciones.html">💰 Donaciones</a>
+    </div>
+
+    <header>
+        <h1>Panel de Personalización</h1>
+        <p>Configura los parámetros principales de tu bot de manera sencilla.</p>
+    </header>
+
+    <div class="container">
+        <div class="form-group">
+            <label for="botName">🤖 Nombre del Bot:</label>
+            <input type="text" id="botName" placeholder="Ej. Raphael-WA-BOT" value="Raphael-WA-BOT">
+        </div>
+
+        <div class="form-group">
+            <label for="botPrefix">⚡ Prefijo de Comandos:</label>
+            <input type="text" id="botPrefix" placeholder="Ej. !, ., /" value="!">
+        </div>
+
+        <div class="form-group">
+            <label for="botImage">🔗 Enlace de la Foto del Bot:</label>
+            <input type="text" id="botImage" placeholder="Pega el enlace de tu imagen aquí" value="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
+        </div>
+
+        <button class="btn-save" onclick="guardarConfiguracion()">Guardar Cambios</button>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 RAPHAEL-WA-BOT ° Hecho y Desarrollado Por Ares Arcane.©</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("sideMenu");
+            menu.style.width = (menu.style.width === "250px") ? "0" : "250px";
+        }
+
+        function guardarConfiguracion() {
+            const name = document.getElementById("botName").value;
+            const prefix = document.getElementById("botPrefix").value;
+            const image = document.getElementById("botImage").value;
+
+            alert(`¡Configuración guardada con éxito!\n\nNombre: ${name}\nPrefijo: ${prefix}\nImagen: ${image}`);
+        }
+    </script>
+</body>
+</html>
+
