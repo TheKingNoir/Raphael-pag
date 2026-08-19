@@ -12,14 +12,14 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background-color: #0b0f19; color: #e2e8f0; line-height: 1.6; }
 
-        /* 🖼️ Contenedor Neón para la imagen */
+        /* 🖼️ Marco Neón más delgado */
         .neon-border {
             position: relative;
             width: 130px;
             height: 130px;
             margin: 0 auto 20px;
-            padding: 4px; /* Grosor del borde */
-            border-radius: 20px; /* Bordes semicirculares */
+            padding: 2px; /* Reducido para que sea más delgado */
+            border-radius: 20px; 
             background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a);
             background-size: 400% 400%;
             animation: neonGradient 6s ease infinite;
@@ -32,7 +32,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 18px; /* Ajuste para el interior del marco */
+            border-radius: 18px; 
             background-color: #0b0f19;
         }
 
@@ -43,11 +43,8 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* 🛠️ Menú y otros elementos existentes */
+        /* 🛠️ Estilos del menú y encabezado */
         .menu-btn { position: fixed; top: 20px; left: 20px; background: #6366f1; color: white; border: none; padding: 10px 15px; font-size: 20px; cursor: pointer; border-radius: 8px; z-index: 1000; }
-        .side-menu { height: 100%; width: 0; position: fixed; top: 0; left: 0; background-color: #111827; overflow-x: hidden; transition: 0.5s; padding-top: 60px; z-index: 1001; border-right: 2px solid #4f46e5; }
-        .side-menu a { padding: 15px 25px; text-decoration: none; font-size: 1.2rem; color: #e2e8f0; display: block; }
-        
         header { padding: 40px 20px; text-align: center; border-bottom: 2px solid #4f46e5; }
         header h1 { 
             font-size: 2.8rem; font-weight: 800; text-transform: uppercase;
@@ -56,29 +53,30 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: neonGradient 6s ease infinite;
-            text-shadow: 0 0 20px rgba(255, 7, 58, 0.4);
         }
 
-        .container { max-width: 800px; margin: 40px auto; padding: 20px; }
+        /* 📋 Título de sección */
+        .section-title {
+            text-align: center;
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 20px;
+            margin-top: 20px;
+            text-shadow: 0 0 10px rgba(99, 102, 241, 0.5);
+        }
+
+        .container { max-width: 800px; margin: 0 auto 40px; padding: 20px; }
         .api-card { background-color: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.4); transition: transform 0.2s; }
         .api-card:hover { transform: translateY(-3px); border-color: #6366f1; }
         .api-title { font-size: 1.3rem; color: #93c5fd; font-weight: bold; }
-        .api-btn { align-self: flex-start; background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); color: white; text-decoration: none; padding: 10px 20px; border-radius: 25px; font-weight: bold; margin-top: 10px; display: inline-block;}
-        footer { text-align: center; padding: 30px; font-size: 0.9rem; color: #6b7280; }
+        .api-btn { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); color: white; text-decoration: none; padding: 10px 20px; border-radius: 25px; font-weight: bold; display: inline-block; margin-top: 10px;}
     </style>
 </head>
 <body>
 
     <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
-    <div id="sideMenu" class="side-menu">
-        <a href="javascript:void(0)" class="close-btn" onclick="toggleMenu()">&times;</a>
-        <a href="index.html">🏠 Inicio</a>
-        <a href="../pestañas/comandos.html">🛠️ Comandos</a>
-    </div>
-
     <header>
-        <!-- ✨ Marco Neón con la imagen adentro -->
         <div class="neon-border">
             <img src="https://files.yuki-wabot.my.id/cdn/ZABRgOSF.jpeg" alt="Logo Bot" class="header-img">
         </div>
@@ -86,18 +84,16 @@
         <p>Explora y prueba los endpoints disponibles.</p>
     </header>
 
+    <!-- 🏷️ Nuevo Título de Sección -->
+    <h2 class="section-title">Nuestras APIs Disponibles</h2>
+
     <div class="container">
         <div class="api-card">
             <div class="api-title">🌐 API ARCANE YT</div>
             <a href="#" class="api-btn">🔗 Probar API</a>
         </div>
+        <!-- Puedes seguir agregando más tarjetas .api-card aquí -->
     </div>
 
-    <script>
-        function toggleMenu() {
-            const menu = document.getElementById("sideMenu");
-            menu.style.width = (menu.style.width === "250px") ? "0" : "250px";
-        }
-    </script>
 </body>
 </html>
