@@ -1,1 +1,231 @@
+<CTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APIs - Raphael-WA-BOT</title>
+    
+    <!-- 🖼️ Favicon -->
+    <link rel="icon" type="image/jpeg" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
+    <link rel="apple-touch-icon" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
 
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #0b0f19;
+            color: #e2e8f0;
+            line-height: 1.6;
+        }
+
+        /* 🛠️ Estilos del Menú Lateral */
+        .menu-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            font-size: 20px;
+            cursor: pointer;
+            border-radius: 8px;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        .menu-btn:hover {
+            background: #4f46e5;
+        }
+
+        .side-menu {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color: #111827;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+            z-index: 1001;
+            border-right: 2px solid #4f46e5;
+            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+        }
+
+        .side-menu a {
+            padding: 15px 25px;
+            text-decoration: none;
+            font-size: 1.2rem;
+            color: #e2e8f0;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .side-menu a:hover {
+            color: #c084fc;
+            background: #1f2937;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 36px;
+        }
+
+        header {
+            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+            padding: 40px 20px;
+            text-align: center;
+            border-bottom: 2px solid #4f46e5;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            color: #c084fc;
+            margin-bottom: 10px;
+        }
+
+        /* 📦 Contenedor de APIs */
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .api-card {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .api-card:hover {
+            transform: translateY(-3px);
+            border-color: #6366f1;
+        }
+
+        .api-title {
+            font-size: 1.3rem;
+            color: #93c5fd;
+            font-weight: bold;
+        }
+
+        .api-desc {
+            font-size: 0.95rem;
+            color: #9ca3af;
+        }
+
+        /* 🔘 Botón Bonito para la API */
+        .api-btn {
+            align-self: flex-start;
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+            transition: transform 0.1s ease, opacity 0.2s ease;
+        }
+
+        .api-btn:hover {
+            transform: translateY(-2px);
+            opacity: 0.9;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background-color: #030712;
+            color: #6b7280;
+            margin-top: 60px;
+            border-top: 1px solid #1f2937;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 🍔 Botón del Menú -->
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+    <!-- 📂 Menú Lateral -->
+    <div id="sideMenu" class="side-menu">
+        <a href="javascript:void(0)" class="close-btn" onclick="toggleMenu()">&times;</a>
+        <a href="index.html">🏠 Inicio</a>
+        <a href="comandos.html">🛠️ Comandos</a>
+        <a href="vincular.html">🌐 Vincular</a>
+        <a href="personalizar.html">✨ Personalizar</a>
+        <a href="donaciones.html">💰 Donaciones</a>
+    </div>
+
+    <!-- 🏷️ Encabezado -->
+    <header>
+        <h1>APIs del Bot</h1>
+        <p>Explora y prueba los endpoints y herramientas disponibles para desarrolladores.</p>
+    </header>
+
+    <!-- 📋 Listado de APIs (Puedes duplicar las tarjetas .api-card para agregar más) -->
+    <div class="container">
+        
+        <!-- API 1 -->
+        <div class="api-card">
+            <div class="api-title">🌐 API de Descargas (YouTube/TikTok)</div>
+            <div class="api-desc">Permite extraer contenido multimedia y videos de plataformas populares enviando el enlace como parámetro.</div>
+            <a href="https://tu-enlace-de-api.com/download?url=EJEMPLO" target="_blank" class="api-btn">🔗 Probar API</a>
+        </div>
+
+        <!-- API 2 -->
+        <div class="api-card">
+            <div class="api-title">🤖 API de Inteligencia Artificial</div>
+            <div class="api-desc">Endpoint diseñado para generar respuestas de texto automatizadas consultando modelos de lenguaje.</div>
+            <a href="https://tu-enlace-de-api.com/ai?text=EJEMPLO" target="_blank" class="api-btn">🔗 Probar API</a>
+        </div>
+
+        <!-- API 3 -->
+        <div class="api-card">
+            <div class="api-title">🔍 API de Buscador y Herramientas</div>
+            <div class="api-desc">Realiza consultas rápidas a bases de datos y obtención de información estructurada en formato JSON.</div>
+            <a href="https://tu-enlace-de-api.com/search?q=EJEMPLO" target="_blank" class="api-btn">🔗 Probar API</a>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 RAPHAEL-WA-BOT ° Hecho y Desarrollado Por Ares Arcane.©</p>
+    </footer>
+
+    <script>
+        // 🍔 Función para abrir y cerrar el menú lateral
+        function toggleMenu() {
+            const menu = document.getElementById("sideMenu");
+            menu.style.width = (menu.style.width === "250px") ? "0" : "250px";
+        }
+
+        // 🖱️ Evento para cerrar el menú si se hace clic fuera de él
+        document.addEventListener("click", function(event) {
+            const menu = document.getElementById("sideMenu");
+            const menuBtn = document.querySelector(".menu-btn");
+            
+            if (menu.style.width === "250px" && !menu.contains(event.target) && !menuBtn.contains(event.target)) {
+                menu.style.width = "0";
+            }
+        });
+    </script>
+</body>
+</html>
