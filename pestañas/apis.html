@@ -1,4 +1,4 @@
-<CTYPE html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -87,10 +87,30 @@
             border-bottom: 2px solid #4f46e5;
         }
 
+        /* ✨ Estilos y Animación Neón Dinámica en Gradiente */
         header h1 {
-            font-size: 2.5rem;
-            color: #c084fc;
+            font-size: 2.8rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: neonGradient 6s ease infinite;
+            text-shadow: 0 0 20px rgba(255, 7, 58, 0.4), 0 0 40px rgba(0, 240, 255, 0.2);
             margin-bottom: 10px;
+        }
+
+        @keyframes neonGradient {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         /* 📦 Contenedor de APIs */
@@ -176,16 +196,16 @@
 
     <!-- 🏷️ Encabezado -->
     <header>
-        <h1>APIs del Bot</h1>
+        <h1>APIs ARCANE</h1>
         <p>Explora y prueba los endpoints y herramientas disponibles para desarrolladores.</p>
     </header>
 
-    <!-- 📋 Listado de APIs (Puedes duplicar las tarjetas .api-card para agregar más) -->
+    <!-- 📋 Listado de APIs -->
     <div class="container">
         
         <!-- API 1 -->
         <div class="api-card">
-            <div class="api-title">🌐 API de Descargas (YouTube/TikTok)</div>
+            <div class="api-title">🎶 API ARCANE YT</div>
             <div class="api-desc">Permite extraer contenido multimedia y videos de plataformas populares enviando el enlace como parámetro.</div>
             <a href="https://tu-enlace-de-api.com/download?url=EJEMPLO" target="_blank" class="api-btn">🔗 Probar API</a>
         </div>
