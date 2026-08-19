@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Arcane YT - Raphael-WA-BOT</title>
+    
+    <link rel="icon" type="image/jpeg" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
+    <link rel="apple-touch-icon" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0b0f19; color: #e2e8f0; line-height: 1.6; }
+
+        /* 🛠️ Estilos del Menú Lateral */
+        .menu-btn { position: fixed; top: 20px; left: 20px; background: #6366f1; color: white; border: none; padding: 10px 15px; font-size: 20px; cursor: pointer; border-radius: 8px; z-index: 1000; transition: background 0.2s; }
+        .menu-btn:hover { background: #4f46e5; }
+        .side-menu { height: 100%; width: 0; position: fixed; top: 0; left: 0; background-color: #111827; overflow-x: hidden; transition: 0.5s; padding-top: 60px; z-index: 1001; border-right: 2px solid #4f46e5; }
+        .side-menu a { padding: 15px 25px; text-decoration: none; font-size: 1.2rem; color: #e2e8f0; display: block; transition: 0.3s; }
+        .side-menu a:hover { color: #c084fc; background: #1f2937; }
+        .close-btn { position: absolute; top: 10px; right: 20px; font-size: 36px; cursor: pointer; }
+
+        /* 🖼️ Marco Neón Delgado */
+        .neon-border {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin: 0 auto 20px;
+            padding: 2px;
+            border-radius: 20px; 
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a);
+            background-size: 400% 400%;
+            animation: neonGradient 6s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header-img { width: 100%; height: 100%; object-fit: cover; border-radius: 18px; background-color: #0b0f19; }
+
+        @keyframes neonGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        header { padding: 40px 20px; text-align: center; border-bottom: 2px solid #4f46e5; }
+        header h1 { 
+            font-size: 2.8rem; font-weight: 800; text-transform: uppercase;
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a);
+            background-size: 400% 400%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: neonGradient 6s ease infinite;
+        }
+
+        .section-title { text-align: center; font-size: 1.8rem; color: #fff; margin: 30px 0; text-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
+        .container { max-width: 600px; margin: 0 auto 40px; padding: 20px; }
+        
+        .api-card { background-color: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 25px; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.4); text-align: center; }
+        .api-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 15px; color: #fff; }
+        
+        .input-url { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #374151; background: #1f2937; color: white; font-size: 1rem; margin-bottom: 15px; outline: none; }
+        .input-url:focus { border-color: #6366f1; }
+
+        .api-btn { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); color: white; border: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; font-size: 1rem; cursor: pointer; display: inline-block; transition: opacity 0.2s; }
+        .api-btn:hover { opacity: 0.9; }
+    </style>
+</head>
+<body>
+
+    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+
+    <div id="sideMenu" class="side-menu">
+        <span class="close-btn" onclick="toggleMenu()">&times;</span>
+        <a href="index.html">🏠 Inicio</a>
+        <a href="comandos.html">🛠️ Comandos</a>
+        <a href="apis.html">🌐 APIs</a>
+        <a href="Personalizar.html">✨ Personalizar</a>
+        <a href="donaciones.html">💰 Donaciones</a>
+    </div>
+
+    <header>
+        <div class="neon-border">
+            <img src="https://files.yuki-wabot.my.id/cdn/ZABRgOSF.jpeg" alt="Logo Bot" class="header-img">
+        </div>
+        <h1>API ARCANE YT</h1>
+        <p>Descarga audio en formato MP3 desde YouTube de forma rápida.</p>
+    </header>
+
+    <h2 class="section-title">Probador de Endpoint</h2>
+
+    <div class="container">
+        <div class="api-card">
+            <div class="api-title">🎵 Descargar MP3</div>
+            <input type="text" id="ytUrl" class="input-url" placeholder="Pega el enlace de YouTube aquí...">
+            <br>
+            <button class="api-btn" onclick="descargarAudio()">📥 Obtener MP3</button>
+        </div>
+    </div>
+
+    <script>
+        // Abrir/Cerrar menú
+        function toggleMenu() {
+            const menu = document.getElementById("sideMenu");
+            menu.style.width = (menu.style.width === "250px") ? "0" : "250px";
+        }
+
+        // Cerrar menú al hacer clic fuera
+        document.addEventListener("click", function(event) {
+            const menu = document.getElementById("sideMenu");
+            const menuBtn = document.querySelector(".menu-btn");
+            if (menu.style.width === "250px" && !menu.contains(event.target) && !menuBtn.contains(event.target)) {
+                menu.style.width = "0";
+            }
+        });
+
+        // Función para enviar la petición a nuestro servidor de Cafirexos
+        function descargarAudio() {
+            const urlInput = document.getElementById('ytUrl').value.trim();
+            if (!urlInput) {
+                alert("Por favor, ingresa un enlace de YouTube válido.");
+                return;
+            }
+            
+            // Redirige a la API en Cafirexos para iniciar la descarga automática del MP3
+            window.location.href = `http://fsn1-de.cafirexos.com:5158/api/yt?url=${encodeURIComponent(urlInput)}`;
+        }
+    </script>
+</body>
+</html>
+
