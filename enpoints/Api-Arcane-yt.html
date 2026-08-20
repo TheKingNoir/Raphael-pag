@@ -12,14 +12,14 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background-color: #0b0f19; color: #e2e8f0; line-height: 1.6; }
 
-        /* 🔙 Botón Volver */
+        /* 🔙 Botón Volver (Restaurado y unificado) */
         .back-btn { 
             position: fixed; 
             top: 20px; 
             left: 20px; 
-            background: #1f2937; 
+            background: #111827; 
             color: white; 
-            border: 1px solid #374151; 
+            border: none; /* Quitamos el borde sólido */
             padding: 8px 16px; 
             font-size: 0.95rem; 
             cursor: pointer; 
@@ -29,11 +29,31 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: background 0.2s, border-color 0.2s; 
+            transition: opacity 0.2s; 
+            /* Usamos el mismo gradiente y animación del marco de la foto */
+            padding: 2px; 
+            border-radius: 10px; 
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a);
+            background-size: 400% 400%;
+            animation: neonGradient 6s ease infinite;
         }
-        .back-btn:hover { background: #374151; border-color: #6366f1; }
 
-        /* 🖼️ Marco Neón Delgado */
+        /* Contenido interno del botón para mantener el fondo oscuro */
+        .back-btn-content {
+            background-color: #111827;
+            padding: 6px 14px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background-color 0.2s;
+        }
+
+        .back-btn:hover .back-btn-content {
+            background-color: #374151; /* Efecto hover al oscurecer el fondo */
+        }
+
+        /* 🖼️ Marco Neón Delgado (Original) */
         .neon-border {
             position: relative;
             width: 130px;
@@ -70,16 +90,17 @@
         .section-title { text-align: center; font-size: 1.8rem; color: #fff; margin: 30px 0; text-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
         .container { max-width: 600px; margin: 0 auto 40px; padding: 20px; }
         
-        /* 🔴 Tarjeta con Efecto Neón Rojo Delgado */
+        /* 🌈 Nueva Tarjeta con Efecto Neón Multicolor (Copiado del marco) */
         .api-card-wrapper {
             position: relative;
             padding: 2px; /* Grosor del borde */
             border-radius: 14px;
-            background: linear-gradient(270deg, #ff073a, #ff4d6d, #ff073a);
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a);
             background-size: 400% 400%;
             animation: neonGradient 6s ease infinite;
             margin-bottom: 20px;
-            box-shadow: 0 4px 15px rgba(255, 7, 58, 0.2);
+            /* Opcional: un ligero resplandor sombra */
+            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); 
         }
 
         .api-card { 
@@ -92,16 +113,50 @@
         .api-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 15px; color: #fff; }
         
         .input-url { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #374151; background: #1f2937; color: white; font-size: 1rem; margin-bottom: 15px; outline: none; }
-        .input-url:focus { border-color: #ff073a; }
+        /* Cambiamos el color de foco a uno de la paleta neón, ej: cian */
+        .input-url:focus { border-color: #00f0ff; box-shadow: 0 0 5px rgba(0, 240, 255, 0.5); }
 
-        .api-btn { background: linear-gradient(135deg, #ff073a 0%, #c50024 100%); color: white; border: none; padding: 12px 25px; border-radius: 25px; font-weight: bold; font-size: 1rem; cursor: pointer; display: inline-block; transition: opacity 0.2s; }
-        .api-btn:hover { opacity: 0.9; }
+        /* 🌈 Botón "Obtener MP3" con Efecto Neón Multicolor */
+        .api-btn { 
+            background: #1f2937; /* Fondo base oscuro */
+            color: white; 
+            border: none; 
+            padding: 0; /* Quitamos padding para usar el del wrapper */
+            border-radius: 25px; 
+            font-weight: bold; 
+            font-size: 1rem; 
+            cursor: pointer; 
+            display: inline-block; 
+            transition: opacity 0.2s;
+            
+            /* Borde neón */
+            position: relative;
+            padding: 2px;
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a);
+            background-size: 400% 400%;
+            animation: neonGradient 6s ease infinite;
+        }
+        
+        /* Contenido interno del botón */
+        .api-btn-content {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); /* Degradado original */
+            padding: 10px 23px;
+            border-radius: 23px;
+            display: block;
+            transition: background 0.2s;
+        }
+
+        .api-btn:hover .api-btn-content {
+            background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%); /* Hover más oscuro */
+        }
     </style>
 </head>
 <body>
 
-    <!-- Botón Volver -->
-    <a href="../pestañas/apis.html" class="back-btn">Volver</a>
+    <!-- Botón Volver (Texto restaurado y ruta corregida) -->
+    <a href="../apis.html" class="back-btn">
+        <span class="back-btn-content">⬅️ Volver</span>
+    </a>
 
     <header>
         <div class="neon-border">
@@ -114,12 +169,15 @@
     <h2 class="section-title">Prueba Nuestra API</h2>
 
     <div class="container">
-        <div class="api-card-wrapper">
+        <div class="api-card-wrapper"> <!-- Borde neón aplicado aquí -->
             <div class="api-card">
                 <div class="api-title">🎵 Descargar MP3</div>
                 <input type="text" id="ytUrl" class="input-url" placeholder="Pon el nombre de la canción o pega el enlace...">
                 <br>
-                <button class="api-btn" onclick="descargarAudio()">Obtener MP3</button>
+                <!-- Botón con borde neón aplicado aquí -->
+                <button class="api-btn" onclick="descargarAudio()">
+                    <span class="api-btn-content">Obtener MP3</span>
+                </button>
             </div>
         </div>
     </div>
