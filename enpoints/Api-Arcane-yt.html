@@ -106,7 +106,6 @@
         .input-url { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #374151; background: #1f2937; color: white; font-size: 1rem; margin-bottom: 15px; outline: none; }
         .input-url:focus { border-color: #00f0ff; box-shadow: 0 0 5px rgba(0, 240, 255, 0.5); }
 
-        /* Contenedor para alinear los botones */
         .button-group {
             display: flex;
             justify-content: center;
@@ -166,11 +165,9 @@
                 <input type="text" id="ytUrl" class="input-url" placeholder="Pon el nombre de la canción/video o pega el enlace...">
                 <br>
                 <div class="button-group">
-                    <!-- Botón MP3 -->
                     <button class="api-btn" onclick="descargar('audio')">
                         <span class="api-btn-content">Obtener MP3</span>
                     </button>
-                    <!-- Botón Video -->
                     <button class="api-btn" onclick="descargar('video')">
                         <span class="api-btn-content">Descargar Video</span>
                     </button>
@@ -180,7 +177,6 @@
     </div>
 
     <script>
-        // Función general conectada a tu VPS y puerto 5500
         function descargar(tipo) {
             const urlInput = document.getElementById('ytUrl').value.trim();
             if (!urlInput) {
@@ -188,7 +184,7 @@
                 return;
             }
             
-            // Apunta a tu subdominio con la IP y el nuevo puerto 5500
+            // Redirige directamente al endpoint de la API con los parámetros codificados
             window.location.href = `http://169.58.212.74:5500/api/yt?url=${encodeURIComponent(urlInput)}&type=${tipo}`;
         }
     </script>
