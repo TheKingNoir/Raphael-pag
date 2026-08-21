@@ -12,146 +12,64 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background-color: #0b0f19; color: #e2e8f0; line-height: 1.6; }
 
-        /* 🔙 Botón Volver (Restaurado y unificado) */
+        /* 🔙 Botón Volver */
         .back-btn { 
-            position: fixed; 
-            top: 20px; 
-            left: 20px; 
-            background: #111827; 
-            color: white; 
-            border: none; 
-            padding: 2px; 
-            font-size: 0.95rem; 
-            cursor: pointer; 
-            border-radius: 10px; 
-            z-index: 1000; 
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a);
-            background-size: 400% 400%;
-            animation: neonGradient 6s ease infinite;
+            position: fixed; top: 20px; left: 20px; background: #111827; color: white; border: none; padding: 2px; cursor: pointer; border-radius: 10px; z-index: 1000; text-decoration: none; display: flex; align-items: center;
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%; animation: neonGradient 6s ease infinite;
         }
-
-        .back-btn-content {
-            background-color: #111827;
-            padding: 6px 14px;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: background-color 0.2s;
-        }
-
-        .back-btn:hover .back-btn-content {
-            background-color: #374151;
-        }
+        .back-btn-content { background-color: #111827; padding: 6px 14px; border-radius: 8px; transition: background-color 0.2s; }
+        .back-btn:hover .back-btn-content { background-color: #374151; }
 
         .neon-border {
-            position: relative;
-            width: 130px;
-            height: 130px;
-            margin: 0 auto 20px;
-            padding: 2px;
-            border-radius: 20px; 
-            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a);
-            background-size: 400% 400%;
-            animation: neonGradient 6s ease infinite;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            position: relative; width: 130px; height: 130px; margin: 0 auto 20px; padding: 2px; border-radius: 20px; 
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%; animation: neonGradient 6s ease infinite;
+            display: flex; justify-content: center; align-items: center;
         }
-
         .header-img { width: 100%; height: 100%; object-fit: cover; border-radius: 18px; background-color: #0b0f19; }
 
         @keyframes neonGradient {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
         }
 
         header { padding: 40px 20px; text-align: center; border-bottom: 2px solid #4f46e5; }
         header h1 { 
             font-size: 2.8rem; font-weight: 800; text-transform: uppercase;
-            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a);
-            background-size: 400% 400%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: neonGradient 6s ease infinite;
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: neonGradient 6s ease infinite;
         }
 
         .section-title { text-align: center; font-size: 1.8rem; color: #fff; margin: 30px 0; text-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
         .container { max-width: 600px; margin: 0 auto 40px; padding: 20px; }
         
         .api-card-wrapper {
-            position: relative;
-            padding: 2px;
-            border-radius: 14px;
-            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a);
-            background-size: 400% 400%;
-            animation: neonGradient 6s ease infinite;
-            margin-bottom: 20px;
-            box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); 
+            position: relative; padding: 2px; border-radius: 14px;
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%;
+            animation: neonGradient 6s ease infinite; margin-bottom: 20px; box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); 
         }
-
-        .api-card { 
-            background-color: #111827; 
-            border-radius: 12px; 
-            padding: 25px; 
-            text-align: center; 
-        }
-
-        .api-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 15px; color: #fff; }
+        .api-card { background-color: #111827; border-radius: 12px; padding: 25px; text-align: center; }
+        .api-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 10px; color: #fff; }
         
+        /* 💡 Contenedor de Estado */
+        #status { text-align: center; margin-bottom: 15px; color: #00f0ff; font-weight: bold; min-height: 24px; font-size: 0.9rem; }
+
         .input-url { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #374151; background: #1f2937; color: white; font-size: 1rem; margin-bottom: 15px; outline: none; }
         .input-url:focus { border-color: #00f0ff; box-shadow: 0 0 5px rgba(0, 240, 255, 0.5); }
 
-        .button-group {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            flex-wrap: wrap;
-        }
-
+        .button-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
         .api-btn { 
-            background: #1f2937; 
-            color: white; 
-            border: none; 
-            padding: 0; 
-            border-radius: 25px; 
-            font-weight: bold; 
-            font-size: 1rem; 
-            cursor: pointer; 
-            display: inline-block; 
-            position: relative;
-            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a);
-            background-size: 400% 400%;
-            animation: neonGradient 6s ease infinite;
+            background: #1f2937; color: white; border: none; padding: 0; border-radius: 25px; font-weight: bold; font-size: 1rem; cursor: pointer;
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%; animation: neonGradient 6s ease infinite;
         }
-        
-        .api-btn-content {
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-            padding: 10px 23px;
-            border-radius: 23px;
-            display: block;
-            transition: background 0.2s;
-        }
-
-        .api-btn:hover .api-btn-content {
-            background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
-        }
+        .api-btn-content { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); padding: 10px 23px; border-radius: 23px; display: block; transition: background 0.2s; }
+        .api-btn:hover .api-btn-content { background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%); }
     </style>
 </head>
 <body>
 
-    <a href="../pestañas/apis.html" class="back-btn">
-        <span class="back-btn-content">Volver</span>
-    </a>
+    <a href="../pestañas/apis.html" class="back-btn"><span class="back-btn-content">Volver</span></a>
 
     <header>
-        <div class="neon-border">
-            <img src="https://files.yuki-wabot.my.id/cdn/cn3UFsii.jpeg" alt="Logo Bot" class="header-img">
-        </div>
+        <div class="neon-border"><img src="https://files.yuki-wabot.my.id/cdn/cn3UFsii.jpeg" alt="Logo Bot" class="header-img"></div>
         <h1>API ARCANE YT</h1>
         <p>Descarga audio o video por nombre o enlace de forma rápida.</p>
     </header>
@@ -162,30 +80,66 @@
         <div class="api-card-wrapper">
             <div class="api-card">
                 <div class="api-title">📥 Descargas YouTube</div>
-                <input type="text" id="ytUrl" class="input-url" placeholder="Pon el nombre de la canción/video o pega el enlace...">
+                <div id="status"></div> <!-- 💡 Aquí saldrán los avisos -->
+                <input type="text" id="ytUrl" class="input-url" placeholder="Pon el nombre o pega el enlace...">
                 <br>
                 <div class="button-group">
-                    <button class="api-btn" onclick="descargar('audio')">
-                        <span class="api-btn-content">Obtener MP3</span>
-                    </button>
-                    <button class="api-btn" onclick="descargar('video')">
-                        <span class="api-btn-content">Descargar Video</span>
-                    </button>
+                    <button class="api-btn" onclick="descargar('audio')"><span class="api-btn-content">Obtener MP3</span></button>
+                    <button class="api-btn" onclick="descargar('video')"><span class="api-btn-content">Descargar Video</span></button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        function descargar(tipo) {
+        async function descargar(tipo) {
             const urlInput = document.getElementById('ytUrl').value.trim();
-            if (!urlInput) {
-                alert("Por favor, ingresa el nombre o un enlace.");
-                return;
-            }
+            const statusEl = document.getElementById('status');
+            if (!urlInput) { alert("Por favor, ingresa el nombre o un enlace."); return; }
+
+            const btn = event.currentTarget;
+            const originalText = btn.querySelector('.api-btn-content').innerText;
             
-            // Redirige directamente al endpoint de la API con los parámetros codificados
-            window.location.href = `http://169.58.212.74:5500/api/yt?url=${encodeURIComponent(urlInput)}&type=${tipo}`;
+            // Estado: Buscando
+            statusEl.innerText = tipo === 'audio' ? "🔍 Buscando Audio..." : "🔍 Buscando Video...";
+            btn.disabled = true;
+
+            try {
+                const endpoint = `http://169.58.212.74:5500/api/yt?url=${encodeURIComponent(urlInput)}&type=${tipo}`;
+                
+                statusEl.innerText = "⏳ Iniciando descarga...";
+                const response = await fetch(endpoint);
+                
+                if (!response.ok) throw new Error('Error al conectar con la API');
+
+                statusEl.innerText = "📥 Descargando...";
+                const blob = await response.blob();
+                
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = tipo === 'audio' ? 'audio.mp3' : 'video.mp4';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+                
+                // Estado: Finalizado
+                statusEl.innerText = tipo === 'audio' ? "✅ Audio Descargado" : "✅ Video Descargado";
+                
+                setTimeout(() => {
+                    statusEl.innerText = "";
+                    btn.disabled = false;
+                    btn.querySelector('.api-btn-content').innerText = originalText;
+                    document.getElementById('ytUrl').value = ""; // Limpiar input
+                }, 3000);
+
+            } catch (error) {
+                statusEl.innerText = "❌ Error en la descarga";
+                alert("Hubo un error: " + error.message);
+                btn.disabled = false;
+                btn.querySelector('.api-btn-content').innerText = originalText;
+            }
         }
     </script>
 </body>
