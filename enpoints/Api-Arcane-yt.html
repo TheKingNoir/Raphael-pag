@@ -19,26 +19,20 @@
             left: 20px; 
             background: #111827; 
             color: white; 
-            border: none; /* Quitamos el borde sólido */
-            padding: 8px 16px; 
+            border: none; 
+            padding: 2px; 
             font-size: 0.95rem; 
             cursor: pointer; 
-            border-radius: 8px; 
+            border-radius: 10px; 
             z-index: 1000; 
             text-decoration: none;
             display: flex;
             align-items: center;
-            gap: 6px;
-            transition: opacity 0.2s; 
-            /* Usamos el mismo gradiente y animación del marco de la foto */
-            padding: 2px; 
-            border-radius: 10px; 
             background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a);
             background-size: 400% 400%;
             animation: neonGradient 6s ease infinite;
         }
 
-        /* Contenido interno del botón para mantener el fondo oscuro */
         .back-btn-content {
             background-color: #111827;
             padding: 6px 14px;
@@ -50,10 +44,9 @@
         }
 
         .back-btn:hover .back-btn-content {
-            background-color: #374151; /* Efecto hover al oscurecer el fondo */
+            background-color: #374151;
         }
 
-        /* 🖼️ Marco Neón Delgado (Original) */
         .neon-border {
             position: relative;
             width: 130px;
@@ -90,16 +83,14 @@
         .section-title { text-align: center; font-size: 1.8rem; color: #fff; margin: 30px 0; text-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
         .container { max-width: 600px; margin: 0 auto 40px; padding: 20px; }
         
-        /* 🌈 Nueva Tarjeta con Efecto Neón Multicolor (Copiado del marco) */
         .api-card-wrapper {
             position: relative;
-            padding: 2px; /* Grosor del borde */
+            padding: 2px;
             border-radius: 14px;
             background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a);
             background-size: 400% 400%;
             animation: neonGradient 6s ease infinite;
             margin-bottom: 20px;
-            /* Opcional: un ligero resplandor sombra */
             box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); 
         }
 
@@ -113,33 +104,34 @@
         .api-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 15px; color: #fff; }
         
         .input-url { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #374151; background: #1f2937; color: white; font-size: 1rem; margin-bottom: 15px; outline: none; }
-        /* Cambiamos el color de foco a uno de la paleta neón, ej: cian */
         .input-url:focus { border-color: #00f0ff; box-shadow: 0 0 5px rgba(0, 240, 255, 0.5); }
 
-        /* 🌈 Botón "Obtener MP3" con Efecto Neón Multicolor */
+        /* Contenedor para alinear los botones */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
         .api-btn { 
-            background: #1f2937; /* Fondo base oscuro */
+            background: #1f2937; 
             color: white; 
             border: none; 
-            padding: 0; /* Quitamos padding para usar el del wrapper */
+            padding: 0; 
             border-radius: 25px; 
             font-weight: bold; 
             font-size: 1rem; 
             cursor: pointer; 
             display: inline-block; 
-            transition: opacity 0.2s;
-            
-            /* Borde neón */
             position: relative;
-            padding: 2px;
             background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a);
             background-size: 400% 400%;
             animation: neonGradient 6s ease infinite;
         }
         
-        /* Contenido interno del botón */
         .api-btn-content {
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); /* Degradado original */
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
             padding: 10px 23px;
             border-radius: 23px;
             display: block;
@@ -147,13 +139,12 @@
         }
 
         .api-btn:hover .api-btn-content {
-            background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%); /* Hover más oscuro */
+            background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%);
         }
     </style>
 </head>
 <body>
 
-    <!-- Botón Volver (Texto restaurado y ruta corregida) -->
     <a href="../pestañas/apis.html" class="back-btn">
         <span class="back-btn-content">Volver</span>
     </a>
@@ -163,36 +154,42 @@
             <img src="https://files.yuki-wabot.my.id/cdn/cn3UFsii.jpeg" alt="Logo Bot" class="header-img">
         </div>
         <h1>API ARCANE YT</h1>
-        <p>Descarga audio en formato MP3 por nombre o enlace de forma rápida.</p>
+        <p>Descarga audio o video por nombre o enlace de forma rápida.</p>
     </header>
 
     <h2 class="section-title">Prueba Nuestra API</h2>
 
     <div class="container">
-        <div class="api-card-wrapper"> <!-- Borde neón aplicado aquí -->
+        <div class="api-card-wrapper">
             <div class="api-card">
-                <div class="api-title">🎵 Descargar MP3</div>
-                <input type="text" id="ytUrl" class="input-url" placeholder="Pon el nombre de la canción o pega el enlace...">
+                <div class="api-title">📥 Descargas YouTube</div>
+                <input type="text" id="ytUrl" class="input-url" placeholder="Pon el nombre de la canción/video o pega el enlace...">
                 <br>
-                <!-- Botón con borde neón aplicado aquí -->
-                <button class="api-btn" onclick="descargarAudio()">
-                    <span class="api-btn-content">Obtener MP3</span>
-                </button>
+                <div class="button-group">
+                    <!-- Botón MP3 -->
+                    <button class="api-btn" onclick="descargar('audio')">
+                        <span class="api-btn-content">Obtener MP3</span>
+                    </button>
+                    <!-- Botón Video -->
+                    <button class="api-btn" onclick="descargar('video')">
+                        <span class="api-btn-content">Descargar Video</span>
+                    </button>
+                </div>
             </div>
         </div>
     </div>
 
     <script>
-        // Función para enviar la petición a nuestro servidor de Cafirexos
-        function descargarAudio() {
+        // Función general conectada a tu VPS y puerto 5500
+        function descargar(tipo) {
             const urlInput = document.getElementById('ytUrl').value.trim();
             if (!urlInput) {
-                alert("Por favor, ingresa el nombre de una canción o un enlace.");
+                alert("Por favor, ingresa el nombre o un enlace.");
                 return;
             }
             
-            // Redirige a la API en Cafirexos para iniciar la búsqueda y descarga automática del MP3
-            window.location.href = `http://fsn1-de.cafirexos.com:5158/api/yt?url=${encodeURIComponent(urlInput)}`;
+            // Apunta a tu subdominio con la IP y el nuevo puerto 5500
+            window.location.href = `http://169.58.212.74:5500/api/yt?url=${encodeURIComponent(urlInput)}&type=${tipo}`;
         }
     </script>
 </body>
