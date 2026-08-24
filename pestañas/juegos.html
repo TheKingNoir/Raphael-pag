@@ -1,1 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zona de Juegos - Raphael-WA-BOT</title>
+    
+    <link rel="icon" type="image/jpeg" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
+    <link rel="apple-touch-icon" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
 
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0b0f19; color: #e2e8f0; line-height: 1.6; }
+
+        /* 🔙 Botón Volver */
+        .back-btn { 
+            position: fixed; top: 20px; left: 20px; background: #111827; color: white; border: none; padding: 2px; cursor: pointer; border-radius: 10px; z-index: 1000; text-decoration: none; display: flex; align-items: center;
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%; animation: neonGradient 6s ease infinite;
+        }
+        .back-btn-content { background-color: #111827; padding: 6px 14px; border-radius: 8px; transition: background-color 0.2s; }
+        .back-btn:hover .back-btn-content { background-color: #374151; }
+
+        .neon-border {
+            position: relative; width: 130px; height: 130px; margin: 0 auto 20px; padding: 2px; border-radius: 20px; 
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%; animation: neonGradient 6s ease infinite;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .header-img { width: 100%; height: 100%; object-fit: cover; border-radius: 18px; background-color: #0b0f19; }
+
+        @keyframes neonGradient {
+            0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
+        }
+
+        header { padding: 40px 20px; text-align: center; border-bottom: 2px solid #4f46e5; }
+        header h1 { 
+            font-size: 2.8rem; font-weight: 800; text-transform: uppercase;
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: neonGradient 6s ease infinite;
+        }
+
+        .section-title { text-align: center; font-size: 1.8rem; color: #fff; margin: 30px 0; text-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
+        .container { max-width: 600px; margin: 0 auto 40px; padding: 20px; }
+        
+        .api-card-wrapper {
+            position: relative; padding: 2px; border-radius: 14px;
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%;
+            animation: neonGradient 6s ease infinite; margin-bottom: 20px; box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); 
+        }
+        .api-card { background-color: #111827; border-radius: 12px; padding: 25px; text-align: center; }
+        .api-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 15px; color: #fff; }
+
+        .button-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .api-btn { 
+            background: #1f2937; color: white; border: none; padding: 0; border-radius: 25px; font-weight: bold; font-size: 1rem; cursor: pointer;
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%; animation: neonGradient 6s ease infinite;
+            text-decoration: none; display: inline-block;
+        }
+        .api-btn-content { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); padding: 10px 23px; border-radius: 23px; display: block; transition: background 0.2s; }
+        .api-btn:hover .api-btn-content { background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%); }
+
+        /* Marco neón estilo píxeles retro */
+        .pixel-neon-border {
+            position: relative;
+            width: 100%;
+            max-width: 280px;
+            height: 160px;
+            margin: 0 auto 20px;
+            padding: 4px;
+            border-radius: 6px;
+            background: linear-gradient(270deg, #39ff14, #00f0ff, #ffe600, #ff073a, #39ff14);
+            background-size: 400% 400%;
+            animation: neonGradient 6s ease infinite;
+            box-shadow: 0 0 15px rgba(57, 255, 20, 0.4);
+            /* Simulación de borde pixelado usando clip-path opcional o bordes rectos */
+        }
+        .pixel-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 4px;
+            image-rendering: pixelated;
+            background-color: #0b0f19;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Botón para volver a la página anterior o al inicio -->
+    <a href="../pestañas/apis.html" class="back-btn"><span class="back-btn-content">Volver</span></a>
+
+    <header>
+        <div class="neon-border"><img src="https://files.yuki-wabot.my.id/cdn/cn3UFsii.jpeg" alt="Logo Bot" class="header-img"></div>
+        <h1>ZONA DE JUEGOS</h1>
+        <p>Explora minijuegos y contenidos interactivos.</p>
+    </header>
+
+    <h2 class="section-title">Elige tu Juego</h2>
+
+    <div class="container">
+        <!-- Tarjeta de Minecraft -->
+        <div class="api-card-wrapper">
+            <div class="api-card">
+                <div class="api-title">🟩 MINECRAFT</div>
+                
+                <!-- Imagen con marco neón pixelado -->
+                <div class="pixel-neon-border">
+                    <img src="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg" alt="Minecraft" class="pixel-img">
+                </div>
+
+                <div class="button-group">
+                    <a href="minecraft.html" class="api-btn">
+                        <span class="api-btn-content">MINECRAFT</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
