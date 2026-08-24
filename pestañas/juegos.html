@@ -39,57 +39,74 @@
         }
 
         .section-title { text-align: center; font-size: 1.8rem; color: #fff; margin: 30px 0; text-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
-        .container { max-width: 600px; margin: 0 auto 40px; padding: 20px; }
+        .container { max-width: 650px; margin: 0 auto 40px; padding: 20px; }
         
-        .api-card-wrapper {
-            position: relative; padding: 2px; border-radius: 14px;
-            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%;
-            animation: neonGradient 6s ease infinite; margin-bottom: 20px; box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); 
+        /* 🎮 Nueva Tarjeta compacta en horizontal */
+        .game-card {
+            background-color: #111827; 
+            border-radius: 12px; 
+            padding: 15px; 
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid #374151;
+            margin-bottom: 20px;
         }
-        .api-card { background-color: #111827; border-radius: 12px; padding: 25px; text-align: center; }
-        .api-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 15px; color: #fff; }
 
-        .button-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
-        .api-btn { 
-            background: #1f2937; color: white; border: none; padding: 0; border-radius: 25px; font-weight: bold; font-size: 1rem; cursor: pointer;
-            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%; animation: neonGradient 6s ease infinite;
-            text-decoration: none; display: inline-block;
+        /* Imagen lateral sin bordes neón */
+        .game-img-container {
+            flex-shrink: 0;
+            width: 90px;
+            height: 90px;
+            border-radius: 8px;
+            overflow: hidden;
+            background-color: #1f2937;
         }
-        .api-btn-content { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); padding: 10px 23px; border-radius: 23px; display: block; transition: background 0.2s; }
-        .api-btn:hover .api-btn-content { background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%); }
-
-        /* Marco neón estilo píxeles retro */
-        .pixel-neon-border {
-            position: relative;
-            width: 100%;
-            max-width: 280px;
-            height: 160px;
-            margin: 0 auto 20px;
-            padding: 4px;
-            border-radius: 6px;
-            background: linear-gradient(270deg, #39ff14, #00f0ff, #ffe600, #ff073a, #39ff14);
-            background-size: 400% 400%;
-            animation: neonGradient 6s ease infinite;
-            box-shadow: 0 0 15px rgba(57, 255, 20, 0.4);
-            /* Simulación de borde pixelado usando clip-path opcional o bordes rectos */
-        }
-        .pixel-img {
+        .game-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            border-radius: 4px;
-            image-rendering: pixelated;
-            background-color: #0b0f19;
         }
+
+        /* Contenido al lado de la imagen */
+        .game-info {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .game-title { 
+            font-size: 1.1rem; 
+            font-weight: bold; 
+            margin-bottom: 5px; 
+            color: #fff; 
+        }
+
+        .game-desc {
+            font-size: 0.85rem;
+            color: #9ca3af;
+            margin-bottom: 10px;
+        }
+
+        .api-btn { 
+            background: #1f2937; color: white; border: none; padding: 0; border-radius: 20px; font-weight: bold; font-size: 0.85rem; cursor: pointer;
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%; animation: neonGradient 6s ease infinite;
+            text-decoration: none; display: inline-block; width: fit-content;
+        }
+        .api-btn-content { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); padding: 6px 16px; border-radius: 18px; display: block; transition: background 0.2s; }
+        .api-btn:hover .api-btn-content { background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%); }
     </style>
 </head>
 <body>
 
-    <!-- Botón para volver a la página anterior o al inicio -->
+    <!-- Botón para volver con borde neón original -->
     <a href="../pestañas/apis.html" class="back-btn"><span class="back-btn-content">Volver</span></a>
 
     <header>
-        <div class="neon-border"><img src="https://files.yuki-wabot.my.id/cdn/jZlymkt3.jpeg" alt="Logo Bot" class="header-img"></div>
+        <!-- Primera foto con marco neón original -->
+        <div class="neon-border"><img src="https://files.yuki-wabot.my.id/cdn/czIqrdU1.jpeg" alt="Logo Bot" class="header-img"></div>
+        <!-- Título con neón original -->
         <h1>ZONA DE JUEGOS</h1>
         <p>Explora minijuegos y contenidos interactivos.</p>
     </header>
@@ -97,21 +114,17 @@
     <h2 class="section-title">Elige tu Juego</h2>
 
     <div class="container">
-        <!-- Tarjeta de Minecraft -->
-        <div class="api-card-wrapper">
-            <div class="api-card">
-                <div class="api-title">🟩 MINECRAFT</div>
-                
-                <!-- Imagen con marco neón pixelado -->
-                <div class="pixel-neon-border">
-                    <img src="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg" alt="Minecraft" class="pixel-img">
-                </div>
-
-                <div class="button-group">
-                    <a href="minecraft.html" class="api-btn">
-                        <span class="api-btn-content">MINECRAFT</span>
-                    </a>
-                </div>
+        <!-- Tarjeta de Minecraft compacta (imagen a un lado, descripción y botón al otro, sin bordes neón) -->
+        <div class="game-card">
+            <div class="game-img-container">
+                <img src="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg" alt="Minecraft" class="game-img">
+            </div>
+            <div class="game-info">
+                <div class="game-title">MINECRAFT</div>
+                <div class="game-desc">Accede al contenido y recursos de Minecraft.</div>
+                <a href="minecraft.html" class="api-btn">
+                    <span class="api-btn-content">MINECRAFT</span>
+                </a>
             </div>
         </div>
     </div>
