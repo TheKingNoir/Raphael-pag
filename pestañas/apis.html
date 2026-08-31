@@ -83,6 +83,13 @@
         
         .api-title { font-size: 1.2rem; font-weight: bold; color: #fff; }
 
+        .api-btn-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+
         .api-btn { 
             background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); 
             color: white; 
@@ -91,27 +98,16 @@
             border-radius: 25px; 
             font-weight: bold; 
             display: inline-block; 
-            margin-top: 10px; 
         }
 
         .api-btn-doc { 
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%); 
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); 
             color: white; 
             text-decoration: none; 
             padding: 10px 20px; 
             border-radius: 25px; 
             font-weight: bold; 
             display: inline-block; 
-            margin-top: 10px; 
-            margin-left: 10px;
-        }
-
-        .api-btn-doc:hover { background: linear-gradient(135deg, #059669 0%, #047857 100%); }
-
-        .btn-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
         }
     </style>
 </head>
@@ -142,17 +138,17 @@
     <div class="container">
         <div class="api-card">
             <div class="api-title">🎶 API ARCANE YT</div>
-            <div class="btn-group">
+            <div class="api-btn-group">
                 <a href="../enpoints/Api-Arcane-yt.html" class="api-btn">🔗 Probar API</a>
-                <a href="../enpoints/Api-Arcane-yt-doc.html" class="api-btn-doc">📖 Documentación</a>
+                <a href="#" class="api-btn-doc">📖 Documentación</a>
             </div>
         </div>
 
         <div class="api-card">
             <div class="api-title">🖼️ API ARCANE IMG</div>
-            <div class="btn-group">
+            <div class="api-btn-group">
                 <a href="../enpoints/Api-Arcane-img.html" class="api-btn">🔗 Probar API</a>
-                <a href="../enpoints/Api-Arcane-img-doc.html" class="api-btn-doc">📖 Documentación</a>
+                <a href="#" class="api-btn-doc">📖 Documentación</a>
             </div>
         </div>
     </div>
