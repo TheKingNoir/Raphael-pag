@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación API IMG - Raphael-WA-BOT</title>
+    <link rel="icon" type="image/jpeg" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0b0f19; color: #e2e8f0; line-height: 1.6; padding: 20px; }
+        
+        .doc-container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        
+        .doc-header { text-align: center; margin-bottom: 40px; }
+        .doc-logo { width: 90px; height: 90px; object-fit: cover; border-radius: 15px; border: 2px solid #6366f1; margin-bottom: 15px; }
+        .doc-title { font-size: 2.2rem; color: #fff; margin-bottom: 10px; }
+        .doc-subtitle { color: #9ca3af; font-size: 1rem; }
+
+        .endpoint-card {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .endpoint-title { font-size: 1.25rem; font-weight: bold; color: #f3f4f6; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        
+        .method-get {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+        }
+
+        .endpoint-url {
+            background: #1f2937;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-family: monospace;
+            color: #60a5fa;
+            word-break: break-all;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+
+        .params-list { list-style: none; margin-bottom: 15px; }
+        .params-list li { font-size: 0.9rem; color: #9ca3af; margin-bottom: 5px; }
+        .params-list code { color: #f472b6; font-family: monospace; }
+
+        pre {
+            background: #030712;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            color: #34d399;
+            font-family: monospace;
+            font-size: 0.85rem;
+            border: 1px solid #1f2937;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="doc-container">
+        <div class="doc-header">
+            <img src="https://files.yuki-wabot.my.id/cdn/czIqrdU1.jpeg" alt="API IMG Logo" class="doc-logo">
+            <h1 class="doc-title">🖼️ Documentación API ARCANE IMG</h1>
+            <p class="doc-subtitle">Guía de integración para el buscador y descargador de imágenes.</p>
+        </div>
+
+        <!-- Endpoint 1 -->
+        <div class="endpoint-card">
+            <div class="endpoint-title">
+                <span class="method-get">GET</span> Verificar estado de la API 📊
+            </div>
+            <div class="endpoint-url">https://bimg-api.raphaelbot.com/health</div>
+            <p style="font-size: 0.9rem; color: #9ca3af; margin-bottom: 8px;">Ejemplo de resultado:</p>
+            <pre>{
+  "status": "OK",
+  "message": "API de bimage-scraper funcionando"
+}</pre>
+        </div>
+
+        <!-- Endpoint 2 -->
+        <div class="endpoint-card">
+            <div class="endpoint-title">
+                <span class="method-get">GET</span> Buscar imágenes 🔎
+            </div>
+            <div class="endpoint-url">https://bimg-api.raphaelbot.com/search?query=[TEXTO]&limit=[NÚMERO]</div>
+            <p style="font-size: 0.9rem; color: #f3f4f6; margin-bottom: 5px; font-weight: bold;">Headers requeridos:</p>
+            <div class="endpoint-url" style="font-size: 0.85rem; color: #c084fc;">x-api-key: [TU_API_KEY]</div>
+            
+            <ul class="params-list">
+                <li><code>[TEXTO]</code> = Lo que quieres buscar (Ej: Gatos)</li>
+                <li><code>[NÚMERO]</code> = Cantidad de imágenes (Ej: 5)</li>
+                <li><code>[TU_API_KEY]</code> = Tu clave secreta (Ej: 8affc894-...)</li>
+            </ul>
+
+            <p style="font-size: 0.9rem; color: #9ca3af; margin-bottom: 8px;">Ejemplo de resultado:</p>
+            <pre>{
+  "success": true,
+  "count": 5,
+  "results": [
+    {
+      "title": "Título de la imagen",
+      "image": "https://.../imagen.jpg",
+      "thumbnail": "https://.../imagen-mini.jpg",
+      "source": "https://.../pagina-origen.com"
+    }
+  ]
+}</pre>
+        </div>
+
+        <!-- Endpoint 3 -->
+        <div class="endpoint-card">
+            <div class="endpoint-title">
+                <span class="method-get">GET</span> Descargar imágenes 📥
+            </div>
+            <div class="endpoint-url">https://bimg-api.raphaelbot.com/download?url=[URL_IMAGEN]</div>
+            <p style="font-size: 0.9rem; color: #f3f4f6; margin-bottom: 5px; font-weight: bold;">Headers requeridos:</p>
+            <div class="endpoint-url" style="font-size: 0.85rem; color: #c084fc;">x-api-key: [TU_API_KEY]</div>
+
+            <ul class="params-list">
+                <li><code>[URL_IMAGEN]</code> = La URL de la imagen que quieres descargar</li>
+            </ul>
+
+            <p style="font-size: 0.9rem; color: #9ca3af; margin-bottom: 8px;">Ejemplo de resultado:</p>
+            <pre>El archivo de la imagen (descarga directa)</pre>
+        </div>
+
+        <!-- Endpoint 4 -->
+        <div class="endpoint-card">
+            <div class="endpoint-title">
+                <span class="method-get">GET</span> Buscar y descargar en un mismo endpoint 🌐
+            </div>
+            <div class="endpoint-url">https://bimg-api.raphaelbot.com/search?query=[TEXTO]&limit=[NÚMERO]&download=true</div>
+            <p style="font-size: 0.9rem; color: #f3f4f6; margin-bottom: 5px; font-weight: bold;">Headers requeridos:</p>
+            <div class="endpoint-url" style="font-size: 0.85rem; color: #c084fc;">x-api-key: [TU_API_KEY]</div>
+        </div>
+
+    </div>
+
+</body>
+</html>
