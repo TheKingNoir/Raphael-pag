@@ -1,0 +1,34 @@
+{
+  "api_arcane_imagenes": {
+    "nombre": "API Arcane Imágenes",
+    "descripcion": "Búsqueda de imágenes con tecnología Bing",
+    "url_base": "https://bimg-api.raphaelbot.com",
+    "api_key": "8affc894-e6ce-409e-95c0-ff19c8bc71e4",
+    "endpoints": {
+      "buscar": "/search",
+      "generar_key": "/generate-key",
+      "listar_keys": "/list-keys"
+    },
+    "metodos": {
+      "buscar": "GET",
+      "generar_key": "POST",
+      "listar_keys": "GET"
+    },
+    "parametros": {
+      "buscar": {
+        "query": "Texto a buscar (obligatorio)",
+        "limit": "Cantidad de resultados (opcional, default: 5)",
+        "download": "true/false (opcional, default: false)"
+      },
+      "generar_key": {
+        "name": "Nombre para la key (opcional)"
+      }
+    },
+    "ejemplo": "https://bimg-api.raphaelbot.com/search?query=gatos&limit=5",
+    "estado": "activo"
+  },
+  "versiones": {
+    "ultima": "1.0.0",
+    "fecha_actualizacion": "2024-01-15"
+  }
+}
