@@ -32,9 +32,13 @@
         .btn-sm { padding: 8px 16px; font-size: 0.85rem; }
         .key-list { margin-top: 15px; }
         .key-item { background: #1f2937; padding: 12px 15px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-left: 3px solid #6366f1; }
+        .key-item.admin { border-left-color: #ef4444; }
         .key-item .key-name { font-weight: bold; color: #c084fc; }
+        .key-item.admin .key-name { color: #f87171; }
         .key-item .key-value { font-family: monospace; color: #94a3b8; word-break: break-all; font-size: 0.9rem; }
         .key-item .key-actions { display: flex; gap: 8px; }
+        .key-item .key-badge { font-size: 0.7rem; padding: 2px 10px; border-radius: 12px; background: #374151; color: #94a3b8; }
+        .key-item.admin .key-badge { background: #7f1d1d; color: #f87171; }
         .status-msg { padding: 12px; border-radius: 8px; margin-top: 10px; display: none; }
         .status-msg.success { display: block; background: #064e3b; color: #34d399; border-left: 4px solid #34d399; }
         .status-msg.error { display: block; background: #7f1d1d; color: #f87171; border-left: 4px solid #f87171; }
@@ -45,6 +49,15 @@
         .mb-10 { margin-bottom: 10px; }
         .copy-btn { background: none; border: none; color: #60a5fa; cursor: pointer; font-size: 0.8rem; padding: 2px 8px; border-radius: 4px; }
         .copy-btn:hover { background: #374151; }
+        .status-panel { display: flex; gap: 30px; flex-wrap: wrap; justify-content: center; padding: 10px 0; }
+        .status-item { display: flex; align-items: center; gap: 10px; background: #1f2937; padding: 10px 20px; border-radius: 8px; }
+        .status-dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+        .status-dot.online { background: #10b981; box-shadow: 0 0 10px #10b981; }
+        .status-dot.offline { background: #ef4444; box-shadow: 0 0 10px #ef4444; }
+        .status-dot.checking { background: #f59e0b; box-shadow: 0 0 10px #f59e0b; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        .key-info { font-size: 0.85rem; color: #94a3b8; background: #1f2937; padding: 12px 15px; border-radius: 8px; margin-bottom: 15px; border-left: 3px solid #f59e0b; }
+        .key-info strong { color: #f87171; }
         @media (max-width: 600px) { .input-group { flex-direction: column; } .key-item { flex-direction: column; align-items: stretch; } .key-item .key-actions { justify-content: flex-start; } }
     </style>
 </head>
@@ -52,7 +65,7 @@
     <div class="container">
         <header>
             <h1>🛠️ Admin API Arcane Imágenes</h1>
-            <p style="color: #94a3b8;">Gestiona tus API Keys de forma sencilla</p>
+            <p style="color: #94a3b8;">Gestión de API Keys para Administradores</p>
         </header>
 
         <div id="statusMessage" class="status-msg"></div>
@@ -60,13 +73,17 @@
         <div class="card">
             <h2>🆕 Generar Nueva API Key</h2>
             <div class="input-group">
-                <input type="text" id="newKeyName" placeholder="Nombre para la key (ej: mi-frontend)" value="mi-app">
+                <input type="text" id="newKeyName" placeholder="Nombre para la key (ej: frontend-1, backend-test)">
                 <button class="btn btn-success" onclick="generarKey()">✨ Generar Key</button>
             </div>
         </div>
 
         <div class="card">
             <h2>📋 Todas las API Keys</h2>
+            <div class="key-info">
+                ⚠️ <strong>API Key de Administrador (NO ELIMINAR)</strong> — Es la key maestra que usas para administrar la API. 
+                Si la eliminas, perderás acceso a la gestión. Las keys de <strong>Frontend</strong> son para usuarios y pueden eliminarse sin problemas.
+            </div>
             <div class="flex mb-10">
                 <button class="btn btn-primary btn-sm" onclick="listarKeys()">🔄 Actualizar lista</button>
                 <button class="btn btn-secondary btn-sm" onclick="copiarTodasKeys()">📋 Copiar todas</button>
@@ -75,10 +92,28 @@
                 <div class="empty-msg">🔄 Haz clic en "Actualizar lista" para cargar las keys</div>
             </div>
         </div>
+
+        <div class="card">
+            <h2>📊 Estado de la API</h2>
+            <div class="status-panel">
+                <div class="status-item">
+                    <span class="status-dot checking" id="healthDot"></span>
+                    <span id="healthStatus">Verificando...</span>
+                </div>
+                <div class="status-item">
+                    <span>🕐 Última comprobación:</span>
+                    <span id="lastCheck">--</span>
+                </div>
+            </div>
+            <div style="text-align:center;margin-top:10px;">
+                <button class="btn btn-primary btn-sm" onclick="checkHealth()">🔄 Verificar ahora</button>
+            </div>
+        </div>
     </div>
 
     <script>
         const API_URL = 'https://bimg-api.raphaelbot.com';
+        const ADMIN_KEY = '8affc894-e6ce-409e-95c0-ff19c8bc71e4';
 
         function mostrarStatus(mensaje, tipo = 'info') {
             const el = document.getElementById('statusMessage');
@@ -88,7 +123,11 @@
         }
 
         async function generarKey() {
-            const nombre = document.getElementById('newKeyName').value.trim() || 'mi-app';
+            const nombre = document.getElementById('newKeyName').value.trim();
+            if (!nombre) {
+                mostrarStatus('❌ Escribe un nombre para la key', 'error');
+                return;
+            }
             const btn = event.currentTarget;
             btn.disabled = true;
             btn.textContent = '⏳ Generando...';
@@ -135,17 +174,23 @@
 
                 let html = '<div class="key-list">';
                 for (const [nombre, key] of Object.entries(data.keys)) {
+                    const isAdmin = (key === ADMIN_KEY);
+                    const badgeText = isAdmin ? '🔴 Admin (NO ELIMINAR)' : '🟢 Frontend';
                     html += `
-                        <div class="key-item">
+                        <div class="key-item ${isAdmin ? 'admin' : ''}">
                             <div>
                                 <div class="key-name">📌 ${nombre}</div>
                                 <div class="key-value" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
                                     <span>${key}</span>
                                     <button class="copy-btn" onclick="copiarTexto('${key}')">📋 Copiar</button>
+                                    <span class="key-badge">${badgeText}</span>
                                 </div>
                             </div>
                             <div class="key-actions">
-                                <button class="btn btn-danger btn-sm" onclick="eliminarKey('${nombre}')">🗑️ Eliminar</button>
+                                ${isAdmin ? 
+                                    `<span style="color:#f87171;font-size:0.8rem;padding:6px 12px;background:#7f1d1d;border-radius:6px;">🔒 Protegida</span>` :
+                                    `<button class="btn btn-danger btn-sm" onclick="eliminarKey('${nombre}')">🗑️ Eliminar</button>`
+                                }
                             </div>
                         </div>
                     `;
@@ -188,7 +233,6 @@
             navigator.clipboard.writeText(texto).then(() => {
                 mostrarStatus('✅ Texto copiado al portapapeles', 'success');
             }).catch(() => {
-                // Fallback
                 const input = document.createElement('input');
                 input.value = texto;
                 document.body.appendChild(input);
@@ -209,13 +253,44 @@
             items.forEach(item => {
                 const nombre = item.querySelector('.key-name')?.textContent?.replace('📌 ', '') || '';
                 const valor = item.querySelector('.key-value span')?.textContent || '';
-                texto += `${nombre}: ${valor}\n`;
+                const badge = item.querySelector('.key-badge')?.textContent || '';
+                texto += `${nombre} ${badge}: ${valor}\n`;
             });
             copiarTexto(texto);
         }
 
+        async function checkHealth() {
+            const dot = document.getElementById('healthDot');
+            const statusText = document.getElementById('healthStatus');
+            const lastCheck = document.getElementById('lastCheck');
+
+            dot.className = 'status-dot checking';
+            statusText.textContent = 'Verificando...';
+
+            try {
+                const res = await fetch(`${API_URL}/health`);
+                const data = await res.json();
+
+                if (res.ok && data.status === 'OK') {
+                    dot.className = 'status-dot online';
+                    statusText.textContent = '✅ Activo';
+                } else {
+                    dot.className = 'status-dot offline';
+                    statusText.textContent = '❌ Inactivo';
+                }
+            } catch (error) {
+                dot.className = 'status-dot offline';
+                statusText.textContent = '❌ Inactivo (sin conexión)';
+            }
+
+            const ahora = new Date();
+            lastCheck.textContent = ahora.toLocaleString('es-ES');
+        }
+
         window.onload = function() {
             listarKeys();
+            checkHealth();
+            setInterval(checkHealth, 30000);
         };
     </script>
 </body>
