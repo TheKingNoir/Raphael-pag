@@ -174,7 +174,7 @@
             <div class="api-card">
                 <div class="api-title">🔍 Escribe tu búsqueda</div>
                 <div id="status">💡 Busca cualquier tema</div>
-                <input type="text" id="searchQuery" class="input-url" placeholder="Ej: anime, carros, paisajes, gatos..." value="gatos">
+                <input type="text" id="searchQuery" class="input-url" placeholder="Ej: anime, carros, paisajes, gatos..." value="">
                 <div class="button-group">
                     <button class="api-btn" onclick="buscarImagenes()"><span class="api-btn-content">🔍 Buscar Imágenes</span></button>
                     <button class="api-btn" onclick="limpiarResultados()"><span class="api-btn-content" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">🗑️ Limpiar</span></button>
@@ -197,6 +197,7 @@
             if (!query) {
                 statusEl.className = 'error';
                 statusEl.innerText = '❌ Por favor, ingresa un término de búsqueda.';
+                resultsContainer.innerHTML = '';
                 return;
             }
 
@@ -307,6 +308,7 @@
 
         function limpiarResultados() {
             document.getElementById('imageResults').innerHTML = '';
+            document.getElementById('searchQuery').value = '';
             const statusEl = document.getElementById('status');
             statusEl.className = '';
             statusEl.innerText = '💡 Listo para buscar';
@@ -318,7 +320,7 @@
         });
 
         window.onload = function() {
-            setTimeout(buscarImagenes, 500);
+            document.getElementById('searchQuery').focus();
         };
     </script>
 </body>
