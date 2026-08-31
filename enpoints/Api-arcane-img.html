@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Arcane Imágenes - Raphael-WA-BOT</title>
+    
+    <link rel="icon" type="image/jpeg" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
+    <link rel="apple-touch-icon" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0b0f19; color: #e2e8f0; line-height: 1.6; }
+
+        /* Botón Volver */
+        .back-btn { 
+            position: fixed; top: 20px; left: 20px; background: #111827; color: white; border: none; padding: 2px; cursor: pointer; border-radius: 10px; z-index: 1000; text-decoration: none; display: flex; align-items: center;
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%; animation: neonGradient 6s ease infinite;
+        }
+        .back-btn-content { background-color: #111827; padding: 6px 14px; border-radius: 8px; transition: background-color 0.2s; }
+        .back-btn:hover .back-btn-content { background-color: #374151; }
+
+        .neon-border {
+            position: relative; width: 130px; height: 130px; margin: 0 auto 20px; padding: 2px; border-radius: 20px; 
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%; animation: neonGradient 6s ease infinite;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .header-img { width: 100%; height: 100%; object-fit: cover; border-radius: 18px; background-color: #0b0f19; }
+
+        @keyframes neonGradient {
+            0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
+        }
+
+        header { padding: 40px 20px; text-align: center; border-bottom: 2px solid #4f46e5; }
+        header h1 { 
+            font-size: 2.8rem; font-weight: 800; text-transform: uppercase;
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: neonGradient 6s ease infinite;
+        }
+
+        .section-title { text-align: center; font-size: 1.8rem; color: #fff; margin: 30px 0; text-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
+        .container { max-width: 700px; margin: 0 auto 40px; padding: 20px; }
+        
+        .api-card-wrapper {
+            position: relative; padding: 2px; border-radius: 14px;
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%;
+            animation: neonGradient 6s ease infinite; margin-bottom: 20px; box-shadow: 0 0 15px rgba(0, 240, 255, 0.3); 
+        }
+        .api-card { background-color: #111827; border-radius: 12px; padding: 25px; text-align: center; }
+        .api-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 15px; color: #fff; }
+
+        #status { text-align: center; margin-bottom: 15px; color: #00f0ff; font-weight: bold; min-height: 24px; font-size: 0.9rem; }
+
+        .input-url { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #374151; background: #1f2937; color: white; font-size: 1rem; margin-bottom: 15px; outline: none; }
+        .input-url:focus { border-color: #00f0ff; box-shadow: 0 0 5px rgba(0, 240, 255, 0.5); }
+
+        .button-group { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .api-btn { 
+            background: #1f2937; color: white; border: none; padding: 0; border-radius: 25px; font-weight: bold; font-size: 1rem; cursor: pointer;
+            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%; animation: neonGradient 6s ease infinite;
+            text-decoration: none; display: inline-block;
+        }
+        .api-btn-content { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); padding: 10px 23px; border-radius: 23px; display: block; transition: background 0.2s; }
+        .api-btn:hover .api-btn-content { background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%); }
+
+        /* 🖼️ Cuadrícula de vista previa de imágenes */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .image-preview-card {
+            background-color: #111827;
+            border: 1px solid #374151;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 10px;
+        }
+        .image-preview-card img {
+            width: 100%;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="../pestañas/apis.html" class="back-btn"><span class="back-btn-content">Volver</span></a>
+
+    <header>
+        <div class="neon-border"><img src="https://files.yuki-wabot.my.id/cdn/czIqrdU1.jpeg" alt="Logo Bot" class="header-img"></div>
+        <h1>API ARCANE IMÁGENES</h1>
+        <p>Busca y previsualiza imágenes antes de descargarlas.</p>
+    </header>
+
+    <h2 class="section-title">🖼️ Buscador de Imágenes</h2>
+
+    <div class="container">
+        <div class="api-card-wrapper">
+            <div class="api-card">
+                <div class="api-title">🔍 Escribe tu búsqueda</div>
+                <div id="status"></div>
+                <input type="text" id="searchQuery" class="input-url" placeholder="Ej: anime, carros, paisajes...">
+                <div class="button-group">
+                    <button class="api-btn" onclick="buscarImagenes()"><span class="api-btn-content">Buscar Imágenes</span></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenedor donde se mostrarán las imágenes previas -->
+        <div id="imageResults" class="image-grid"></div>
+    </div>
+
+    <script>
+        async function buscarImagenes() {
+            const query = document.getElementById('searchQuery').value.trim();
+            const statusEl = document.getElementById('status');
+            const resultsContainer = document.getElementById('imageResults');
+
+            if (!query) {
+                alert("Por favor, ingresa un término de búsqueda.");
+                return;
+            }
+
+            statusEl.innerText = "🔍 Buscando imágenes...";
+            resultsContainer.innerHTML = "";
+
+            try {
+                // Reemplaza esta URL con el endpoint real de tu servidor backend que consulta las imágenes
+                const endpoint = `http://169.58.212.74:5500/api/images?query=${encodeURIComponent(query)}`;
+                
+                const response = await fetch(endpoint);
+                if (!response.ok) throw new Error('Error al conectar con la API de imágenes');
+
+                const data = await response.json();
+                
+                statusEl.innerText = "✅ Imágenes encontradas";
+
+                // Ejemplo asumiendo que tu API devuelve un array de URLs en data.images
+                if (data.images && data.images.length > 0) {
+                    data.images.forEach(imgUrl => {
+                        const card = document.createElement('div');
+                        card.className = 'image-preview-card';
+                        
+                        card.innerHTML = `
+                            <img src="${imgUrl}" alt="Previsualización">
+                            <a href="${imgUrl}" target="_blank" download class="api-btn" style="font-size: 0.8rem; width: 100%;">
+                                <span class="api-btn-content" style="padding: 6px 10px; text-align: center;">Descargar</span>
+                            </a>
+                        `;
+                        resultsContainer.appendChild(card);
+                    });
+                } else {
+                    statusEl.innerText = "❌ No se encontraron resultados.";
+                }
+
+            } catch (error) {
+                statusEl.innerText = "❌ Error en la búsqueda";
+                console.error(error);
+            }
+        }
+    </script>
+</body>
+</html>
