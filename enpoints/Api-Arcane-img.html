@@ -266,7 +266,10 @@
             button.className = 'api-btn api-btn-small btn-download downloading';
             button.innerHTML = '<span class="api-btn-content">⏳ Descargando...</span>';
             
-            fetch(url)
+            // Usar un proxy para evitar problemas de CORS
+            const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+            
+            fetch(proxyUrl)
                 .then(response => {
                     if (!response.ok) throw new Error('Error al descargar la imagen');
                     return response.blob();
@@ -297,12 +300,32 @@
                 })
                 .catch(error => {
                     console.error('Error en descarga:', error);
-                    button.className = 'api-btn api-btn-small btn-download';
-                    button.innerHTML = '<span class="api-btn-content" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">❌ Error</span>';
                     
-                    setTimeout(() => {
-                        button.innerHTML = originalContent;
-                    }, 1500);
+                    // Intento alternativo: descarga directa por si el proxy falla
+                    try {
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.target = '_blank';
+                        link.download = `${nombre.substring(0, 30)}.jpg`;
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                        
+                        button.className = 'api-btn api-btn-small btn-download downloaded';
+                        button.innerHTML = '<span class="api-btn-content">⬇️ Abriendo</span>';
+                        
+                        setTimeout(() => {
+                            button.className = 'api-btn api-btn-small btn-download';
+                            button.innerHTML = originalContent;
+                        }, 2000);
+                    } catch (e) {
+                        button.className = 'api-btn api-btn-small btn-download';
+                        button.innerHTML = '<span class="api-btn-content" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">❌ Error</span>';
+                        
+                        setTimeout(() => {
+                            button.innerHTML = originalContent;
+                        }, 1500);
+                    }
                 });
         }
 
