@@ -76,6 +76,7 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
+            position: relative;
         }
 
         .api-card:hover { transform: translateY(-3px); border-color: #6366f1; }
@@ -84,6 +85,7 @@
             display: flex;
             align-items: center;
             gap: 15px;
+            position: relative;
         }
 
         .api-icon {
@@ -99,10 +101,53 @@
             display: flex;
             flex-direction: column;
             gap: 4px;
+            flex-grow: 1;
         }
 
-        .api-title { font-size: 1.25rem; font-weight: bold; color: #fff; }
+        .api-title { font-size: 1.25rem; font-weight: bold; color: #fff; display: flex; align-items: center; justify-content: space-between; }
         .api-desc { font-size: 0.95rem; color: #9ca3af; }
+
+        /* 🟢🔴 Insignia de Estado */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 4px 10px;
+            border-radius: 12px;
+            background: #1f2937;
+            color: #9ca3af;
+            border: 1px solid #374151;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: #9ca3af;
+            box-shadow: 0 0 6px rgba(156, 163, 175, 0.5);
+        }
+
+        .status-badge.online {
+            color: #34d399;
+            border-color: rgba(52, 211, 153, 0.3);
+            background: rgba(52, 211, 153, 0.1);
+        }
+        .status-badge.online .status-dot {
+            background-color: #10b981;
+            box-shadow: 0 0 8px #10b981;
+        }
+
+        .status-badge.offline {
+            color: #f87171;
+            border-color: rgba(248, 113, 113, 0.3);
+            background: rgba(248, 113, 113, 0.1);
+        }
+        .status-badge.offline .status-dot {
+            background-color: #ef4444;
+            box-shadow: 0 0 8px #ef4444;
+        }
 
         .api-btn-group {
             display: flex;
@@ -172,9 +217,12 @@
         <!-- Tarjeta API YT -->
         <div class="api-card">
             <div class="api-top">
-                <img src="https://files.yuki-wabot.my.id/cdn/cn3UFsii.jpeg" alt="Icono YT" class="api-icon">
+                <img src="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg" alt="Icono YT" class="api-icon">
                 <div class="api-info">
-                    <div class="api-title">🎶 API ARCANE YT</div>
+                    <div class="api-title">
+                        <span>🎶 API ARCANE YT</span>
+                        <div id="status-yt" class="status-badge"><span class="status-dot"></span> Verificando...</div>
+                    </div>
                     <div class="api-desc">Busca y descarga contenido multimedia y audios de YouTube rápidamente.</div>
                 </div>
             </div>
@@ -188,9 +236,12 @@
         <!-- Tarjeta API IMG -->
         <div class="api-card">
             <div class="api-top">
-                <img src="https://files.yuki-wabot.my.id/cdn/bkrzeYYr.jpeg" alt="Icono IMG" class="api-icon">
+                <img src="https://files.yuki-wabot.my.id/cdn/czIqrdU1.jpeg" alt="Icono IMG" class="api-icon">
                 <div class="api-info">
-                    <div class="api-title">🖼️ API ARCANE IMG</div>
+                    <div class="api-title">
+                        <span>🖼️ API ARCANE IMG</span>
+                        <div id="status-img" class="status-badge"><span class="status-dot"></span> Verificando...</div>
+                    </div>
                     <div class="api-desc">Buscador avanzado y previsualizador de imágenes mediante tu scraper personalizado.</div>
                 </div>
             </div>
@@ -214,6 +265,38 @@
             if (menu.style.width === "250px" && !menu.contains(event.target) && !menuBtn.contains(event.target)) {
                 menu.style.width = "0";
             }
+        });
+
+        // 🔍 Función para verificar el estado de las APIs automáticamente
+        async function checkApiStatus(url, elementId) {
+            const badge = document.getElementById(elementId);
+            try {
+                const response = await fetch(url, { method: 'GET', mode: 'cors' });
+                const data = await response.json();
+                
+                // Valida si la respuesta coincide con el estado OK
+                if (response.ok && data.status === "OK") {
+                    badge.className = "status-badge online";
+                    badge.innerHTML = `<span class="status-dot"></span> ACTIVO`;
+                } else {
+                    throw new Error("Respuesta no válida");
+                }
+            } catch (error) {
+                badge.className = "status-badge offline";
+                badge.innerHTML = `<span class="status-dot"></span> CAÍDO`;
+            }
+        }
+
+        // Ejecutar las comprobaciones al cargar la página
+        window.addEventListener('DOMContentLoaded', () => {
+            // Puedes cambiar o asignar los enlaces de health de cada API aquí
+            checkApiStatus('https://bimg-api.raphaelbot.com/health', 'status-img');
+            
+            // Si la de YouTube usa otro enlace de health, reemplázalo aquí abajo:
+            // checkApiStatus('https://yt-api.raphaelbot.com/health', 'status-yt');
+            
+            // Por defecto, simulamos o dejamos una URL de ejemplo para YouTube si comparte o tiene otra:
+            checkApiStatus('https://bimg-api.raphaelbot.com/health', 'status-yt'); 
         });
     </script>
 </body>
