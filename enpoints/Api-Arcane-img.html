@@ -126,6 +126,9 @@
         .image-preview-card .btn-download.downloaded .api-btn-content {
             background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
         }
+        .image-preview-card .btn-download.error .api-btn-content {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+        }
 
         .loading-spinner {
             text-align: center;
@@ -242,7 +245,7 @@
                              loading="lazy"
                              onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22160%22%3E%3Crect fill=%22%231f2937%22 width=%22200%22 height=%22160%22/%3E%3Ctext x=%2250%%22 y=%2250%%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%236b7280%22 font-size=%2214%22 font-family=%22Arial%22%3EImagen no disponible%3C/text%3E%3C/svg%3E'">
                         <div class="img-title">${title.substring(0, 60)}${title.length > 60 ? '...' : ''}</div>
-                        <button class="api-btn api-btn-small btn-download" onclick="descargarImagen('${imgUrl}', '${title.replace(/'/g, "\\'")}')">
+                        <button class="api-btn api-btn-small btn-download" onclick="descargarImagen('${encodeURIComponent(imgUrl)}', '${title.replace(/'/g, "\\'").replace(/"/g, '&quot;')}')">
                             <span class="api-btn-content">📥 Descargar</span>
                         </button>
                         ${img.source ? `<a href="${img.source}" target="_blank" style="font-size:0.65rem;color:#6366f1;margin-top:4px;text-decoration:none;">🔗 Fuente</a>` : ''}
@@ -259,19 +262,26 @@
             }
         }
 
-        function descargarImagen(url, nombre) {
+        function descargarImagen(urlEncoded, nombre) {
             const button = event.currentTarget;
             const originalContent = button.innerHTML;
+            const url = decodeURIComponent(urlEncoded);
             
             button.className = 'api-btn api-btn-small btn-download downloading';
             button.innerHTML = '<span class="api-btn-content">⏳ Descargando...</span>';
             
-            // Usar un proxy para evitar problemas de CORS
-            const proxyUrl = `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`;
+            // Usar el proxy de la API para descargar
+            const proxyUrl = `${API_URL}/download?url=${encodeURIComponent(url)}`;
             
-            fetch(proxyUrl)
+            fetch(proxyUrl, {
+                headers: { 'x-api-key': API_KEY }
+            })
                 .then(response => {
-                    if (!response.ok) throw new Error('Error al descargar la imagen');
+                    if (!response.ok) {
+                        return response.json().then(err => {
+                            throw new Error(err.error || `Error ${response.status}`);
+                        });
+                    }
                     return response.blob();
                 })
                 .then(blob => {
@@ -300,32 +310,13 @@
                 })
                 .catch(error => {
                     console.error('Error en descarga:', error);
+                    button.className = 'api-btn api-btn-small btn-download error';
+                    button.innerHTML = `<span class="api-btn-content" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">❌ ${error.message || 'Error'}</span>`;
                     
-                    // Intento alternativo: descarga directa por si el proxy falla
-                    try {
-                        const link = document.createElement('a');
-                        link.href = url;
-                        link.target = '_blank';
-                        link.download = `${nombre.substring(0, 30)}.jpg`;
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                        
-                        button.className = 'api-btn api-btn-small btn-download downloaded';
-                        button.innerHTML = '<span class="api-btn-content">⬇️ Abriendo</span>';
-                        
-                        setTimeout(() => {
-                            button.className = 'api-btn api-btn-small btn-download';
-                            button.innerHTML = originalContent;
-                        }, 2000);
-                    } catch (e) {
+                    setTimeout(() => {
                         button.className = 'api-btn api-btn-small btn-download';
-                        button.innerHTML = '<span class="api-btn-content" style="background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);">❌ Error</span>';
-                        
-                        setTimeout(() => {
-                            button.innerHTML = originalContent;
-                        }, 1500);
-                    }
+                        button.innerHTML = originalContent;
+                    }, 2000);
                 });
         }
 
