@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin API Arcane Imágenes</title>
+    <link rel="icon" type="image/jpeg" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
+    <link rel="apple-touch-icon" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0b0f19; color: #e2e8f0; line-height: 1.6; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        header { text-align: center; padding: 30px 0; border-bottom: 2px solid #4f46e5; margin-bottom: 30px; }
+        header h1 { font-size: 2.5rem; font-weight: 800; text-transform: uppercase; background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%; -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: neonGradient 6s ease infinite; }
+        @keyframes neonGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        .card { background-color: #111827; border: 1px solid #1f2937; border-radius: 12px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+        .card h2 { color: #fff; margin-bottom: 15px; font-size: 1.4rem; }
+        .input-group { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 15px; }
+        .input-group input { flex: 1; padding: 12px; border-radius: 8px; border: 1px solid #374151; background: #1f2937; color: white; font-size: 1rem; outline: none; min-width: 200px; }
+        .input-group input:focus { border-color: #6366f1; }
+        .btn { padding: 12px 24px; border: none; border-radius: 8px; font-weight: bold; font-size: 1rem; cursor: pointer; transition: all 0.2s; color: white; }
+        .btn-primary { background: linear-gradient(135deg, #6366f1, #a855f7); }
+        .btn-primary:hover { transform: scale(1.02); opacity: 0.9; }
+        .btn-success { background: linear-gradient(135deg, #10b981, #059669); }
+        .btn-success:hover { transform: scale(1.02); opacity: 0.9; }
+        .btn-danger { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .btn-danger:hover { transform: scale(1.02); opacity: 0.9; }
+        .btn-warning { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .btn-warning:hover { transform: scale(1.02); opacity: 0.9; }
+        .btn-secondary { background: linear-gradient(135deg, #6b7280, #4b5563); }
+        .btn-secondary:hover { transform: scale(1.02); opacity: 0.9; }
+        .btn-sm { padding: 8px 16px; font-size: 0.85rem; }
+        .key-list { margin-top: 15px; }
+        .key-item { background: #1f2937; padding: 12px 15px; border-radius: 8px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; border-left: 3px solid #6366f1; }
+        .key-item .key-name { font-weight: bold; color: #c084fc; }
+        .key-item .key-value { font-family: monospace; color: #94a3b8; word-break: break-all; font-size: 0.9rem; }
+        .key-item .key-actions { display: flex; gap: 8px; }
+        .status-msg { padding: 12px; border-radius: 8px; margin-top: 10px; display: none; }
+        .status-msg.success { display: block; background: #064e3b; color: #34d399; border-left: 4px solid #34d399; }
+        .status-msg.error { display: block; background: #7f1d1d; color: #f87171; border-left: 4px solid #f87171; }
+        .status-msg.info { display: block; background: #1e3a5f; color: #60a5fa; border-left: 4px solid #60a5fa; }
+        .empty-msg { color: #6b7280; text-align: center; padding: 20px; }
+        .flex { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+        .mt-10 { margin-top: 10px; }
+        .mb-10 { margin-bottom: 10px; }
+        .copy-btn { background: none; border: none; color: #60a5fa; cursor: pointer; font-size: 0.8rem; padding: 2px 8px; border-radius: 4px; }
+        .copy-btn:hover { background: #374151; }
+        @media (max-width: 600px) { .input-group { flex-direction: column; } .key-item { flex-direction: column; align-items: stretch; } .key-item .key-actions { justify-content: flex-start; } }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛠️ Admin API Arcane Imágenes</h1>
+            <p style="color: #94a3b8;">Gestiona tus API Keys de forma sencilla</p>
+        </header>
+
+        <div id="statusMessage" class="status-msg"></div>
+
+        <div class="card">
+            <h2>🆕 Generar Nueva API Key</h2>
+            <div class="input-group">
+                <input type="text" id="newKeyName" placeholder="Nombre para la key (ej: mi-frontend)" value="mi-app">
+                <button class="btn btn-success" onclick="generarKey()">✨ Generar Key</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>📋 Todas las API Keys</h2>
+            <div class="flex mb-10">
+                <button class="btn btn-primary btn-sm" onclick="listarKeys()">🔄 Actualizar lista</button>
+                <button class="btn btn-secondary btn-sm" onclick="copiarTodasKeys()">📋 Copiar todas</button>
+            </div>
+            <div id="keysContainer">
+                <div class="empty-msg">🔄 Haz clic en "Actualizar lista" para cargar las keys</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'https://bimg-api.raphaelbot.com';
+
+        function mostrarStatus(mensaje, tipo = 'info') {
+            const el = document.getElementById('statusMessage');
+            el.textContent = mensaje;
+            el.className = 'status-msg ' + tipo;
+            setTimeout(() => { el.className = 'status-msg'; }, 6000);
+        }
+
+        async function generarKey() {
+            const nombre = document.getElementById('newKeyName').value.trim() || 'mi-app';
+            const btn = event.currentTarget;
+            btn.disabled = true;
+            btn.textContent = '⏳ Generando...';
+
+            try {
+                const res = await fetch(`${API_URL}/generate-key`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: nombre })
+                });
+                const data = await res.json();
+
+                if (res.ok) {
+                    mostrarStatus(`✅ Key generada: ${data.apiKey} (${data.name})`, 'success');
+                    document.getElementById('newKeyName').value = '';
+                    listarKeys();
+                } else {
+                    mostrarStatus(`❌ Error: ${data.error || 'Error desconocido'}`, 'error');
+                }
+            } catch (error) {
+                mostrarStatus(`❌ Error de conexión: ${error.message}`, 'error');
+            }
+
+            btn.disabled = false;
+            btn.textContent = '✨ Generar Key';
+        }
+
+        async function listarKeys() {
+            const container = document.getElementById('keysContainer');
+            container.innerHTML = '<div style="text-align:center;padding:20px;color:#6b7280;">⏳ Cargando keys...</div>';
+
+            try {
+                const res = await fetch(`${API_URL}/list-keys`);
+                const data = await res.json();
+
+                if (!res.ok) {
+                    throw new Error(data.error || 'Error al listar keys');
+                }
+
+                if (data.count === 0) {
+                    container.innerHTML = '<div class="empty-msg">📭 No hay API Keys generadas aún</div>';
+                    return;
+                }
+
+                let html = '<div class="key-list">';
+                for (const [nombre, key] of Object.entries(data.keys)) {
+                    html += `
+                        <div class="key-item">
+                            <div>
+                                <div class="key-name">📌 ${nombre}</div>
+                                <div class="key-value" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                                    <span>${key}</span>
+                                    <button class="copy-btn" onclick="copiarTexto('${key}')">📋 Copiar</button>
+                                </div>
+                            </div>
+                            <div class="key-actions">
+                                <button class="btn btn-danger btn-sm" onclick="eliminarKey('${nombre}')">🗑️ Eliminar</button>
+                            </div>
+                        </div>
+                    `;
+                }
+                html += '</div>';
+                container.innerHTML = html;
+
+            } catch (error) {
+                container.innerHTML = `<div class="empty-msg">❌ Error: ${error.message}</div>`;
+                mostrarStatus(`❌ Error al listar keys: ${error.message}`, 'error');
+            }
+        }
+
+        async function eliminarKey(nombre) {
+            if (!confirm(`¿Seguro que quieres eliminar la key "${nombre}"?`)) return;
+
+            const btn = event.currentTarget;
+            btn.disabled = true;
+            btn.textContent = '⏳...';
+
+            try {
+                const res = await fetch(`${API_URL}/delete-key/${nombre}`, { method: 'DELETE' });
+                const data = await res.json();
+
+                if (res.ok) {
+                    mostrarStatus(`✅ ${data.message}`, 'success');
+                    listarKeys();
+                } else {
+                    mostrarStatus(`❌ Error: ${data.error || 'Error desconocido'}`, 'error');
+                }
+            } catch (error) {
+                mostrarStatus(`❌ Error de conexión: ${error.message}`, 'error');
+            }
+
+            btn.disabled = false;
+            btn.textContent = '🗑️ Eliminar';
+        }
+
+        function copiarTexto(texto) {
+            navigator.clipboard.writeText(texto).then(() => {
+                mostrarStatus('✅ Texto copiado al portapapeles', 'success');
+            }).catch(() => {
+                // Fallback
+                const input = document.createElement('input');
+                input.value = texto;
+                document.body.appendChild(input);
+                input.select();
+                document.execCommand('copy');
+                document.body.removeChild(input);
+                mostrarStatus('✅ Texto copiado al portapapeles', 'success');
+            });
+        }
+
+        function copiarTodasKeys() {
+            const items = document.querySelectorAll('.key-item');
+            if (items.length === 0) {
+                mostrarStatus('📭 No hay keys para copiar', 'info');
+                return;
+            }
+            let texto = '🔑 MIS API KEYS:\n\n';
+            items.forEach(item => {
+                const nombre = item.querySelector('.key-name')?.textContent?.replace('📌 ', '') || '';
+                const valor = item.querySelector('.key-value span')?.textContent || '';
+                texto += `${nombre}: ${valor}\n`;
+            });
+            copiarTexto(texto);
+        }
+
+        window.onload = function() {
+            listarKeys();
+        };
+    </script>
+</body>
+</html>
