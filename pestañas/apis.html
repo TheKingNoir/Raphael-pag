@@ -76,18 +76,18 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
         }
 
         .api-card:hover { transform: translateY(-3px); border-color: #6366f1; }
         
-        .api-title { font-size: 1.2rem; font-weight: bold; color: #fff; }
+        .api-title { font-size: 1.2rem; font-weight: bold; color: #fff; white-space: nowrap; }
 
         .api-buttons {
             display: flex;
             gap: 12px;
             align-items: center;
-            flex-wrap: wrap;
+            flex-shrink: 0;
         }
 
         .api-btn { 
@@ -98,7 +98,7 @@
             border-radius: 25px; 
             font-weight: bold; 
             display: inline-block; 
-            margin-top: 10px; 
+            margin-top: 0px;
         }
 
         .api-btn-doc {
@@ -109,7 +109,7 @@
             border-radius: 25px;
             font-weight: bold;
             display: inline-block;
-            margin-top: 10px;
+            margin-top: 0px;
             font-size: 1.1rem;
         }
 
