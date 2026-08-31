@@ -83,13 +83,6 @@
         
         .api-title { font-size: 1.2rem; font-weight: bold; color: #fff; }
 
-        .api-buttons {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 10px;
-        }
-
         .api-btn { 
             background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); 
             color: white; 
@@ -97,18 +90,8 @@
             padding: 10px 20px; 
             border-radius: 25px; 
             font-weight: bold; 
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: none;
-            cursor: pointer;
-            font-size: 0.95rem;
-        }
-
-        .api-btn:hover { 
-            transform: scale(1.05); 
-            box-shadow: 0 0 20px rgba(99, 102, 241, 0.4);
+            display: inline-block; 
+            margin-top: 10px; 
         }
 
         .api-btn-doc { 
@@ -118,37 +101,17 @@
             padding: 10px 20px; 
             border-radius: 25px; 
             font-weight: bold; 
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            transition: transform 0.2s, box-shadow 0.2s;
-            border: none;
-            cursor: pointer;
-            font-size: 0.95rem;
+            display: inline-block; 
+            margin-top: 10px; 
+            margin-left: 10px;
         }
 
-        .api-btn-doc:hover { 
-            transform: scale(1.05); 
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
-        }
+        .api-btn-doc:hover { background: linear-gradient(135deg, #059669 0%, #047857 100%); }
 
-        /* 📱 Responsive */
-        @media (max-width: 600px) {
-            .api-card {
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 12px;
-            }
-            .api-buttons {
-                width: 100%;
-            }
-            .api-btn, .api-btn-doc {
-                flex: 1;
-                justify-content: center;
-                padding: 10px 15px;
-                font-size: 0.85rem;
-            }
-            header h1 { font-size: 2rem; }
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
         }
     </style>
 </head>
@@ -177,21 +140,19 @@
     <h2 class="section-title">Nuestras APIs Disponibles</h2>
 
     <div class="container">
-        <!-- API ARCANE YT -->
         <div class="api-card">
             <div class="api-title">🎶 API ARCANE YT</div>
-            <div class="api-buttons">
+            <div class="btn-group">
                 <a href="../enpoints/Api-Arcane-yt.html" class="api-btn">🔗 Probar API</a>
-                <a href="../enpoints/doc-Api-Arcane-yt.html" class="api-btn-doc">📖 Documentación</a>
+                <a href="../enpoints/Api-Arcane-yt-doc.html" class="api-btn-doc">📖 Documentación</a>
             </div>
         </div>
 
-        <!-- API ARCANE IMG -->
         <div class="api-card">
             <div class="api-title">🖼️ API ARCANE IMG</div>
-            <div class="api-buttons">
+            <div class="btn-group">
                 <a href="../enpoints/Api-Arcane-img.html" class="api-btn">🔗 Probar API</a>
-                <a href="../enpoints/doc-Api-Arcane-img.html" class="api-btn-doc">📖 Documentación</a>
+                <a href="../enpoints/Api-Arcane-img-doc.html" class="api-btn-doc">📖 Documentación</a>
             </div>
         </div>
     </div>
