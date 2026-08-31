@@ -3,14 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DOCUMENTACION API IMG - Raphael-WA-BOT</title>
+    <title>Documentación API IMG - Raphael-WA-BOT</title>
     <link rel="icon" type="image/jpeg" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
         body { background-color: #0b0f19; color: #e2e8f0; line-height: 1.6; padding: 20px; }
         
-        .doc-container { max-width: 900px; margin: 0 auto; padding: 20px; }
+        .doc-container { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; }
         
+        /* Botón Volver */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #1f2937;
+            color: #93c5fd;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            border: 1px solid #374151;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .back-button:hover {
+            background-color: #374151;
+            color: #60a5fa;
+        }
+
         .doc-header { text-align: center; margin-bottom: 40px; }
         .doc-logo { width: 90px; height: 90px; object-fit: cover; border-radius: 15px; border: 2px solid #6366f1; margin-bottom: 15px; }
         .doc-title { font-size: 2.2rem; color: #fff; margin-bottom: 10px; }
@@ -36,15 +57,48 @@
             border: 1px solid rgba(52, 211, 153, 0.3);
         }
 
-        .endpoint-url {
+        /* Contenedor del URL con botón de copiar */
+        .url-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             background: #1f2937;
             padding: 10px 14px;
             border-radius: 8px;
+            border: 1px solid #374151;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
+        .endpoint-url {
             font-family: monospace;
             color: #60a5fa;
             word-break: break-all;
-            margin-bottom: 15px;
             font-size: 0.95rem;
+        }
+
+        .copy-btn {
+            background-color: #374151;
+            color: #e2e8f0;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .copy-btn:hover {
+            background-color: #4b5563;
+            color: #fff;
+        }
+        .copy-btn.copied {
+            background-color: #10b981;
+            color: #fff;
         }
 
         .params-list { list-style: none; margin-bottom: 15px; }
@@ -66,10 +120,15 @@
 <body>
 
     <div class="doc-container">
+        <!-- Botón de Volver -->
+        <a href="apis.html" class="back-button">
+            Volver
+        </a>
+
         <div class="doc-header">
             <img src="https://files.yuki-wabot.my.id/cdn/bkrzeYYr.jpeg" alt="API IMG Logo" class="doc-logo">
-            <h1 class="doc-title">📁 DOCUMENTACION API ARCANE IMG</h1>
-            <p class="doc-subtitle">Guía de integración para el buscador de imágenes.</p>
+            <h1 class="doc-title">📁 DOCOMENTACION API ARCANE IMG</h1>
+            <p class="doc-subtitle">Guía de integración para el buscador y descargador de imágenes.</p>
         </div>
 
         <!-- Endpoint 1 -->
@@ -77,7 +136,10 @@
             <div class="endpoint-title">
                 <span class="method-get">GET</span> Verificar estado de la API 📊
             </div>
-            <div class="endpoint-url">https://bimg-api.raphaelbot.com/health</div>
+            <div class="url-box">
+                <span class="endpoint-url" id="url-1">https://bimg-api.raphaelbot.com/health</span>
+                <button class="copy-btn" onclick="copyToClipboard('url-1', this)">📋 Copiar</button>
+            </div>
             <p style="font-size: 0.9rem; color: #9ca3af; margin-bottom: 8px;">Ejemplo de resultado:</p>
             <pre>{
   "status": "OK",
@@ -90,9 +152,16 @@
             <div class="endpoint-title">
                 <span class="method-get">GET</span> Buscar imágenes 🔎
             </div>
-            <div class="endpoint-url">https://bimg-api.raphaelbot.com/search?query=[TEXTO]&limit=[NÚMERO]</div>
+            <div class="url-box">
+                <span class="endpoint-url" id="url-2">https://bimg-api.raphaelbot.com/search?query=[TEXTO]&limit=[NÚMERO]</span>
+                <button class="copy-btn" onclick="copyToClipboard('url-2', this)">📋 Copiar</button>
+            </div>
+            
             <p style="font-size: 0.9rem; color: #f3f4f6; margin-bottom: 5px; font-weight: bold;">Headers requeridos:</p>
-            <div class="endpoint-url" style="font-size: 0.85rem; color: #c084fc;">x-api-key: [TU_API_KEY]</div>
+            <div class="url-box">
+                <span class="endpoint-url" id="header-1" style="color: #c084fc; font-size: 0.85rem;">x-api-key: [TU_API_KEY]</span>
+                <button class="copy-btn" onclick="copyToClipboard('header-1', this)">📋 Copiar</button>
+            </div>
             
             <ul class="params-list">
                 <li><code>[TEXTO]</code> = Lo que quieres buscar (Ej: Gatos)</li>
@@ -120,9 +189,16 @@
             <div class="endpoint-title">
                 <span class="method-get">GET</span> Descargar imágenes 📥
             </div>
-            <div class="endpoint-url">https://bimg-api.raphaelbot.com/download?url=[URL_IMAGEN]</div>
+            <div class="url-box">
+                <span class="endpoint-url" id="url-3">https://bimg-api.raphaelbot.com/download?url=[URL_IMAGEN]</span>
+                <button class="copy-btn" onclick="copyToClipboard('url-3', this)">📋 Copiar</button>
+            </div>
+
             <p style="font-size: 0.9rem; color: #f3f4f6; margin-bottom: 5px; font-weight: bold;">Headers requeridos:</p>
-            <div class="endpoint-url" style="font-size: 0.85rem; color: #c084fc;">x-api-key: [TU_API_KEY]</div>
+            <div class="url-box">
+                <span class="endpoint-url" id="header-2" style="color: #c084fc; font-size: 0.85rem;">x-api-key: [TU_API_KEY]</span>
+                <button class="copy-btn" onclick="copyToClipboard('header-2', this)">📋 Copiar</button>
+            </div>
 
             <ul class="params-list">
                 <li><code>[URL_IMAGEN]</code> = La URL de la imagen que quieres descargar</li>
@@ -137,12 +213,36 @@
             <div class="endpoint-title">
                 <span class="method-get">GET</span> Buscar y descargar en un mismo endpoint 🌐
             </div>
-            <div class="endpoint-url">https://bimg-api.raphaelbot.com/search?query=[TEXTO]&limit=[NÚMERO]&download=true</div>
+            <div class="url-box">
+                <span class="endpoint-url" id="url-4">https://bimg-api.raphaelbot.com/search?query=[TEXTO]&limit=[NÚMERO]&download=true</span>
+                <button class="copy-btn" onclick="copyToClipboard('url-4', this)">📋 Copiar</button>
+            </div>
+
             <p style="font-size: 0.9rem; color: #f3f4f6; margin-bottom: 5px; font-weight: bold;">Headers requeridos:</p>
-            <div class="endpoint-url" style="font-size: 0.85rem; color: #c084fc;">x-api-key: [TU_API_KEY]</div>
+            <div class="url-box">
+                <span class="endpoint-url" id="header-3" style="color: #c084fc; font-size: 0.85rem;">x-api-key: [TU_API_KEY]</span>
+                <button class="copy-btn" onclick="copyToClipboard('header-3', this)">📋 Copiar</button>
+            </div>
         </div>
 
     </div>
 
+    <script>
+        function copyToClipboard(elementId, btnElement) {
+            const textToCopy = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalText = btnElement.innerHTML;
+                btnElement.innerHTML = "✅ ¡Copiado!";
+                btnElement.classList.add("copied");
+                
+                setTimeout(() => {
+                    btnElement.innerHTML = originalText;
+                    btnElement.classList.remove("copied");
+                }, 2000);
+            }).catch(err => {
+                console.error('Error al copiar: ', err);
+            });
+        }
+    </script>
 </body>
 </html>
