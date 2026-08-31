@@ -74,20 +74,21 @@
             transition: transform 0.2s; 
             width: 100%;
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            flex-wrap: nowrap;
+            align-items: center;
+            flex-wrap: wrap;
         }
 
         .api-card:hover { transform: translateY(-3px); border-color: #6366f1; }
         
-        .api-title { font-size: 1.2rem; font-weight: bold; color: #fff; white-space: nowrap; }
+        .api-title { font-size: 1.2rem; font-weight: bold; color: #fff; }
 
-        .api-buttons {
+        .api-btn-group {
             display: flex;
-            gap: 12px;
+            gap: 10px;
             align-items: center;
-            flex-shrink: 0;
+            flex-wrap: wrap;
+            margin-top: 10px;
         }
 
         .api-btn { 
@@ -98,19 +99,17 @@
             border-radius: 25px; 
             font-weight: bold; 
             display: inline-block; 
-            margin-top: 0px;
         }
 
         .api-btn-doc {
-            background: linear-gradient(135deg, #f59e0b 0%, #f97316 100%);
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
             color: white;
             text-decoration: none;
             padding: 10px 20px;
             border-radius: 25px;
             font-weight: bold;
             display: inline-block;
-            margin-top: 0px;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
 
         .api-btn-doc::before {
@@ -145,7 +144,7 @@
     <div class="container">
         <div class="api-card">
             <div class="api-title">🎶 API ARCANE YT</div>
-            <div class="api-buttons">
+            <div class="api-btn-group">
                 <a href="../enpoints/Api-Arcane-yt.html" class="api-btn">🔗 Probar API</a>
                 <a href="#" class="api-btn-doc">Documentación</a>
             </div>
@@ -153,7 +152,7 @@
 
         <div class="api-card">
             <div class="api-title">🖼️ API ARCANE IMG</div>
-            <div class="api-buttons">
+            <div class="api-btn-group">
                 <a href="../enpoints/Api-Arcane-img.html" class="api-btn">🔗 Probar API</a>
                 <a href="#" class="api-btn-doc">Documentación</a>
             </div>
