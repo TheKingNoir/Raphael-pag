@@ -217,7 +217,7 @@
         <!-- Tarjeta API YT -->
         <div class="api-card">
             <div class="api-top">
-                <img src="https://files.yuki-wabot.my.id/cdn/cn3UFsii.jpeg" alt="Icono YT" class="api-icon">
+                <img src="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg" alt="Icono YT" class="api-icon">
                 <div class="api-info">
                     <div class="api-title">
                         <span>🎶 API ARCANE YT</span>
@@ -236,13 +236,13 @@
         <!-- Tarjeta API IMG -->
         <div class="api-card">
             <div class="api-top">
-                <img src="https://files.yuki-wabot.my.id/cdn/bkrzeYYr.jpeg" alt="Icono IMG" class="api-icon">
+                <img src="https://files.yuki-wabot.my.id/cdn/czIqrdU1.jpeg" alt="Icono IMG" class="api-icon">
                 <div class="api-info">
                     <div class="api-title">
                         <span>🖼️ API ARCANE IMG</span>
                         <div id="status-img" class="status-badge"><span class="status-dot"></span> Verificando...</div>
                     </div>
-                    <div class="api-desc">Buscador de imágenes y descargas avanzado.</div>
+                    <div class="api-desc">Buscador avanzado y previsualizador de imágenes mediante tu scraper personalizado.</div>
                 </div>
             </div>
             <div class="api-btn-group">
@@ -267,19 +267,19 @@
             }
         });
 
-        // 🔍 Función para verificar el estado de las APIs automáticamente
+        // 🔍 Función independiente para verificar cada API
         async function checkApiStatus(url, elementId) {
             const badge = document.getElementById(elementId);
             try {
                 const response = await fetch(url, { method: 'GET', mode: 'cors' });
                 const data = await response.json();
                 
-                // Valida si la respuesta coincide con el estado OK
+                // Valida si la respuesta es OK y el estado devuelto es "OK"
                 if (response.ok && data.status === "OK") {
                     badge.className = "status-badge online";
                     badge.innerHTML = `<span class="status-dot"></span> ACTIVO`;
                 } else {
-                    throw new Error("Respuesta no válida");
+                    throw new Error("API caída o error de estado");
                 }
             } catch (error) {
                 badge.className = "status-badge offline";
@@ -287,16 +287,13 @@
             }
         }
 
-        // Ejecutar las comprobaciones al cargar la página
+        // Ejecutar las comprobaciones al cargar la página con sus enlaces separados:
         window.addEventListener('DOMContentLoaded', () => {
-            // Puedes cambiar o asignar los enlaces de health de cada API aquí
+            // 1. Enlace de verificación para la API de Imágenes (IMG)
             checkApiStatus('https://bimg-api.raphaelbot.com/health', 'status-img');
             
-            // Si la de YouTube usa otro enlace de health, reemplázalo aquí abajo:
-            // checkApiStatus('https://yt-api.raphaelbot.com/health', 'status-yt');
-            
-            // Por defecto, simulamos o dejamos una URL de ejemplo para YouTube si comparte o tiene otra:
-            checkApiStatus('https://bimg-api.raphaelbot.com/health', 'status-yt'); 
+            // 2. Enlace de verificación para la API de YouTube (YT) -> [CAMBIA ESTE LINK POR EL DE TU API YT]
+            checkApiStatus('https://yt-api.raphaelbot.com/health', 'status-yt');
         });
     </script>
 </body>
