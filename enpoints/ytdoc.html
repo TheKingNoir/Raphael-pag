@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentación API YouTube - Raphael-WA-BOT</title>
+    <link rel="icon" type="image/jpeg" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0b0f19; color: #e2e8f0; line-height: 1.6; padding: 20px; }
+        
+        .doc-container { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; }
+        
+        /* Botón Volver */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: #1f2937;
+            color: #93c5fd;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            border: 1px solid #374151;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .back-button:hover {
+            background-color: #374151;
+            color: #60a5fa;
+        }
+
+        .doc-header { text-align: center; margin-bottom: 40px; }
+        .doc-logo { width: 90px; height: 90px; object-fit: cover; border-radius: 15px; border: 2px solid #ef4444; margin-bottom: 15px; }
+        .doc-title { font-size: 2.2rem; color: #fff; margin-bottom: 10px; }
+        .doc-subtitle { color: #9ca3af; font-size: 1rem; }
+
+        .endpoint-card {
+            background-color: #111827;
+            border: 1px solid #1f2937;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .endpoint-title { font-size: 1.25rem; font-weight: bold; color: #f3f4f6; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        
+        .method-get {
+            background-color: rgba(16, 185, 129, 0.15);
+            color: #34d399;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(52, 211, 153, 0.3);
+        }
+
+        /* Contenedor del URL con botón de copiar */
+        .url-box {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #1f2937;
+            padding: 10px 14px;
+            border-radius: 8px;
+            border: 1px solid #374151;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
+        .endpoint-url {
+            font-family: monospace;
+            color: #60a5fa;
+            word-break: break-all;
+            font-size: 0.95rem;
+        }
+
+        .copy-btn {
+            background-color: #374151;
+            color: #e2e8f0;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            white-space: nowrap;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .copy-btn:hover {
+            background-color: #4b5563;
+            color: #fff;
+        }
+        .copy-btn.copied {
+            background-color: #10b981;
+            color: #fff;
+        }
+
+        .params-list { list-style: none; margin-bottom: 15px; }
+        .params-list li { font-size: 0.9rem; color: #9ca3af; margin-bottom: 5px; }
+        .params-list code { color: #f472b6; font-family: monospace; }
+
+        pre {
+            background: #030712;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            color: #34d399;
+            font-family: monospace;
+            font-size: 0.85rem;
+            border: 1px solid #1f2937;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="doc-container">
+        <!-- Botón de Volver -->
+        <a href="apis.html" class="back-button">
+            ⬅️ Volver a APIs
+        </a>
+
+        <div class="doc-header">
+            <!-- Puedes cambiar este logo si deseas uno específico para YouTube -->
+            <img src="https://files.yuki-wabot.my.id/cdn/czIqrdU1.jpeg" alt="API YouTube Logo" class="doc-logo">
+            <h1 class="doc-title">▶️ Documentación API YouTube</h1>
+            <p class="doc-subtitle">Guía de integración para el buscador, extractor de metadatos y descargas multimedia de YouTube.</p>
+        </div>
+
+        <!-- Endpoint 1 -->
+        <div class="endpoint-card">
+            <div class="endpoint-title">
+                <span class="method-get">GET</span> Verificar estado de la API 📊
+            </div>
+            <div class="url-box">
+                <span class="endpoint-url" id="url-1">https://yt-api.raphaelbot.com/health</span>
+                <button class="copy-btn" onclick="copyToClipboard('url-1', this)">📋 Copiar</button>
+            </div>
+            <p style="font-size: 0.9rem; color: #9ca3af; margin-bottom: 8px;">Ejemplo de resultado:</p>
+            <pre>{
+  "status": "OK",
+  "message": "API de YouTube Scraper funcionando",
+  "endpoints": {
+    "public": [
+      "/health"
+    ],
+    "protected": [
+      "/search",
+      "/metadata",
+      "/channel",
+      "/ytmp3",
+      "/ytmp4"
+    ]
+  }
+}</pre>
+        </div>
+
+        <!-- Endpoint 2 -->
+        <div class="endpoint-card">
+            <div class="endpoint-title">
+                <span class="method-get">GET</span> Buscar videos en YouTube 🔎
+            </div>
+            <div class="url-box">
+                <span class="endpoint-url" id="url-2">https://yt-api.raphaelbot.com/search?query=[TEXTO]</span>
+                <button class="copy-btn" onclick="copyToClipboard('url-2', this)">📋 Copiar</button>
+            </div>
+            
+            <p style="font-size: 0.9rem; color: #f3f4f6; margin-bottom: 5px; font-weight: bold;">Headers requeridos:</p>
+            <div class="url-box">
+                <span class="endpoint-url" id="header-1" style="color: #c084fc; font-size: 0.85rem;">x-api-key: [TU_API_KEY]</span>
+                <button class="copy-btn" onclick="copyToClipboard('header-1', this)">📋 Copiar</button>
+            </div>
+            
+            <ul class="params-list">
+                <li><code>[TEXTO]</code> = Lo que quieres buscar (Ej: Bad Bunny)</li>
+                <li><code>[TU_API_KEY]</code> = Tu clave secreta (Ej: 8affc894-...)</li>
+                <li>*(Opcional en query params: <code>?query=[TEXTO]&apiKey=[TU_API_KEY]</code>)*</li>
+            </ul>
+
+            <p style="font-size: 0.9rem; color: #9ca3af; margin-bottom: 8px;">Ejemplo de resultado:</p>
+            <pre>{
+  "success": true,
+  "results": [
+    {
+      "title": "Título del Video",
+      "url": "https://www.youtube.com/watch?v=...",
+      "duration": "3:45",
+      "author": "Nombre del Canal"
+    }
+  ]
+}</pre>
+        </div>
+
+        <!-- Endpoint 3 -->
+        <div class="endpoint-card">
+            <div class="endpoint-title">
+                <span class="method-get">GET</span> Obtener Metadata de un Video 🎬
+            </div>
+            <div class="url-box">
+                <span class="endpoint-url" id="url-3">https://yt-api.raphaelbot.com/metadata?url=[URL_VIDEO]</span>
+                <button class="copy-btn" onclick="copyToClipboard('url-3', this)">📋 Copiar</button>
+            </div>
+
+            <p style="font-size: 0.9rem; color: #f3f4f6; margin-bottom: 5px; font-weight: bold;">Headers requeridos:</p>
+            <div class="url-box">
+                <span class="endpoint-url" id="header-2" style="color: #c084fc; font-size: 0.85rem;">x-api-key: [TU_API_KEY]</span>
+                <button class="copy-btn" onclick="copyToClipboard('header-2', this)">📋 Copiar</button>
+            </div>
+
+            <ul class="params-list">
+                <li><code>[URL_VIDEO]</code> = URL completa del video de YouTube (Ej: https://www.youtube.com/watch?v=dQw4w9WgXcQ)</li>
+            </ul>
+
+            <p style="font-size: 0.9rem; color: #9ca3af; margin-bottom: 8px;">Ejemplo de resultado:</p>
+            <pre>{
+  "success": true,
+  "data": {
+    "title": "Título del Video",
+    "description": "Descripción del video...",
+    "views": "1000000",
+    "likes": "50000",
+    "author": "Nombre del Canal"
+  }
+}</pre>
+        </div>
+
+        <!-- Endpoint 4 -->
+        <div class="endpoint-card">
+            <div class="endpoint-title">
+                <span class="method-get">GET</span> Obtener Metadata de un Canal 📺
+            </div>
+            <div class="url-box">
+                <span class="endpoint-url" id="url-4">https://yt-api.raphaelbot.com/channel?channel=[CANAL]</span>
+                <button class="copy-btn" onclick="copyToClipboard('url-4', this)">📋 Copiar</button>
+            </div>
+
+            <p style="font-size: 0.9rem; color: #f3f4f6; margin-bottom: 5px; font-weight: bold;">Headers requeridos:</p>
+            <div class="url-box">
+                <span class="endpoint-url" id="header-3" style="color: #c084fc; font-size: 0.85rem;">x-api-key: [TU_API_KEY]</span>
+                <button class="copy-btn" onclick="copyToClipboard('header-3', this)">📋 Copiar</button>
+            </div>
+
+            <ul class="params-list">
+                <li><code>[CANAL]</code> = URL del canal o @handle (Ej: @youtube o https://www.youtube.com/@youtube)</li>
+            </ul>
+
+            <p style="font-size: 0.9rem; color: #9ca3af; margin-bottom: 8px;">Ejemplo de resultado:</p>
+            <pre>{
+  "success": true,
+  "data": {
+    "channelName": "Nombre del Canal",
+    "subscribers": "1M",
+    "avatar": "https://.../avatar.jpg"
+  }
+}</pre>
+        </div>
+
+        <!-- Endpoint 5 -->
+        <div class="endpoint-card">
+            <div class="endpoint-title">
+                <span class="method-get">GET</span> Descargar Audio MP3 🎵
+            </div>
+            <div class="url-box">
+                <span class="endpoint-url" id="url-5">https://yt-api.raphaelbot.com/ytmp3?url=[URL_VIDEO]&quality=[CALIDAD]</span>
+                <button class="copy-btn" onclick="copyToClipboard('url-5', this)">📋 Copiar</button>
+            </div>
+
+            <p style="font-size: 0.9rem; color: #f3f4f6; margin-bottom: 5px; font-weight: bold;">Headers requeridos:</p>
+            <div class="url-box">
+                <span class="endpoint-url" id="header-4" style="color: #c084fc; font-size: 0.85rem;">x-api-key: [TU_API_KEY]</span>
+                <button class="copy-btn" onclick="copyToClipboard('header-4', this)">📋 Copiar</button>
+            </div>
+
+            <ul class="params-list">
+                <li><code>[URL_VIDEO]</code> = URL del video de YouTube</li>
+                <li><code>[CALIDAD]</code> = Calidad del audio en kbps (Opcional, por defecto: 128)</li>
+            </ul>
+
+            <p style="font-size: 0.9rem; color: #9ca3af; margin-bottom: 8px;">Ejemplo de resultado:</p>
+            <pre>El archivo MP3 (descarga directa)</pre>
+        </div>
+
+        <!-- Endpoint 6 -->
+        <div class="endpoint-card">
+            <div class="endpoint-title">
+                <span class="method-get">GET</span> Descargar Video MP4 🎥
+            </div>
+            <div class="url-box">
+                <span class="endpoint-url" id="url-6">https://yt-api.raphaelbot.com/ytmp4?url=[URL_VIDEO]&quality=[CALIDAD]</span>
+                <button class="copy-btn" onclick="copyToClipboard('url-6', this)">📋 Copiar</button>
+            </div>
+
+            <p style="font-size: 0.9rem; color: #f3f4f6; margin-bottom: 5px; font-weight: bold;">Headers requeridos:</p>
+            <div class="url-box">
+                <span class="endpoint-url" id="header-5" style="color: #c084fc; font-size: 0.85rem;">x-api-key: [TU_API_KEY]</span>
+                <button class="copy-btn" onclick="copyToClipboard('header-5', this)">📋 Copiar</button>
+            </div>
+
+            <ul class="params-list">
+                <li><code>[URL_VIDEO]</code> = URL del video de YouTube</li>
+                <li><code>[CALIDAD]</code> = Calidad del video p.ej. 360, 720, 1080 (Opcional, por defecto: 360)</li>
+            </ul>
+
+            <p style="font-size: 0.9rem; color: #9ca3af; margin-bottom: 8px;">Ejemplo de resultado:</p>
+            <pre>El archivo MP4 (descarga directa)</pre>
+        </div>
+
+    </div>
+
+    <script>
+        function copyToClipboard(elementId, btnElement) {
+            const textToCopy = document.getElementById(elementId).innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                const originalText = btnElement.innerHTML;
+                btnElement.innerHTML = "✅ ¡Copiado!";
+                btnElement.classList.add("copied");
+                
+                setTimeout(() => {
+                    btnElement.innerHTML = originalText;
+                    btnElement.classList.remove("copied");
+                }, 2000);
+            }).catch(err => {
+                console.error('Error al copiar: ', err);
+            });
+        }
+    </script>
+</body>
+</html>
