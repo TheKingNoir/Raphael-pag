@@ -1,20 +1,9 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  
-  .services-section {
+<style>
+.services-section {
   position: relative;
   width: 100%;
   padding: 90px 70px 110px;
-  background:
-    radial-gradient(circle at 15% 25%, rgba(72, 111, 216, 0.16), transparent 32%),
-    radial-gradient(circle at 85% 75%, rgba(30, 42, 68, 0.22), transparent 30%),
-    linear-gradient(
-      145deg,
-      rgba(30, 42, 68, 0.96) 0%,
-      rgba(24, 34, 56, 0.94) 48%,
-      rgba(30, 50, 76, 0.96) 100%
-    );
+  background: radial-gradient(circle at 15% 25%, rgba(72, 111, 216, 0.16), transparent 32%), radial-gradient(circle at 85% 75%, rgba(30, 42, 68, 0.22), transparent 30%), linear-gradient(145deg, rgba(30, 42, 68, 0.96) 0%, rgba(24, 34, 56, 0.94) 48%, rgba(30, 50, 76, 0.96) 100%);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -171,36 +160,16 @@
   transform: scale(1.15);
 }
 
-.server-item.node {
-  color: #21a359;
-}
-
-.server-item.python {
-  color: #3776ab;
-}
-
-.server-item.golang {
-  color: #00add8;
-}
-
-.server-item.java {
-  color: #e76f00;
-}
-
-.server-item.whatsapp {
-  color: #25d366;
-}
-
-.server-item.telegram {
-  color: #229ed9;
-}
-
+.server-item.node { color: #21a359; }
+.server-item.python { color: #3776ab; }
+.server-item.golang { color: #00add8; }
+.server-item.java { color: #e76f00; }
+.server-item.whatsapp { color: #25d366; }
+.server-item.telegram { color: #229ed9; }
 .server-item.basilisk-e1,
 .server-item.basilisk-e2,
 .server-item.basilisk-e3,
-.server-item.basilisk-a35 {
-  color: #234b33;
-}
+.server-item.basilisk-a35 { color: #234b33; }
 
 .service-action-block {
   display: flex;
@@ -219,7 +188,6 @@
   letter-spacing: 0.8px;
 }
 
-/* 🟢 MODIFICACIÓN CLAVE: Ancho fijo unificado, centrado y control de cajas */
 .service-btn {
   display: inline-flex;
   align-items: center;
@@ -253,41 +221,25 @@
   transform: translateX(4px);
 }
 
-.service-name.phone-title {
-  color: #cb3429;
-}
-
+.service-name.phone-title { color: #cb3429; }
 .servers-label.phone-label,
-.action-label.phone-label {
-  color: #cb3429;
-}
+.action-label.phone-label { color: #cb3429; }
 
 .service-btn.phone-btn {
   background: #cb3429;
   box-shadow: 0 4px 12px rgba(203, 52, 41, 0.25);
 }
+.service-btn.phone-btn:hover { background: #a8281e; }
 
-.service-btn.phone-btn:hover {
-  background: #a8281e;
-}
-
-.service-name.ai-title {
-  color: #234b33;
-}
-
+.service-name.ai-title { color: #234b33; }
 .servers-label.ai-label,
-.action-label.ai-label {
-  color: #234b33;
-}
+.action-label.ai-label { color: #234b33; }
 
 .service-btn.ai-btn {
   background: #234b33;
   box-shadow: 0 4px 12px rgba(35, 75, 51, 0.25);
 }
-
-.service-btn.ai-btn:hover {
-  background: #173423;
-}
+.service-btn.ai-btn:hover { background: #173423; }
 
 .service-image {
   width: 350px;
@@ -304,49 +256,11 @@
 }
 
 @media (max-width: 1024px) {
-  .services-section {
-    padding: 80px 40px 100px;
-  }
-  .service-card {
-    height: auto;
-    flex-direction: column-reverse;
-  }
-  .service-content-wrapper {
-    flex-direction: column;
-    align-items: flex-start;
-    padding: 25px;
-    gap: 20px;
-  }
-  .service-divider {
-    width: 100%;
-    height: 1px;
-  }
-  .service-image {
-    width: 100%;
-    height: 180px;
-  }
-}
-
-.service-action-block {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.action-item {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.server-item.basilisk-e1,
-.server-item.basilisk-e2,
-.server-item.basilisk-e3 {
-  color: #2e6f4a;
-}
-
-.server-item.basilisk-a35 {
-  color: #234b33;
+  .services-section { padding: 80px 40px 100px; }
+  .service-card { height: auto; flex-direction: column-reverse; }
+  .service-content-wrapper { flex-direction: column; align-items: flex-start; padding: 25px; gap: 20px; }
+  .service-divider { width: 100%; height: 1px; }
+  .service-image { width: 100%; height: 180px; }
 }
 
 .custom-buttons-group {
@@ -358,19 +272,13 @@
   background: #486fd8;
   box-shadow: 0 4px 12px rgba(72, 111, 216, 0.25);
 }
-
-.service-btn.email-btn:hover {
-  background: #3559c2;
-}
+.service-btn.email-btn:hover { background: #3559c2; }
 
 .service-btn.whatsapp-btn {
   background: #25d366;
   box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25);
 }
-
-.service-btn.whatsapp-btn:hover {
-  background: #1fb85a;
-}
+.service-btn.whatsapp-btn:hover { background: #1fb85a; }
 
 .service-card.custom-service-card {
   height: auto;
@@ -383,38 +291,16 @@
   gap: 35px;
 }
 
-.custom-service-card .service-divider {
-  height: 70px;
-}
-
-.custom-service-card .service-info {
-  flex: none;
-}
+.custom-service-card .service-divider { height: 70px; }
+.custom-service-card .service-info { flex: none; }
 
 @media (max-width: 768px) {
-  .services-section {
-    padding: 70px 20px 85px;
-  }
-  .services-title {
-    font-size: 32px;
-    letter-spacing: -1px;
-    margin-bottom: 34px;
-  }
-  .service-divider {
-    display: none;
-  }
-  .custom-action-block {
-    align-items: stretch !important;
-    width: 100%;
-  }
-  .custom-buttons-group {
-    flex-direction: column;
-    width: 100%;
-  }
-  /* 🟢 MODIFICACIÓN EN MÓVIL: Ocupan el 100% en columna pero mantienen uniformidad exacta */
-  .service-btn {
-    width: 100%;
-  }
+  .services-section { padding: 70px 20px 85px; }
+  .services-title { font-size: 32px; letter-spacing: -1px; margin-bottom: 34px; }
+  .service-divider { display: none; }
+  .custom-action-block { align-items: stretch !important; width: 100%; }
+  .custom-buttons-group { flex-direction: column; width: 100%; }
+  .service-btn { width: 100%; }
 }
 
 .service-toggle-btn {
@@ -432,27 +318,15 @@
   border-radius: 0;
 }
 
-.service-toggle-btn.phone-btn {
-  background: #cb3429 !important;
-}
+.service-toggle-btn.phone-btn { background: #cb3429 !important; }
+.service-toggle-btn.ai-btn { background: #234b33 !important; }
 
-.service-toggle-btn.ai-btn {
-  background: #234b33 !important;
-}
-
-.service-toggle-btn svg {
-  transition: transform 0.3s ease;
-}
-
-.service-toggle-btn.open svg {
-  transform: rotate(180deg);
-}
+.service-toggle-btn svg { transition: transform 0.3s ease; }
+.service-toggle-btn.open svg { transform: rotate(180deg); }
 
 @media (prefers-reduced-motion: reduce) {
-  .service-card,
-  .service-btn,
-  .server-item,
-  .server-item img,
-  .service-toggle-btn svg {
+  .service-card, .service-btn, .server-item, .server-item img, .service-toggle-btn svg {
     transition: none !important;
   }
+}
+</style>
