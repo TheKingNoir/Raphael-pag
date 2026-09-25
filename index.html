@@ -3,347 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Raphael-WA-BOT</title>
+    <title>Estado de Número - Raphael-WA-BOT</title>
     
-    <!-- 🖼️ Favicon vinculado a tu archivo local favicon.png -->
-    <link rel="icon" type="image/png" href="favicon.png" sizes="48x48">
-    <link rel="apple-touch-icon" href="favicon.png">
-
-    <!-- 🔗 Vinculación correcta de tu archivo CSS externo -->
-    <link rel="stylesheet" href="../pestañas/pruebas.css">
+    <link rel="icon" type="image/jpeg" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
+    <link rel="apple-touch-icon" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
 
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-
-        body {
-            background-color: #0b0f19;
-            color: #e2e8f0;
-            line-height: 1.6;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #0b0f19; color: #e2e8f0; line-height: 1.6; }
 
         /* 🛠️ Estilos del Menú Lateral */
-        .menu-btn {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: #6366f1;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            font-size: 20px;
-            cursor: pointer;
-            border-radius: 8px;
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
-            transition: background 0.2s, transform 0.1s;
+        .menu-btn { position: fixed; top: 20px; left: 20px; background: #6366f1; color: white; border: none; padding: 10px 15px; font-size: 20px; cursor: pointer; border-radius: 8px; z-index: 1000; transition: background 0.2s; }
+        .menu-btn:hover { background: #4f46e5; }
+        .side-menu { height: 100%; width: 0; position: fixed; top: 0; left: 0; background-color: #111827; overflow-x: hidden; transition: 0.5s; padding-top: 60px; z-index: 1001; border-right: 2px solid #4f46e5; }
+        .side-menu a { padding: 15px 25px; text-decoration: none; font-size: 1.2rem; color: #e2e8f0; display: block; transition: 0.3s; }
+        .side-menu a:hover { color: #c084fc; background: #1f2937; }
+        .close-btn { position: absolute; top: 10px; right: 20px; font-size: 36px; cursor: pointer; }
+
+        header { padding: 40px 20px; text-align: center; border-bottom: 2px solid #4f46e5; }
+        header h1 { font-size: 2.5rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
+        header p { color: #9ca3af; }
+
+        .container { 
+            max-width: 650px; 
+            margin: 40px auto; 
+            padding: 20px; 
         }
 
-        .menu-btn:hover {
-            background: #4f46e5;
-        }
-
-        .menu-btn:active {
-            transform: scale(0.92);
-        }
-
-        .side-menu {
-            height: 100%;
-            width: 0;
-            position: fixed;
-            top: 0;
-            left: 0;
-            background-color: #111827;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-            z-index: 1001;
-            border-right: 2px solid #4f46e5;
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
-        }
-
-        .side-menu a {
-            padding: 15px 25px;
-            text-decoration: none;
-            font-size: 1.2rem;
-            color: #e2e8f0;
-            display: block;
-            transition: 0.3s;
-        }
-
-        .side-menu a:hover {
-            color: #c084fc;
-            background: #1f2937;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 36px;
-        }
-
-        /* 🟢 Estilos para la insignia de estado superior derecha */
-        .status-badge {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(17, 24, 39, 0.85);
-            border: 1px solid rgba(79, 70, 229, 0.4);
-            padding: 8px 16px;
-            border-radius: 30px;
+        .check-card { 
+            background-color: #111827; 
+            border: 1px solid #1f2937; 
+            border-radius: 14px; 
+            padding: 30px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.4); 
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
             gap: 8px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #e2e8f0;
-            z-index: 1000;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
         }
 
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #10b981;
-            border-radius: 50%;
-            box-shadow: 0 0 8px #10b981;
-        }
-
-        header {
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
-            padding: 60px 20px;
-            text-align: center;
-            border-bottom: 2px solid #4f46e5;
-        }
-
-        /* ✨ NOMBRE DEL BOT CON GRADIENTE SUAVE Y ANIMADO */
-        header h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            
-            background: linear-gradient(90deg, #3b82f6, #ef4444, #3b82f6);
-            background-size: 200% auto;
-            
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            
-            animation: shine 6s ease-in-out infinite;
-            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.4));
-        }
-
-        @keyframes shine {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        /* ✨ MARCO DELGADO CON LUZ ACTIVA LUMINOSA */
-        .profile-container {
-            position: relative;
-            width: 160px;
-            height: 160px;
-            margin: 0 auto 25px auto;
-            border-radius: 20px;
-            padding: 2px;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #0b0f19;
-        }
-
-        .profile-container::before {
-            content: "";
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(transparent, #3b82f6, #ec4899, #3b82f6, transparent);
-            animation: rotate-border 3s linear infinite;
-        }
-
-        .profile-container img {
-            position: relative;
-            width: calc(100% - 4px);
-            height: calc(100% - 4px);
-            border-radius: 19px;
-            z-index: 1;
-            object-fit: cover;
-            background-color: #0b0f19;
-        }
-
-        @keyframes rotate-border {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* 🏃 Estilos de la marquesina */
-        .marquee-container {
-            width: 100%;
-            max-width: 650px;
-            margin: 15px auto 20px auto;
-            background: rgba(17, 24, 39, 0.8);
-            border: 1px solid #4f46e5;
-            border-radius: 30px;
-            overflow: hidden;
-            white-space: nowrap;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-            padding: 8px 0;
-        }
-
-        .marquee-track {
-            display: inline-flex;
-            white-space: nowrap;
-            animation: marqueeScroll 18s linear infinite;
-        }
-
-        .marquee-track span {
-            display: inline-block;
-            padding-right: 40px;
-            font-size: 0.82rem;
-            font-weight: bold;
-            color: #93c5fd;
-        }
-
-        @keyframes marqueeScroll {
-            0% { transform: translateX(0%); }
-            100% { transform: translateX(-50%); }
-        }
-
-        header p {
-            font-size: 1.1rem;
-            color: #93c5fd;
-            max-width: 600px;
-            margin: 0 auto 15px auto;
-        }
-
-        .btn-container {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 30px;
-        }
-
-        .btn {
-            display: inline-block;
-            color: white;
-            padding: 12px 20px;
-            width: 250px;
-            text-align: center;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: bold;
-            transition: transform 0.1s ease, box-shadow 0.1s ease, opacity 0.1s ease;
-            border: none;
-            cursor: pointer;
+        .form-label {
             font-size: 0.95rem;
+            color: #f3f4f6;
+            font-weight: 600;
         }
 
-        .btn:hover {
+        .form-input {
+            background-color: #1f2937;
+            border: 1px solid #374151;
+            border-radius: 10px;
+            padding: 12px 16px;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            border-color: #6366f1;
+        }
+
+        .check-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); 
+            color: white; 
+            border: none;
+            padding: 12px; 
+            border-radius: 10px; 
+            font-weight: bold; 
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .check-btn:hover {
             transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(168, 85, 247, 0.4);
         }
 
-        .btn:active {
-            transform: scale(0.95) translateY(0);
-            opacity: 0.85;
+        /* 📱 Caja de Resultado */
+        .result-box {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            background: #1f2937;
+            border: 1px solid #374151;
+            display: none;
+            text-align: center;
+            font-weight: 500;
         }
 
-        .btn-primary { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4); }
-        .btn-whatsapp { background: linear-gradient(135deg, #059669 0%, #10b981 100%); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); }
-        .btn-gmail { background: linear-gradient(135deg, #db4437 0%, #ff6347 100%); box-shadow: 0 4px 15px rgba(219, 68, 55, 0.4); }
-        .btn-github { background: linear-gradient(135deg, #333 0%, #000 100%); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); }
-
-        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
-        .section-title { text-align: center; color: #c084fc; margin-bottom: 30px; font-size: 2rem; }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .feature-card { background-color: #111827; border: 1px solid #1f2937; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); transition: border-color 0.2s; }
-        .feature-card:hover { border-color: #6366f1; }
-        .feature-card h3 { color: #93c5fd; margin-bottom: 10px; }
-        footer { text-align: center; padding: 30px; background-color: #030712; color: #6b7280; margin-top: 60px; border-top: 1px solid #1f2937; font-size: 0.9rem; }
+        .result-box.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
 
     <button class="menu-btn" onclick="toggleMenu()">☰</button>
 
-    <div class="status-badge">
-        <span class="status-dot"></span>
-        En Línea
-    </div>
-
-    <!-- 📂 Menú lateral corregido (sin link mal ubicado) -->
     <div id="sideMenu" class="side-menu">
-        <a href="javascript:void(0)" class="close-btn" onclick="toggleMenu()">&times;</a>
+        <span class="close-btn" onclick="toggleMenu()">&times;</span>
         <a href="index.html">🏠 Inicio</a>
-        <a href="../pestañas/comandos.html">🛠️ Comandos</a>
-        <a href="../pestañas/apis.html">🕹️ APIs</a>
-        <a href="../pestañas/vincular.html">🌐 Vincular</a>
-        <a href="../pestañas/Personalizar.html">✨ Personalizar</a>
-        <a href="../pestañas/juegos.html">🎮 Juegos</a>
-        <a href="../pestañas/donaciones.html">💰 Donaciones</a>
-        <a href="../pestañas/statusnumber.html">🔴 Ban Check</a>
+        <a href="apis.html">⚡ APIs</a>
+        <a href="Aplicaciones.html">📱 Aplicaciones</a>
+        <a href="statusnumber.html">🔍 Estado de Número</a>
     </div>
 
     <header>
-        <div class="profile-container">
-            <img src="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg" alt="Foto de Raphael Bot">
-        </div>
-        
-        <h1>RAPHAEL-BOT</h1>
-        
-        <div class="marquee-container">
-            <div class="marquee-track">
-                <span>🟢 Activo las 24 horas   ★   ⛩️ Gacha, Economía y Descargas   ★   👻 Stickers y Personalización   ★   🛡️ Moderación y Seguridad   ★</span>
-                <span>🟢 Activo las 24 horas   ★   ⛩️ Gacha, Economía y Descargas   ★   👻 Stickers y Personalización   ★   🛡️ Moderación y Seguridad   ★</span>
-            </div>
-        </div>
-
-        <p>El mejor bot para automatizar y divertirte en tus grupos de WhatsApp de manera rápida y sencilla.</p>
-        
-        <div class="btn-container">
-            <a href="https://chat.whatsapp.com/L3riNwByiVMEyyJFO5ZTFQ?s=cl&p=a&ilr=1" class="btn btn-primary" target="_blank">¡Probar Bot Personalmente!</a>
-            <a href="https://whatsapp.com/channel/0029VaeaBGb2UPB80GbJ420a" class="btn btn-whatsapp" target="_blank">Unirse al Canal</a>
-            <a href="mailto:raphaelbotwa@gmail.com" class="btn btn-gmail" target="_blank">Contactar por Gmail</a>
-            <a href="https://github.com/TheKingNoir" class="btn btn-github" target="_blank">GitHub</a>
-        </div>
+        <h1>VERIFICADOR DE NÚMERO</h1>
+        <p>Comprueba el estado de un número en WhatsApp de forma rápida.</p>
     </header>
 
     <div class="container">
-        <h2 class="section-title">Características Principales</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <h3>⚡ Respuestas Rápidas</h3>
-                <p>Procesa comandos y consultas al instante las 24 horas del día, sin interrupciones.</p>
+        <div class="check-card">
+            <div class="form-group">
+                <label class="form-label" for="phoneNumber">Ingresa tu número de teléfono</label>
+                <input type="text" id="phoneNumber" class="form-input" placeholder="Ej: +521234567890">
             </div>
-            <div class="feature-card">
-                <h3>🛠️ Moderación de Grupos</h3>
-                <p>Mantén el orden en tus chats con herramientas automáticas y seguras para administradores.</p>
-            </div>
-            <div class="feature-card">
-                <h3>🎵 Descargas y Utilidades</h3>
-                <p>Descarga contenido multimedia y usa herramientas interactivas directamente en el chat.</p>
+            
+            <button class="check-btn" onclick="checkNumberStatus()">Verificar Estado</button>
+
+            <div id="resultBox" class="result-box">
+                <span id="resultText">Esperando consulta...</span>
             </div>
         </div>
     </div>
-
-    <footer>
-        <p>&copy; 2026 RAPHAEL-WA-BOT ° Hecho y Desarrollado Por Ares Arcane.©</p>
-    </footer>
 
     <script>
         function toggleMenu() {
             const menu = document.getElementById("sideMenu");
             menu.style.width = (menu.style.width === "250px") ? "0" : "250px";
         }
+
         document.addEventListener("click", function(event) {
             const menu = document.getElementById("sideMenu");
             const menuBtn = document.querySelector(".menu-btn");
@@ -351,6 +148,40 @@
                 menu.style.width = "0";
             }
         });
+
+        async function checkNumberStatus() {
+            const input = document.getElementById("phoneNumber").value.trim();
+            const resultBox = document.getElementById("resultBox");
+            const resultText = document.getElementById("resultText");
+
+            if (!input) {
+                resultBox.className = "result-box active";
+                resultText.style.color = "#f87171";
+                resultText.innerHTML = "⚠️ Por favor, ingresa un número de teléfono válido.";
+                return;
+            }
+
+            resultBox.className = "result-box active";
+            resultText.style.color = "#9ca3af";
+            resultText.innerHTML = "⏳ Consultando el estado en el servidor...";
+
+            try {
+                // 🌐 Recuerda cambiar "https://tu-servidor.com" por la URL real de tu backend
+                const response = await fetch(`https://tu-servidor.com/api/check-number?phone=${encodeURIComponent(input)}`);
+                const data = await response.json();
+
+                if (data.exists) {
+                    resultText.style.color = "#34d399";
+                    resultText.innerHTML = `✅ El número <strong>${input}</strong> está activo y registrado en WhatsApp.`;
+                } else {
+                    resultText.style.color = "#f87171";
+                    resultText.innerHTML = `❌ El número <strong>${input}</strong> no está registrado o se encuentra suspendido/inactivo.`;
+                }
+            } catch (error) {
+                resultText.style.color = "#f87171";
+                resultText.innerHTML = "❌ Ocurrió un error al conectar con el servidor de consultas.";
+            }
+        }
     </script>
 </body>
 </html>
