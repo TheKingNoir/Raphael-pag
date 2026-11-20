@@ -4,285 +4,666 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Personalizar Bot - Raphael-WA-BOT</title>
-    
-    <!-- 🖼️ Favicon -->
+
     <link rel="icon" type="image/jpeg" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
     <link rel="apple-touch-icon" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
 
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
     <style>
+        :root {
+            --bg-black: #030508;
+            --electric-blue: #00a8ff;
+            --electric-cyan: #38bdf8;
+            --electric-deep: #0284c7;
+            --glass-bg: rgba(10, 16, 28, 0.48);
+            --glass-bg-hover: rgba(14, 24, 42, 0.65);
+            --glass-border: rgba(148, 210, 255, 0.14);
+            --glass-border-hover: rgba(56, 189, 248, 0.45);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: #0b0f19;
-            color: #e2e8f0;
+            background-color: var(--bg-black);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        /* 🛠️ Estilos del Menú Lateral */
-        .menu-btn {
+        /* Fondo eléctrico */
+        #electric-canvas {
             position: fixed;
-            top: 20px;
-            left: 20px;
-            background: #6366f1;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            font-size: 20px;
-            cursor: pointer;
-            border-radius: 8px;
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
-            transition: background 0.2s, transform 0.1s;
-        }
-
-        .menu-btn:hover {
-            background: #4f46e5;
-        }
-
-        .side-menu {
+            inset: 0;
+            width: 100%;
             height: 100%;
-            width: 0;
+            z-index: -2;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 0%, #071226 0%, #030508 65%, #000000 100%);
+        }
+
+        .ambient-vignette {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 40%, transparent 25%, rgba(0, 0, 0, 0.72) 100%);
+        }
+
+        /* Glassmorphism base */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(18px) saturate(140%);
+            -webkit-backdrop-filter: blur(18px) saturate(140%);
+            border: 1px solid var(--glass-border);
+            box-shadow:
+                0 20px 45px rgba(0, 0, 0, 0.65),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        /* Barra superior fija */
+        .topbar {
             position: fixed;
             top: 0;
             left: 0;
-            background-color: #111827;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
+            right: 0;
+            height: 70px;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 900;
+            background: rgba(3, 5, 8, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .menu-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(15, 23, 42, 0.6);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+            padding: 9px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+        }
+
+        .menu-btn:hover {
+            border-color: var(--glass-border-hover);
+            background: rgba(20, 32, 54, 0.8);
+        }
+
+        .menu-btn:active {
+            transform: scale(0.97);
+        }
+
+        .brand-mini {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.14em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            display: none;
+        }
+
+        @media (min-width: 640px) {
+            .brand-mini {
+                display: block;
+            }
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 14px;
+            border-radius: 999px;
+            background: rgba(10, 16, 28, 0.65);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--text-main);
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: #22c55e;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);
+            animation: pulseDot 2.4s ease-in-out infinite;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.55; transform: scale(0.85); }
+        }
+
+        /* Overlay y Menú Lateral */
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 1000;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 280px;
+            max-width: 85vw;
+            transform: translateX(-100%);
+            transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
             z-index: 1001;
-            border-right: 2px solid #4f46e5;
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
+            padding: 24px 18px;
+            display: flex;
+            flex-direction: column;
+            background: rgba(6, 10, 18, 0.84);
+            backdrop-filter: blur(26px) saturate(150%);
+            -webkit-backdrop-filter: blur(26px) saturate(150%);
+            border-right: 1px solid rgba(56, 189, 248, 0.18);
+            box-shadow: 20px 0 60px rgba(0, 0, 0, 0.85);
         }
 
-        .side-menu a {
-            padding: 15px 25px;
-            text-decoration: none;
-            font-size: 1.2rem;
-            color: #e2e8f0;
-            display: block;
-            transition: 0.3s;
+        .side-menu.open {
+            transform: translateX(0);
         }
 
-        .side-menu a:hover {
-            color: #c084fc;
-            background: #1f2937;
+        .side-menu-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 10px 20px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 16px;
+        }
+
+        .side-menu-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 0.08em;
+            color: var(--text-main);
         }
 
         .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 36px;
-        }
-
-        header {
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
-            padding: 40px 20px;
-            text-align: center;
-            border-bottom: 2px solid #4f46e5;
-        }
-
-        header h1 {
-            font-size: 2.5rem;
-            color: #c084fc;
-            margin-bottom: 10px;
-        }
-
-        /* 📋 Formulario de Personalización */
-        .container {
-            max-width: 650px;
-            margin: 40px auto;
-            padding: 30px;
-            background-color: #111827;
-            border: 1px solid #1f2937;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 6px;
-            color: #93c5fd;
-            font-weight: bold;
-            font-size: 1.05rem;
-        }
-
-        /* 💡 Estilos para las instrucciones */
-        .instruction-text {
-            font-size: 0.88rem;
-            color: #9ca3af;
-            margin-bottom: 10px;
-            line-height: 1.4;
-            font-style: italic;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 12px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            width: 34px;
+            height: 34px;
             border-radius: 8px;
-            border: 1px solid #4f46e5;
-            background-color: #0b0f19;
-            color: #e2e8f0;
-            font-size: 1rem;
+            font-size: 20px;
+            line-height: 1;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            transition: color 0.2s, border-color 0.2s, background 0.2s;
         }
 
-        .form-group input:focus {
-            outline: none;
-            border-color: #c084fc;
-            box-shadow: 0 0 8px rgba(192, 132, 252, 0.3);
+        .close-btn:hover {
+            color: #fff;
+            border-color: var(--glass-border-hover);
+            background: rgba(56, 189, 248, 0.1);
         }
 
-        /* 🖼️ Cuadro de Vista Previa más grande y ubicado arriba */
+        .side-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            overflow-y: auto;
+        }
+
+        .side-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.94rem;
+            font-weight: 500;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .side-nav a svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            flex-shrink: 0;
+            opacity: 0.8;
+        }
+
+        .side-nav a:hover,
+        .side-nav a.active {
+            color: var(--text-main);
+            background: rgba(56, 189, 248, 0.09);
+            border-color: rgba(56, 189, 248, 0.22);
+        }
+
+        .side-nav a:hover svg,
+        .side-nav a.active svg {
+            color: var(--electric-cyan);
+            opacity: 1;
+        }
+
+        /* Contenedor Principal */
+        main {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 106px 20px 60px 20px;
+        }
+
+        /* Cabecera Hero */
+        .page-hero {
+            border-radius: 24px;
+            padding: 38px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 28px;
+        }
+
+        .page-hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 16%;
+            right: 16%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.75), transparent);
+        }
+
+        .hero-icon {
+            width: 52px;
+            height: 52px;
+            margin: 0 auto 16px auto;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            color: var(--electric-cyan);
+        }
+
+        .hero-kicker {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--electric-cyan);
+            margin-bottom: 8px;
+        }
+
+        .page-hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 4.8vw, 2.6rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .page-hero p {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Tarjeta de Formulario */
+        .panel-card {
+            border-radius: 22px;
+            padding: 32px 28px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Vista Previa */
         .preview-container {
             text-align: center;
-            margin-bottom: 25px;
-            padding: 15px;
-            background: rgba(11, 15, 25, 0.5);
-            border-radius: 12px;
-            border: 1px solid #1f2937;
+            margin-bottom: 28px;
+            padding: 20px;
+            background: rgba(5, 9, 18, 0.55);
+            border-radius: 16px;
+            border: 1px solid rgba(148, 210, 255, 0.12);
+        }
+
+        .preview-label {
+            display: block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.76rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--electric-cyan);
+            margin-bottom: 14px;
         }
 
         .preview-box {
-            width: 180px;
-            height: 180px;
-            margin: 12px auto 0 auto;
-            border-radius: 15px;
-            border: 2px dashed #4f46e5;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: #0b0f19;
-            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+            width: 168px;
+            height: 168px;
+            margin: 0 auto;
+            padding: 5px;
+            border-radius: 20px;
+            background: linear-gradient(145deg, rgba(56, 189, 248, 0.35), rgba(15, 23, 42, 0.4));
+            border: 1px dashed rgba(56, 189, 248, 0.45);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.65);
         }
 
         .preview-box img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            border-radius: 15px;
+            display: block;
+            background-color: #05080f;
         }
 
-        .btn-save {
-            display: block;
-            width: 100%;
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 30px;
-            font-weight: bold;
+        /* Campos del formulario */
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+            color: #ffffff;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
             font-size: 1rem;
+        }
+
+        .form-group label svg {
+            width: 17px;
+            height: 17px;
+            color: var(--electric-cyan);
+            flex-shrink: 0;
+        }
+
+        .instruction-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            line-height: 1.45;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 11px;
+            border: 1px solid var(--glass-border);
+            background: rgba(5, 9, 18, 0.68);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.94rem;
+            outline: none;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-dim);
+        }
+
+        .form-group input:focus {
+            border-color: var(--glass-border-hover);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+        }
+
+        /* Botón Guardar */
+        .btn-save {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            width: 100%;
+            min-height: 46px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%);
+            color: #ffffff;
+            border: 1px solid rgba(125, 211, 252, 0.55);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.94rem;
             cursor: pointer;
-            box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4);
-            transition: transform 0.1s ease;
+            box-shadow: 0 8px 24px rgba(2, 132, 199, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            transition: transform 0.18s ease, box-shadow 0.2s ease;
+            margin-top: 6px;
         }
 
         .btn-save:hover {
             transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(14, 165, 233, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        }
+
+        .btn-save:active {
+            transform: translateY(0) scale(0.98);
         }
 
         footer {
+            margin-top: 64px;
+            padding: 28px 20px;
             text-align: center;
-            padding: 30px;
-            background-color: #030712;
-            color: #6b7280;
-            margin-top: 60px;
-            border-top: 1px solid #1f2937;
-            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            background: rgba(3, 5, 8, 0.65);
+            backdrop-filter: blur(12px);
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 540px) {
+            .page-hero {
+                padding: 32px 20px;
+            }
+            .panel-card {
+                padding: 24px 18px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <!-- Fondo animado eléctrico -->
+    <canvas id="electric-canvas" aria-hidden="true"></canvas>
+    <div class="ambient-vignette" aria-hidden="true"></div>
 
-    <div id="sideMenu" class="side-menu">
-        <a href="javascript:void(0)" class="close-btn" onclick="toggleMenu()">&times;</a>
-        <a href="index.html">🏠 Inicio</a>
-        <a href="../pestañas/comandos.html">🛠️ Comandos</a>
-        <a href="../pestañas/apis.html">🕹️ APIs </a>
-        <a href="../pestañas/vincular.html">🌐 Vincular</a>
-        <a href="../pestañas/juegos.html">🎮 Juegos</a>
-        <a href="../pestañas/donaciones.html">💰 Donaciones</a>
-    </div>
+    <!-- Barra superior -->
+    <header class="topbar">
+        <button class="menu-btn" onclick="toggleMenu()" aria-label="Abrir menú de navegación">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <span>Menú</span>
+        </button>
 
-    <header>
-        <h1>Panel De Personalización</h1>
-        <p>Configura los parámetros principales de tu bot de manera sencilla.</p>
+        <span class="brand-mini">RAPHAEL // PERSONALIZAR</span>
+
+        <div class="status-badge">
+            <span class="status-dot"></span>
+            <span>En Línea</span>
+        </div>
     </header>
 
-    <div class="container">
-        
-        <!-- 🖼️ Sección de Imagen al principio con cuadro más grande -->
-        <div class="preview-container">
-            <label>👀 Vista Previa De La Imagen:</label>
-            <div class="preview-box">
-                <img id="imagePreview" src="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg" alt="Vista previa de la foto del bot">
+    <!-- Overlay y Menú Lateral -->
+    <div id="menuOverlay" class="menu-overlay" onclick="closeMenu()"></div>
+
+    <aside id="sideMenu" class="side-menu" aria-label="Navegación principal">
+        <div class="side-menu-header">
+            <span class="side-menu-title">NAVEGACIÓN</span>
+            <button class="close-btn" onclick="closeMenu()" aria-label="Cerrar menú">&times;</button>
+        </div>
+
+        <nav class="side-nav">
+            <a href="index.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Inicio
+            </a>
+            <a href="../pestañas/comandos.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                Comandos
+            </a>
+            <a href="../pestañas/apis.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                APIs
+            </a>
+            <a href="../pestañas/vincular.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                Vincular
+            </a>
+            <a href="../pestañas/Personalizar.html" class="active">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                Personalizar
+            </a>
+            <a href="../pestañas/juegos.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="13" x2="15.01" y2="13"/><line x1="18" y1="11" x2="18.01" y2="11"/><rect x="2" y="6" width="20" height="12" rx="4"/></svg>
+                Juegos
+            </a>
+            <a href="../pestañas/donaciones.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                Donaciones
+            </a>
+            <a href="../pestañas/statusnumber.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Ban Check
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Contenido Principal -->
+    <main>
+        <section class="page-hero glass">
+            <div class="hero-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
             </div>
-        </div>
+            <span class="hero-kicker">Bot Configuration</span>
+            <h1>Panel de Personalización</h1>
+            <p>Configura los parámetros principales de tu bot de manera sencilla.</p>
+        </section>
 
-        <div class="form-group">
-            <label for="botImage">🖼️ Imagen Del Bot:</label>
-            <p class="instruction-text">Ve a un grupo donde esté el bot, envía la imagen que deseas, responde con el comando /tourl a esa imagen y pega el link aquí.</p>
-            <input type="text" id="botImage" placeholder="Pega el link aquí" value="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg" oninput="actualizarVistaPrevia()">
-        </div>
+        <section class="panel-card glass">
+            <!-- Vista Previa -->
+            <div class="preview-container">
+                <span class="preview-label">Vista Previa de la Imagen</span>
+                <div class="preview-box">
+                    <img id="imagePreview" src="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg" alt="Vista previa de la foto del bot">
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label for="botName">🤖 Nombre Del bot:</label>
-            <p class="instruction-text">Pega un nombre corto y sin espacios aquí, ejemplo:</p>
-            <input type="text" id="botName" placeholder="Ej. Raphael-Bot" value="Raphael-WA-BOT">
-        </div>
+            <div class="form-group">
+                <label for="botImage">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+                    Imagen del Bot
+                </label>
+                <p class="instruction-text">Ve a un grupo donde esté el bot, envía la imagen que deseas, responde con el comando /tourl a esa imagen y pega el link aquí.</p>
+                <input type="text" id="botImage" placeholder="Pega el link aquí" value="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg" oninput="actualizarVistaPrevia()">
+            </div>
 
-        <div class="form-group">
-            <label for="botPrefix">⚡ Prefijo:</label>
-            <p class="instruction-text">Elije un signo que te guste o incluso un emoji para usar como prefijo para activar tus comandos.</p>
-            <input type="text" id="botPrefix" placeholder="Ej. !" value="!">
-        </div>
+            <div class="form-group">
+                <label for="botName">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/></svg>
+                    Nombre del Bot
+                </label>
+                <p class="instruction-text">Pega un nombre corto y sin espacios aquí, ejemplo:</p>
+                <input type="text" id="botName" placeholder="Ej. Raphael-Bot" value="Raphael-WA-BOT">
+            </div>
 
-        <div class="form-group">
-            <label for="ownerNumber">👑 Dueño:</label>
-            <p class="instruction-text">Escribe el número que deseas tener como dueño del bot sin espacios ejemplo:</p>
-            <input type="text" id="ownerNumber" placeholder="Ej. +587777777" value="">
-        </div>
+            <div class="form-group">
+                <label for="botPrefix">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    Prefijo
+                </label>
+                <p class="instruction-text">Elige un signo que te guste o incluso un emoji para usar como prefijo para activar tus comandos.</p>
+                <input type="text" id="botPrefix" placeholder="Ej. !" value="!">
+            </div>
 
-        <button class="btn-save" onclick="guardarConfiguracion()">Guardar Cambios</button>
-    </div>
+            <div class="form-group">
+                <label for="ownerNumber">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    Dueño
+                </label>
+                <p class="instruction-text">Escribe el número que deseas tener como dueño del bot sin espacios, ejemplo:</p>
+                <input type="text" id="ownerNumber" placeholder="Ej. +587777777" value="">
+            </div>
+
+            <button class="btn-save" onclick="guardarConfiguracion()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                Guardar Cambios
+            </button>
+        </section>
+    </main>
 
     <footer>
         <p>&copy; 2026 RAPHAEL-WA-BOT ° Hecho y Desarrollado Por Ares Arcane.©</p>
     </footer>
 
     <script>
+        /* --- Control del Menú Lateral --- */
+        const sideMenu = document.getElementById("sideMenu");
+        const menuOverlay = document.getElementById("menuOverlay");
+
         function toggleMenu() {
-            const menu = document.getElementById("sideMenu");
-            menu.style.width = (menu.style.width === "250px") ? "0" : "250px";
+            const isOpen = sideMenu.classList.toggle("open");
+            menuOverlay.classList.toggle("active", isOpen);
         }
 
-        // 🖱️ Evento para cerrar el menú si se hace clic fuera de él
-        document.addEventListener("click", function(event) {
-            const menu = document.getElementById("sideMenu");
-            const menuBtn = document.querySelector(".menu-btn");
-            
-            // Si el menú está abierto y el clic no fue ni en el menú ni en el botón de abrir...
-            if (menu.style.width === "250px" && !menu.contains(event.target) && !menuBtn.contains(event.target)) {
-                menu.style.width = "0";
-            }
+        function closeMenu() {
+            sideMenu.classList.remove("open");
+            menuOverlay.classList.remove("active");
+        }
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") closeMenu();
         });
 
-        // Función para actualizar la imagen en tiempo real al escribir el link
+        /* --- Lógica de Personalización --- */
         function actualizarVistaPrevia() {
             const imageUrl = document.getElementById("botImage").value;
             const previewImg = document.getElementById("imagePreview");
-            if(imageUrl.trim() !== "") {
+            if (imageUrl.trim() !== "") {
                 previewImg.src = imageUrl;
             }
         }
@@ -295,6 +676,162 @@
 
             alert(`¡Configuración guardada con éxito!\n\nNombre: ${name}\nPrefijo: ${prefix}\nDueño: ${owner}\nImagen: ${image}`);
         }
+
+        /* --- Fondo Eléctrico Azul en Canvas --- */
+        const canvas = document.getElementById("electric-canvas");
+        const ctx = canvas.getContext("2d");
+
+        let width, height, dpr;
+        let bolts = [];
+        let conduits = [];
+
+        function resizeCanvas() {
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            initConduits();
+        }
+
+        function initConduits() {
+            conduits = [];
+            const count = width < 768 ? 4 : 6;
+            for (let i = 0; i < count; i++) {
+                const yBase = (height / (count + 1)) * (i + 1);
+                conduits.push({
+                    yBase,
+                    amplitude: 28 + Math.random() * 45,
+                    frequency: 0.002 + Math.random() * 0.0025,
+                    phase: Math.random() * Math.PI * 2,
+                    speed: 0.004 + Math.random() * 0.006,
+                    pulsePos: Math.random(),
+                    pulseSpeed: 0.0018 + Math.random() * 0.0025
+                });
+            }
+        }
+
+        function buildLightningPath(x1, y1, x2, y2, displace) {
+            if (displace < 6) {
+                return [{ x: x1, y: y1 }, { x: x2, y: y2 }];
+            }
+            const midX = (x1 + x2) / 2 + (Math.random() - 0.5) * displace;
+            const midY = (y1 + y2) / 2 + (Math.random() - 0.5) * displace;
+            const left = buildLightningPath(x1, y1, midX, midY, displace * 0.55);
+            const right = buildLightningPath(midX, midY, x2, y2, displace * 0.55);
+            return left.slice(0, -1).concat(right);
+        }
+
+        function spawnBolt() {
+            const fromLeft = Math.random() > 0.5;
+            const startX = fromLeft ? -20 : width + 20;
+            const startY = Math.random() * height;
+            const endX = fromLeft ? width * (0.45 + Math.random() * 0.6) : width * (Math.random() * 0.55);
+            const endY = startY + (Math.random() - 0.5) * 320;
+
+            const mainPath = buildLightningPath(startX, startY, endX, endY, 110);
+            const branches = [];
+
+            const branchCount = 1 + Math.floor(Math.random() * 2);
+            for (let i = 0; i < branchCount; i++) {
+                const idx = Math.floor(mainPath.length * (0.25 + Math.random() * 0.5));
+                const origin = mainPath[idx];
+                if (origin) {
+                    const bx = origin.x + (Math.random() - 0.5) * 200;
+                    const by = origin.y + (Math.random() - 0.5) * 180;
+                    branches.push(buildLightningPath(origin.x, origin.y, bx, by, 55));
+                }
+            }
+
+            bolts.push({
+                path: mainPath,
+                branches,
+                alpha: 0.95,
+                decay: 0.018 + Math.random() * 0.02
+            });
+        }
+
+        function drawPath(points, lineWidth, strokeStyle, glowBlur, glowColor) {
+            if (points.length < 2) return;
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (let i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i].x, points[i].y);
+            }
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = strokeStyle;
+            ctx.shadowBlur = glowBlur;
+            ctx.shadowColor = glowColor;
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        let lastBoltTime = 0;
+
+        function animate(timestamp) {
+            ctx.clearRect(0, 0, width, height);
+
+            for (const c of conduits) {
+                c.phase += c.speed;
+                c.pulsePos = (c.pulsePos + c.pulseSpeed) % 1;
+
+                ctx.beginPath();
+                const step = 28;
+                const pts = [];
+                for (let x = -step; x <= width + step; x += step) {
+                    const y = c.yBase
+                        + Math.sin(x * c.frequency + c.phase) * c.amplitude
+                        + Math.cos(x * c.frequency * 2.1 - c.phase * 1.4) * (c.amplitude * 0.3);
+                    pts.push({ x, y });
+                    if (x === -step) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+
+                ctx.strokeStyle = "rgba(14, 165, 233, 0.14)";
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                const pulseCenter = Math.floor(c.pulsePos * (pts.length - 1));
+                const segStart = Math.max(0, pulseCenter - 4);
+                const segEnd = Math.min(pts.length - 1, pulseCenter + 4);
+                const segment = pts.slice(segStart, segEnd + 1);
+
+                drawPath(segment, 2.2, "rgba(56, 189, 248, 0.65)", 16, "#00a8ff");
+                drawPath(segment, 1, "rgba(224, 242, 254, 0.85)", 6, "#38bdf8");
+            }
+
+            if (timestamp - lastBoltTime > 1600 + Math.random() * 2200) {
+                spawnBolt();
+                lastBoltTime = timestamp;
+            }
+
+            for (let i = bolts.length - 1; i >= 0; i--) {
+                const b = bolts[i];
+                const flicker = b.alpha * (0.75 + Math.random() * 0.25);
+
+                drawPath(b.path, 3, `rgba(0, 168, 255, ${flicker * 0.45})`, 22, "#00a8ff");
+                drawPath(b.path, 1.2, `rgba(224, 242, 254, ${flicker * 0.9})`, 8, "#38bdf8");
+
+                for (const br of b.branches) {
+                    drawPath(br, 1.6, `rgba(14, 165, 233, ${flicker * 0.35})`, 14, "#00a8ff");
+                    drawPath(br, 0.7, `rgba(186, 230, 253, ${flicker * 0.7})`, 4, "#38bdf8");
+                }
+
+                b.alpha -= b.decay;
+                if (b.alpha <= 0) {
+                    bolts.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+        spawnBolt();
+        requestAnimationFrame(animate);
     </script>
 </body>
 </html>
