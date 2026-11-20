@@ -4,213 +4,400 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Raphael-WA-BOT</title>
-    
-    <!-- 🖼️ Favicon vinculado a tu archivo local favicon.png -->
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="favicon.png" sizes="48x48">
     <link rel="apple-touch-icon" href="favicon.png">
 
-    <!-- 🔗 Vinculación correcta de tu archivo CSS externo -->
+    <!-- Tipografías limpias y técnicas -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- CSS externo (si notas conflictos visuales con el nuevo diseño, puedes comentar esta línea) -->
     <link rel="stylesheet" href="../pestañas/pruebas.css">
 
     <style>
+        :root {
+            --bg-black: #030508;
+            --electric-blue: #00a8ff;
+            --electric-cyan: #38bdf8;
+            --electric-deep: #0284c7;
+            --glass-bg: rgba(10, 16, 28, 0.48);
+            --glass-bg-hover: rgba(14, 24, 42, 0.62);
+            --glass-border: rgba(148, 210, 255, 0.14);
+            --glass-border-hover: rgba(56, 189, 248, 0.45);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: #0b0f19;
-            color: #e2e8f0;
+            background-color: var(--bg-black);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        /* 🛠️ Estilos del Menú Lateral */
-        .menu-btn {
+        /* Canvas de fondo eléctrico */
+        #electric-canvas {
             position: fixed;
-            top: 20px;
-            left: 20px;
-            background: #6366f1;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            font-size: 20px;
-            cursor: pointer;
-            border-radius: 8px;
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.4);
-            transition: background 0.2s, transform 0.1s;
-        }
-
-        .menu-btn:hover {
-            background: #4f46e5;
-        }
-
-        .menu-btn:active {
-            transform: scale(0.92);
-        }
-
-        .side-menu {
+            inset: 0;
+            width: 100%;
             height: 100%;
-            width: 0;
+            z-index: -2;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 0%, #071226 0%, #030508 65%, #000000 100%);
+        }
+
+        /* Viñeta sutil para dar profundidad y legibilidad */
+        .ambient-vignette {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 40%, transparent 25%, rgba(0, 0, 0, 0.72) 100%);
+        }
+
+        /* Clase base Glassmorphism */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(18px) saturate(140%);
+            -webkit-backdrop-filter: blur(18px) saturate(140%);
+            border: 1px solid var(--glass-border);
+            box-shadow:
+                0 20px 45px rgba(0, 0, 0, 0.65),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        /* Barra superior minimalista */
+        .topbar {
             position: fixed;
             top: 0;
             left: 0;
-            background-color: #111827;
-            overflow-x: hidden;
-            transition: 0.5s;
-            padding-top: 60px;
-            z-index: 1001;
-            border-right: 2px solid #4f46e5;
-            box-shadow: 5px 0 15px rgba(0, 0, 0, 0.5);
-        }
-
-        .side-menu a {
-            padding: 15px 25px;
-            text-decoration: none;
-            font-size: 1.2rem;
-            color: #e2e8f0;
-            display: block;
-            transition: 0.3s;
-        }
-
-        .side-menu a:hover {
-            color: #c084fc;
-            background: #1f2937;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 36px;
-        }
-
-        /* 🟢 Estilos para la insignia de estado superior derecha */
-        .status-badge {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(17, 24, 39, 0.85);
-            border: 1px solid rgba(79, 70, 229, 0.4);
-            padding: 8px 16px;
-            border-radius: 30px;
+            right: 0;
+            height: 70px;
+            padding: 0 24px;
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            z-index: 900;
+            background: rgba(3, 5, 8, 0.55);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .menu-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(15, 23, 42, 0.6);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+            padding: 9px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+        }
+
+        .menu-btn:hover {
+            border-color: var(--glass-border-hover);
+            background: rgba(20, 32, 54, 0.8);
+        }
+
+        .menu-btn:active {
+            transform: scale(0.97);
+        }
+
+        .brand-mini {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.14em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            display: none;
+        }
+
+        @media (min-width: 640px) {
+            .brand-mini {
+                display: block;
+            }
+        }
+
+        /* Insignia de estado */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
             gap: 8px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            color: #e2e8f0;
-            z-index: 1000;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            padding: 7px 14px;
+            border-radius: 999px;
+            background: rgba(10, 16, 28, 0.65);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--text-main);
         }
 
         .status-dot {
-            width: 8px;
-            height: 8px;
-            background-color: #10b981;
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
-            box-shadow: 0 0 8px #10b981;
+            background-color: #22c55e;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);
+            animation: pulseDot 2.4s ease-in-out infinite;
         }
 
-        header {
-            background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
-            padding: 60px 20px;
-            text-align: center;
-            border-bottom: 2px solid #4f46e5;
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.55; transform: scale(0.85); }
         }
 
-        /* ✨ NOMBRE DEL BOT CON GRADIENTE SUAVE Y ANIMADO */
-        header h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            
-            background: linear-gradient(90deg, #3b82f6, #ef4444, #3b82f6);
-            background-size: 200% auto;
-            
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            
-            animation: shine 6s ease-in-out infinite;
-            filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.4));
+        /* Fondo oscuro cuando se abre el menú */
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 1000;
         }
 
-        @keyframes shine {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
         }
 
-        /* ✨ MARCO DELGADO CON LUZ ACTIVA LUMINOSA */
-        .profile-container {
-            position: relative;
-            width: 160px;
-            height: 160px;
-            margin: 0 auto 25px auto;
-            border-radius: 20px;
-            padding: 2px;
-            overflow: hidden;
+        /* Menú lateral Glassmorphism */
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 280px;
+            max-width: 85vw;
+            transform: translateX(-100%);
+            transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+            z-index: 1001;
+            padding: 24px 18px;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #0b0f19;
+            flex-direction: column;
+            background: rgba(6, 10, 18, 0.84);
+            backdrop-filter: blur(26px) saturate(150%);
+            -webkit-backdrop-filter: blur(26px) saturate(150%);
+            border-right: 1px solid rgba(56, 189, 248, 0.18);
+            box-shadow: 20px 0 60px rgba(0, 0, 0, 0.85);
         }
 
-        .profile-container::before {
+        .side-menu.open {
+            transform: translateX(0);
+        }
+
+        .side-menu-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 10px 20px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 16px;
+        }
+
+        .side-menu-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 0.08em;
+            color: var(--text-main);
+        }
+
+        .close-btn {
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            font-size: 20px;
+            line-height: 1;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            transition: color 0.2s, border-color 0.2s, background 0.2s;
+        }
+
+        .close-btn:hover {
+            color: #fff;
+            border-color: var(--glass-border-hover);
+            background: rgba(56, 189, 248, 0.1);
+        }
+
+        .side-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            overflow-y: auto;
+        }
+
+        .side-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.94rem;
+            font-weight: 500;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .side-nav a svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            flex-shrink: 0;
+            opacity: 0.8;
+        }
+
+        .side-nav a:hover,
+        .side-nav a.active {
+            color: var(--text-main);
+            background: rgba(56, 189, 248, 0.09);
+            border-color: rgba(56, 189, 248, 0.22);
+        }
+
+        .side-nav a:hover svg,
+        .side-nav a.active svg {
+            color: var(--electric-cyan);
+            opacity: 1;
+        }
+
+        /* Contenedor principal */
+        main {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 112px 20px 60px 20px;
+        }
+
+        /* Tarjeta Hero en Glassmorphism */
+        .hero-card {
+            border-radius: 24px;
+            padding: 48px 36px;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .hero-card::before {
             content: "";
             position: absolute;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(transparent, #3b82f6, #ec4899, #3b82f6, transparent);
-            animation: rotate-border 3s linear infinite;
+            top: 0;
+            left: 15%;
+            right: 15%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.75), transparent);
         }
 
-        .profile-container img {
-            position: relative;
-            width: calc(100% - 4px);
-            height: calc(100% - 4px);
-            border-radius: 19px;
-            z-index: 1;
-            object-fit: cover;
-            background-color: #0b0f19;
+        .profile-frame {
+            width: 132px;
+            height: 132px;
+            margin: 0 auto 24px auto;
+            padding: 5px;
+            border-radius: 22px;
+            background: linear-gradient(145deg, rgba(56, 189, 248, 0.35), rgba(15, 23, 42, 0.4));
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 168, 255, 0.16);
         }
 
-        @keyframes rotate-border {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* 🏃 Estilos de la marquesina */
-        .marquee-container {
+        .profile-frame img {
             width: 100%;
-            max-width: 650px;
-            margin: 15px auto 20px auto;
-            background: rgba(17, 24, 39, 0.8);
-            border: 1px solid #4f46e5;
-            border-radius: 30px;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 17px;
+            display: block;
+            background: #05080f;
+        }
+
+        .hero-kicker {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.76rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--electric-cyan);
+            margin-bottom: 10px;
+        }
+
+        .hero-card h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(2.1rem, 5vw, 3.4rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            color: #ffffff;
+            margin-bottom: 18px;
+        }
+
+        .hero-desc {
+            font-size: 1.05rem;
+            color: var(--text-muted);
+            max-width: 580px;
+            margin: 0 auto 28px auto;
+        }
+
+        /* Cinta informativa (Marquesina sobria) */
+        .marquee-strip {
+            max-width: 680px;
+            margin: 0 auto 32px auto;
+            border-radius: 12px;
+            background: rgba(3, 6, 12, 0.6);
+            border: 1px solid rgba(148, 210, 255, 0.12);
             overflow: hidden;
-            white-space: nowrap;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-            padding: 8px 0;
+            padding: 10px 0;
+            position: relative;
+            mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+            -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
         }
 
         .marquee-track {
             display: inline-flex;
             white-space: nowrap;
-            animation: marqueeScroll 18s linear infinite;
+            animation: marqueeScroll 24s linear infinite;
+        }
+
+        .marquee-track:hover {
+            animation-play-state: paused;
         }
 
         .marquee-track span {
-            display: inline-block;
-            padding-right: 40px;
-            font-size: 0.82rem;
-            font-weight: bold;
-            color: #93c5fd;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: #cbd5e1;
+            padding-right: 36px;
+        }
+
+        .marquee-track .sep {
+            color: var(--electric-cyan);
+            margin: 0 14px;
+            padding: 0;
         }
 
         @keyframes marqueeScroll {
@@ -218,34 +405,32 @@
             100% { transform: translateX(-50%); }
         }
 
-        header p {
-            font-size: 1.1rem;
-            color: #93c5fd;
-            max-width: 600px;
-            margin: 0 auto 15px auto;
-        }
-
-        .btn-container {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 30px;
+        /* Botones de acción */
+        .btn-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 12px;
+            max-width: 720px;
+            margin: 0 auto;
         }
 
         .btn {
-            display: inline-block;
-            color: white;
-            padding: 12px 20px;
-            width: 250px;
-            text-align: center;
-            border-radius: 30px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 13px 18px;
+            border-radius: 12px;
             text-decoration: none;
-            font-weight: bold;
-            transition: transform 0.1s ease, box-shadow 0.1s ease, opacity 0.1s ease;
-            border: none;
-            cursor: pointer;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
+            font-weight: 500;
+            transition: transform 0.18s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+            flex-shrink: 0;
         }
 
         .btn:hover {
@@ -253,104 +438,514 @@
         }
 
         .btn:active {
-            transform: scale(0.95) translateY(0);
-            opacity: 0.85;
+            transform: translateY(0) scale(0.98);
         }
 
-        .btn-primary { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); box-shadow: 0 4px 15px rgba(168, 85, 247, 0.4); }
-        .btn-whatsapp { background: linear-gradient(135deg, #059669 0%, #10b981 100%); box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4); }
-        .btn-gmail { background: linear-gradient(135deg, #db4437 0%, #ff6347 100%); box-shadow: 0 4px 15px rgba(219, 68, 55, 0.4); }
-        .btn-github { background: linear-gradient(135deg, #333 0%, #000 100%); box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4); }
+        .btn-primary {
+            background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%);
+            color: #ffffff;
+            border: 1px solid rgba(125, 211, 252, 0.55);
+            box-shadow: 0 8px 24px rgba(2, 132, 199, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
 
-        .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
-        .section-title { text-align: center; color: #c084fc; margin-bottom: 30px; font-size: 2rem; }
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .feature-card { background-color: #111827; border: 1px solid #1f2937; padding: 25px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); transition: border-color 0.2s; }
-        .feature-card:hover { border-color: #6366f1; }
-        .feature-card h3 { color: #93c5fd; margin-bottom: 10px; }
-        footer { text-align: center; padding: 30px; background-color: #030712; color: #6b7280; margin-top: 60px; border-top: 1px solid #1f2937; font-size: 0.9rem; }
+        .btn-primary:hover {
+            box-shadow: 0 12px 30px rgba(14, 165, 233, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        }
+
+        .btn-glass {
+            background: rgba(15, 23, 42, 0.55);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-glass:hover {
+            background: rgba(20, 34, 58, 0.78);
+            border-color: var(--glass-border-hover);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.45);
+        }
+
+        /* Sección Características */
+        .section-header {
+            margin: 64px 0 28px 0;
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.55rem;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+        }
+
+        .section-sub {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            border-radius: 18px;
+            padding: 28px 26px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+        }
+
+        .feature-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.45), transparent);
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            background: var(--glass-bg-hover);
+            border-color: var(--glass-border-hover);
+        }
+
+        .feature-card:hover::after {
+            opacity: 1;
+        }
+
+        .card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.22);
+            color: var(--electric-cyan);
+        }
+
+        .icon-box svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .card-index {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+        }
+
+        .feature-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            font-size: 0.93rem;
+            color: var(--text-muted);
+            line-height: 1.65;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 72px;
+            padding: 28px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            background: rgba(3, 5, 8, 0.65);
+            backdrop-filter: blur(12px);
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 600px) {
+            .hero-card {
+                padding: 36px 20px;
+            }
+            main {
+                padding-top: 96px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <!-- Fondo animado con líneas eléctricas azules -->
+    <canvas id="electric-canvas" aria-hidden="true"></canvas>
+    <div class="ambient-vignette" aria-hidden="true"></div>
 
-    <div class="status-badge">
-        <span class="status-dot"></span>
-        En Línea
-    </div>
+    <!-- Barra superior -->
+    <header class="topbar">
+        <button class="menu-btn" onclick="toggleMenu()" aria-label="Abrir menú de navegación">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <span>Menú</span>
+        </button>
 
-    <!-- 📂 Menú lateral corregido (sin link mal ubicado) -->
-    <div id="sideMenu" class="side-menu">
-        <a href="javascript:void(0)" class="close-btn" onclick="toggleMenu()">&times;</a>
-        <a href="index.html">🏠 Inicio</a>
-        <a href="../pestañas/comandos.html">🛠️ Comandos</a>
-        <a href="../pestañas/apis.html">🕹️ APIs</a>
-        <a href="../pestañas/vincular.html">🌐 Vincular</a>
-        <a href="../pestañas/Personalizar.html">✨ Personalizar</a>
-        <a href="../pestañas/juegos.html">🎮 Juegos</a>
-        <a href="../pestañas/donaciones.html">💰 Donaciones</a>
-        <a href="../pestañas/statusnumber.html">🔴 Ban Check</a>
-    </div>
+        <span class="brand-mini">RAPHAEL // WA-BOT</span>
 
-    <header>
-        <div class="profile-container">
-            <img src="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg" alt="Foto de Raphael Bot">
-        </div>
-        
-        <h1>RAPHAEL-BOT</h1>
-        
-        <div class="marquee-container">
-            <div class="marquee-track">
-                <span>🟢 Activo las 24 horas   ★   ⛩️ Gacha, Economía y Descargas   ★   👻 Stickers y Personalización   ★   🛡️ Moderación y Seguridad   ★</span>
-                <span>🟢 Activo las 24 horas   ★   ⛩️ Gacha, Economía y Descargas   ★   👻 Stickers y Personalización   ★   🛡️ Moderación y Seguridad   ★</span>
-            </div>
-        </div>
-
-        <p>El mejor bot para automatizar y divertirte en tus grupos de WhatsApp de manera rápida y sencilla.</p>
-        
-        <div class="btn-container">
-            <a href="https://chat.whatsapp.com/L3riNwByiVMEyyJFO5ZTFQ?s=cl&p=a&ilr=1" class="btn btn-primary" target="_blank">¡Probar Bot Personalmente!</a>
-            <a href="https://whatsapp.com/channel/0029VaeaBGb2UPB80GbJ420a" class="btn btn-whatsapp" target="_blank">Unirse al Canal</a>
-            <a href="mailto:raphaelbotwa@gmail.com" class="btn btn-gmail" target="_blank">Contactar por Gmail</a>
-            <a href="https://github.com/TheKingNoir" class="btn btn-github" target="_blank">GitHub</a>
+        <div class="status-badge">
+            <span class="status-dot"></span>
+            <span>En Línea</span>
         </div>
     </header>
 
-    <div class="container">
-        <h2 class="section-title">Características Principales</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <h3>⚡ Respuestas Rápidas</h3>
-                <p>Procesa comandos y consultas al instante las 24 horas del día, sin interrupciones.</p>
-            </div>
-            <div class="feature-card">
-                <h3>🛠️ Moderación de Grupos</h3>
-                <p>Mantén el orden en tus chats con herramientas automáticas y seguras para administradores.</p>
-            </div>
-            <div class="feature-card">
-                <h3>🎵 Descargas y Utilidades</h3>
-                <p>Descarga contenido multimedia y usa herramientas interactivas directamente en el chat.</p>
-            </div>
+    <!-- Overlay y Menú Lateral -->
+    <div id="menuOverlay" class="menu-overlay" onclick="closeMenu()"></div>
+
+    <aside id="sideMenu" class="side-menu" aria-label="Navegación principal">
+        <div class="side-menu-header">
+            <span class="side-menu-title">NAVEGACIÓN</span>
+            <button class="close-btn" onclick="closeMenu()" aria-label="Cerrar menú">&times;</button>
         </div>
-    </div>
+
+        <nav class="side-nav">
+            <a href="index.html" class="active">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Inicio
+            </a>
+            <a href="../pestañas/comandos.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                Comandos
+            </a>
+            <a href="../pestañas/apis.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                APIs
+            </a>
+            <a href="../pestañas/vincular.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                Vincular
+            </a>
+            <a href="../pestañas/Personalizar.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                Personalizar
+            </a>
+            <a href="../pestañas/juegos.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="13" x2="15.01" y2="13"/><line x1="18" y1="11" x2="18.01" y2="11"/><rect x="2" y="6" width="20" height="12" rx="4"/></svg>
+                Juegos
+            </a>
+            <a href="../pestañas/donaciones.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                Donaciones
+            </a>
+            <a href="../pestañas/statusnumber.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Ban Check
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Contenido Principal -->
+    <main>
+        <section class="hero-card glass">
+            <div class="profile-frame">
+                <img src="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg" alt="Foto de Raphael Bot">
+            </div>
+
+            <span class="hero-kicker">WhatsApp Automation System</span>
+            <h1>RAPHAEL-BOT</h1>
+
+            <p class="hero-desc">
+                El mejor bot para automatizar y divertirte en tus grupos de WhatsApp de manera rápida y sencilla.
+            </p>
+
+            <div class="marquee-strip">
+                <div class="marquee-track">
+                    <span>
+                        Activo las 24 horas <span class="sep">/</span>
+                        Gacha, Economía y Descargas <span class="sep">/</span>
+                        Stickers y Personalización <span class="sep">/</span>
+                        Moderación y Seguridad <span class="sep">/</span>
+                    </span>
+                    <span>
+                        Activo las 24 horas <span class="sep">/</span>
+                        Gacha, Economía y Descargas <span class="sep">/</span>
+                        Stickers y Personalización <span class="sep">/</span>
+                        Moderación y Seguridad <span class="sep">/</span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="btn-grid">
+                <a href="https://chat.whatsapp.com/L3riNwByiVMEyyJFO5ZTFQ?s=cl&p=a&ilr=1" class="btn btn-primary" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                    ¡Probar Bot Personalmente!
+                </a>
+                <a href="https://whatsapp.com/channel/0029VaeaBGb2UPB80GbJ420a" class="btn btn-glass" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                    Unirse al Canal
+                </a>
+                <a href="mailto:raphaelbotwa@gmail.com" class="btn btn-glass" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    Contactar por Gmail
+                </a>
+                <a href="https://github.com/TheKingNoir" class="btn btn-glass" target="_blank" rel="noopener noreferrer">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+                    GitHub
+                </a>
+            </div>
+        </section>
+
+        <!-- Características Principales -->
+        <section>
+            <div class="section-header">
+                <h2 class="section-title">Características Principales</h2>
+                <span class="section-sub">Módulos Activos</span>
+            </div>
+
+            <div class="features-grid">
+                <article class="feature-card glass">
+                    <div class="card-top">
+                        <div class="icon-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+                        </div>
+                        <span class="card-index">01</span>
+                    </div>
+                    <h3>Respuestas Rápidas</h3>
+                    <p>Procesa comandos y consultas al instante las 24 horas del día, sin interrupciones.</p>
+                </article>
+
+                <article class="feature-card glass">
+                    <div class="card-top">
+                        <div class="icon-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                        </div>
+                        <span class="card-index">02</span>
+                    </div>
+                    <h3>Moderación de Grupos</h3>
+                    <p>Mantén el orden en tus chats con herramientas automáticas y seguras para administradores.</p>
+                </article>
+
+                <article class="feature-card glass">
+                    <div class="card-top">
+                        <div class="icon-box">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        </div>
+                        <span class="card-index">03</span>
+                    </div>
+                    <h3>Descargas y Utilidades</h3>
+                    <p>Descarga contenido multimedia y usa herramientas interactivas directamente en el chat.</p>
+                </article>
+            </div>
+        </section>
+    </main>
 
     <footer>
         <p>&copy; 2026 RAPHAEL-WA-BOT ° Hecho y Desarrollado Por Ares Arcane.©</p>
     </footer>
 
     <script>
+        /* --- Control del Menú Lateral --- */
+        const sideMenu = document.getElementById("sideMenu");
+        const menuOverlay = document.getElementById("menuOverlay");
+
         function toggleMenu() {
-            const menu = document.getElementById("sideMenu");
-            menu.style.width = (menu.style.width === "250px") ? "0" : "250px";
+            const isOpen = sideMenu.classList.toggle("open");
+            menuOverlay.classList.toggle("active", isOpen);
         }
-        document.addEventListener("click", function(event) {
-            const menu = document.getElementById("sideMenu");
-            const menuBtn = document.querySelector(".menu-btn");
-            if (menu.style.width === "250px" && !menu.contains(event.target) && !menuBtn.contains(event.target)) {
-                menu.style.width = "0";
-            }
+
+        function closeMenu() {
+            sideMenu.classList.remove("open");
+            menuOverlay.classList.remove("active");
+        }
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") closeMenu();
         });
+
+        /* --- Fondo Eléctrico Azul en Canvas --- */
+        const canvas = document.getElementById("electric-canvas");
+        const ctx = canvas.getContext("2d");
+
+        let width, height, dpr;
+        let bolts = [];
+        let conduits = [];
+
+        function resizeCanvas() {
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            initConduits();
+        }
+
+        /* Líneas de corriente base que fluyen suavemente detrás del vidrio */
+        function initConduits() {
+            conduits = [];
+            const count = width < 768 ? 4 : 6;
+            for (let i = 0; i < count; i++) {
+                const yBase = (height / (count + 1)) * (i + 1);
+                conduits.push({
+                    yBase,
+                    amplitude: 28 + Math.random() * 45,
+                    frequency: 0.002 + Math.random() * 0.0025,
+                    phase: Math.random() * Math.PI * 2,
+                    speed: 0.004 + Math.random() * 0.006,
+                    pulsePos: Math.random(),
+                    pulseSpeed: 0.0018 + Math.random() * 0.0025
+                });
+            }
+        }
+
+        /* Genera un segmento de rayo realista usando desplazamiento de punto medio */
+        function buildLightningPath(x1, y1, x2, y2, displace) {
+            if (displace < 6) {
+                return [{ x: x1, y: y1 }, { x: x2, y: y2 }];
+            }
+            const midX = (x1 + x2) / 2 + (Math.random() - 0.5) * displace;
+            const midY = (y1 + y2) / 2 + (Math.random() - 0.5) * displace;
+            const left = buildLightningPath(x1, y1, midX, midY, displace * 0.55);
+            const right = buildLightningPath(midX, midY, x2, y2, displace * 0.55);
+            return left.slice(0, -1).concat(right);
+        }
+
+        function spawnBolt() {
+            const fromLeft = Math.random() > 0.5;
+            const startX = fromLeft ? -20 : width + 20;
+            const startY = Math.random() * height;
+            const endX = fromLeft ? width * (0.45 + Math.random() * 0.6) : width * (Math.random() * 0.55);
+            const endY = startY + (Math.random() - 0.5) * 320;
+
+            const mainPath = buildLightningPath(startX, startY, endX, endY, 110);
+            const branches = [];
+
+            // 1 a 2 ramificaciones pequeñas
+            const branchCount = 1 + Math.floor(Math.random() * 2);
+            for (let i = 0; i < branchCount; i++) {
+                const idx = Math.floor(mainPath.length * (0.25 + Math.random() * 0.5));
+                const origin = mainPath[idx];
+                if (origin) {
+                    const bx = origin.x + (Math.random() - 0.5) * 200;
+                    const by = origin.y + (Math.random() - 0.5) * 180;
+                    branches.push(buildLightningPath(origin.x, origin.y, bx, by, 55));
+                }
+            }
+
+            bolts.push({
+                path: mainPath,
+                branches,
+                alpha: 0.95,
+                decay: 0.018 + Math.random() * 0.02
+            });
+        }
+
+        function drawPath(points, lineWidth, strokeStyle, glowBlur, glowColor) {
+            if (points.length < 2) return;
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (let i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i].x, points[i].y);
+            }
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = strokeStyle;
+            ctx.shadowBlur = glowBlur;
+            ctx.shadowColor = glowColor;
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        let lastBoltTime = 0;
+
+        function animate(timestamp) {
+            ctx.clearRect(0, 0, width, height);
+
+            // 1. Dibujar líneas eléctricas continuas + pulsos de corriente
+            for (const c of conduits) {
+                c.phase += c.speed;
+                c.pulsePos = (c.pulsePos + c.pulseSpeed) % 1;
+
+                ctx.beginPath();
+                const step = 28;
+                const pts = [];
+                for (let x = -step; x <= width + step; x += step) {
+                    const y = c.yBase
+                        + Math.sin(x * c.frequency + c.phase) * c.amplitude
+                        + Math.cos(x * c.frequency * 2.1 - c.phase * 1.4) * (c.amplitude * 0.3);
+                    pts.push({ x, y });
+                    if (x === -step) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+
+                // Línea base tenue azul
+                ctx.strokeStyle = "rgba(14, 165, 233, 0.14)";
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                // Pulso luminoso viajando sobre la línea
+                const pulseCenter = Math.floor(c.pulsePos * (pts.length - 1));
+                const segStart = Math.max(0, pulseCenter - 4);
+                const segEnd = Math.min(pts.length - 1, pulseCenter + 4);
+                const segment = pts.slice(segStart, segEnd + 1);
+
+                drawPath(segment, 2.2, "rgba(56, 189, 248, 0.65)", 16, "#00a8ff");
+                drawPath(segment, 1, "rgba(224, 242, 254, 0.85)", 6, "#38bdf8");
+            }
+
+            // 2. Generar arcos eléctricos periódicos
+            if (timestamp - lastBoltTime > 1600 + Math.random() * 2200) {
+                spawnBolt();
+                lastBoltTime = timestamp;
+            }
+
+            // 3. Dibujar y desvanecer los arcos eléctricos
+            for (let i = bolts.length - 1; i >= 0; i--) {
+                const b = bolts[i];
+                const flicker = b.alpha * (0.75 + Math.random() * 0.25);
+
+                // Halo azul exterior
+                drawPath(b.path, 3, `rgba(0, 168, 255, ${flicker * 0.45})`, 22, "#00a8ff");
+                // Núcleo blanco-azul
+                drawPath(b.path, 1.2, `rgba(224, 242, 254, ${flicker * 0.9})`, 8, "#38bdf8");
+
+                // Ramificaciones
+                for (const br of b.branches) {
+                    drawPath(br, 1.6, `rgba(14, 165, 233, ${flicker * 0.35})`, 14, "#00a8ff");
+                    drawPath(br, 0.7, `rgba(186, 230, 253, ${flicker * 0.7})`, 4, "#38bdf8");
+                }
+
+                b.alpha -= b.decay;
+                if (b.alpha <= 0) {
+                    bolts.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+        spawnBolt();
+        requestAnimationFrame(animate);
     </script>
 </body>
 </html>
