@@ -4,285 +4,702 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vincular - Raphael-WA-BOT</title>
+
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
     <style>
+        :root {
+            --bg-black: #030508;
+            --electric-blue: #00a8ff;
+            --electric-cyan: #38bdf8;
+            --electric-deep: #0284c7;
+            --glass-bg: rgba(10, 16, 28, 0.48);
+            --glass-bg-hover: rgba(14, 24, 42, 0.65);
+            --glass-border: rgba(148, 210, 255, 0.14);
+            --glass-border-hover: rgba(56, 189, 248, 0.45);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
         }
 
         body {
-            background-color: #070913;
-            color: #f1f5f9;
+            background-color: var(--bg-black);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        /* 🛠️ Botón y Menú Lateral con estilo brillante */
-        .menu-btn {
+        /* Fondo eléctrico */
+        #electric-canvas {
             position: fixed;
-            top: 20px;
-            left: 20px;
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-            color: white;
-            border: none;
-            padding: 12px 16px;
-            font-size: 22px;
-            cursor: pointer;
-            border-radius: 12px;
-            z-index: 1000;
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.5);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .menu-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(168, 85, 247, 0.8);
-        }
-
-        .side-menu {
+            inset: 0;
+            width: 100%;
             height: 100%;
-            width: 0;
+            z-index: -2;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 0%, #071226 0%, #030508 65%, #000000 100%);
+        }
+
+        .ambient-vignette {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 40%, transparent 25%, rgba(0, 0, 0, 0.72) 100%);
+        }
+
+        /* Glassmorphism base */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(18px) saturate(140%);
+            -webkit-backdrop-filter: blur(18px) saturate(140%);
+            border: 1px solid var(--glass-border);
+            box-shadow:
+                0 20px 45px rgba(0, 0, 0, 0.65),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        /* Barra superior fija */
+        .topbar {
             position: fixed;
             top: 0;
             left: 0;
-            background-color: #0f172a;
-            overflow-x: hidden;
-            transition: 0.4s;
-            padding-top: 60px;
+            right: 0;
+            height: 70px;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 900;
+            background: rgba(3, 5, 8, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .menu-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(15, 23, 42, 0.6);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+            padding: 9px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+        }
+
+        .menu-btn:hover {
+            border-color: var(--glass-border-hover);
+            background: rgba(20, 32, 54, 0.8);
+        }
+
+        .menu-btn:active {
+            transform: scale(0.97);
+        }
+
+        .brand-mini {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.14em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            display: none;
+        }
+
+        @media (min-width: 640px) {
+            .brand-mini {
+                display: block;
+            }
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 14px;
+            border-radius: 999px;
+            background: rgba(10, 16, 28, 0.65);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--text-main);
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: #22c55e;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);
+            animation: pulseDot 2.4s ease-in-out infinite;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.55; transform: scale(0.85); }
+        }
+
+        /* Overlay y Menú Lateral */
+        .menu-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            z-index: 1000;
+        }
+
+        .menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .side-menu {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 280px;
+            max-width: 85vw;
+            transform: translateX(-100%);
+            transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
             z-index: 1001;
-            border-right: 2px solid #a855f7;
-            box-shadow: 10px 0 30px rgba(0, 0, 0, 0.8);
+            padding: 24px 18px;
+            display: flex;
+            flex-direction: column;
+            background: rgba(6, 10, 18, 0.84);
+            backdrop-filter: blur(26px) saturate(150%);
+            -webkit-backdrop-filter: blur(26px) saturate(150%);
+            border-right: 1px solid rgba(56, 189, 248, 0.18);
+            box-shadow: 20px 0 60px rgba(0, 0, 0, 0.85);
         }
 
-        .side-menu a {
-            padding: 15px 25px;
-            text-decoration: none;
-            font-size: 1.2rem;
-            color: #cbd5e1;
-            display: block;
-            transition: 0.3s;
+        .side-menu.open {
+            transform: translateX(0);
         }
 
-        .side-menu a:hover {
-            color: #fff;
-            background: linear-gradient(90deg, #3b82f6, transparent);
+        .side-menu-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4px 10px 20px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            margin-bottom: 16px;
+        }
+
+        .side-menu-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 0.08em;
+            color: var(--text-main);
         }
 
         .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 20px;
-            font-size: 36px;
-            color: #f43f5e;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-muted);
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            font-size: 20px;
+            line-height: 1;
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            transition: color 0.2s, border-color 0.2s, background 0.2s;
         }
 
-        header {
-            background: radial-gradient(circle at center, #1e1b4b 0%, #0b0f19 100%);
-            padding: 70px 20px;
+        .close-btn:hover {
+            color: #fff;
+            border-color: var(--glass-border-hover);
+            background: rgba(56, 189, 248, 0.1);
+        }
+
+        .side-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            overflow-y: auto;
+        }
+
+        .side-nav a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 11px 14px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-size: 0.94rem;
+            font-weight: 500;
+            border: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .side-nav a svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            flex-shrink: 0;
+            opacity: 0.8;
+        }
+
+        .side-nav a:hover,
+        .side-nav a.active {
+            color: var(--text-main);
+            background: rgba(56, 189, 248, 0.09);
+            border-color: rgba(56, 189, 248, 0.22);
+        }
+
+        .side-nav a:hover svg,
+        .side-nav a.active svg {
+            color: var(--electric-cyan);
+            opacity: 1;
+        }
+
+        /* Contenedor Principal */
+        main {
+            max-width: 780px;
+            margin: 0 auto;
+            padding: 106px 20px 60px 20px;
+        }
+
+        /* Cabecera Hero */
+        .page-hero {
+            border-radius: 24px;
+            padding: 40px 30px;
             text-align: center;
-            border-bottom: 2px solid rgba(168, 85, 247, 0.3);
-            box-shadow: inset 0 -20px 20px -20px rgba(168, 85, 247, 0.2);
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 28px;
         }
 
-        header h1 {
-            font-size: 2.8rem;
-            background: linear-gradient(135deg, #c084fc 0%, #38bdf8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 12px;
+        .page-hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 16%;
+            right: 16%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.75), transparent);
+        }
+
+        .hero-icon {
+            width: 52px;
+            height: 52px;
+            margin: 0 auto 16px auto;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            color: var(--electric-cyan);
+        }
+
+        .hero-kicker {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 800;
+            color: var(--electric-cyan);
+            margin-bottom: 8px;
         }
 
-        header p {
-            font-size: 1.15rem;
-            color: #94a3b8;
-            max-width: 600px;
+        .page-hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 4.8vw, 2.7rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .page-hero p {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            max-width: 520px;
             margin: 0 auto;
         }
 
-        .container {
-            max-width: 900px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .donation-card {
-            background: linear-gradient(145deg, #111827 0%, #0f172a 100%);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            padding: 35px;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 20px rgba(56, 189, 248, 0.05);
+        /* Tarjeta de Vinculación */
+        .link-card {
+            border-radius: 22px;
+            padding: 34px 28px;
             text-align: center;
+            position: relative;
+            overflow: hidden;
         }
 
-        .donation-card h3 {
-            color: #38bdf8;
-            margin-bottom: 25px;
-            font-size: 1.5rem;
+        .link-card h3 {
+            font-family: 'Space Grotesk', sans-serif;
+            color: #ffffff;
+            margin-bottom: 22px;
+            font-size: 1.3rem;
             font-weight: 600;
         }
 
+        /* Botones de método alineados */
         .method-buttons {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            max-width: 440px;
+            margin: 0 auto 26px auto;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .method-btn {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            color: #f1f5f9;
-            border: 1px solid #3b82f6;
-            padding: 12px 24px;
-            border-radius: 10px;
+            gap: 8px;
+            width: 100%;
+            min-height: 44px;
+            padding: 10px 16px;
+            border-radius: 11px;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 500;
             cursor: pointer;
-            font-size: 1rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+            transition: transform 0.18s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease, color 0.2s ease;
         }
 
-        .method-btn:hover {
-            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
-            border-color: #60a5fa;
-            color: white;
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.6);
+        .btn svg {
+            width: 17px;
+            height: 17px;
+            flex-shrink: 0;
+        }
+
+        .btn:hover {
             transform: translateY(-2px);
         }
 
+        .btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        .btn-primary {
+            background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%);
+            color: #ffffff;
+            border: 1px solid rgba(125, 211, 252, 0.55);
+            box-shadow: 0 8px 22px rgba(2, 132, 199, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 10px 28px rgba(14, 165, 233, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        }
+
+        .btn-glass {
+            background: rgba(15, 23, 42, 0.55);
+            color: var(--text-muted);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-glass:hover {
+            background: rgba(20, 34, 58, 0.78);
+            border-color: var(--glass-border-hover);
+            color: #ffffff;
+        }
+
+        /* Caja de autenticación (QR / Código) */
         .auth-box {
-            background: rgba(15, 23, 42, 0.7);
-            padding: 30px;
-            border-radius: 12px;
-            min-height: 240px;
+            background: rgba(5, 9, 18, 0.65);
+            padding: 32px 24px;
+            border-radius: 16px;
+            min-height: 250px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border: 2px dashed rgba(56, 189, 248, 0.3);
-            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+            border: 1px dashed rgba(56, 189, 248, 0.3);
+            box-shadow: inset 0 0 24px rgba(0, 0, 0, 0.55);
+        }
+
+        .auth-hint {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            margin-bottom: 16px;
+        }
+
+        .status-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.88rem;
+            color: var(--electric-cyan);
+        }
+
+        .status-text.error {
+            color: #f87171;
         }
 
         .phone-input {
-            padding: 12px 16px;
-            width: 85%;
+            padding: 13px 16px;
+            width: 100%;
             max-width: 320px;
-            border-radius: 8px;
-            border: 1px solid #475569;
-            background: #070913;
-            color: #f1f5f9;
-            margin-bottom: 20px;
+            border-radius: 11px;
+            border: 1px solid var(--glass-border);
+            background: rgba(10, 16, 28, 0.8);
+            color: var(--text-main);
+            margin-bottom: 16px;
             text-align: center;
-            font-size: 1.1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
             outline: none;
-            transition: border-color 0.3s, box-shadow 0.3s;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .phone-input::placeholder {
+            color: var(--text-dim);
         }
 
         .phone-input:focus {
-            border-color: #38bdf8;
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.4);
+            border-color: var(--glass-border-hover);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
+        }
+
+        .btn-request {
+            max-width: 240px;
+        }
+
+        #display-code {
+            margin-top: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1.05rem;
+            color: var(--electric-cyan);
+            min-height: 28px;
+        }
+
+        .code-pill {
+            display: inline-block;
+            margin-left: 8px;
+            color: #ffffff;
+            background: rgba(14, 165, 233, 0.16);
+            padding: 6px 14px;
+            border-radius: 8px;
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            letter-spacing: 0.12em;
+            font-weight: 600;
         }
 
         footer {
+            margin-top: 64px;
+            padding: 28px 20px;
             text-align: center;
-            padding: 35px;
-            background-color: #04060b;
-            color: #64748b;
-            margin-top: 60px;
-            border-top: 1px solid #1e293b;
-            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            background: rgba(3, 5, 8, 0.65);
+            backdrop-filter: blur(12px);
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 540px) {
+            .page-hero {
+                padding: 32px 20px;
+            }
+            .link-card {
+                padding: 24px 18px;
+            }
+            .method-buttons {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 </head>
 <body>
 
-    <button class="menu-btn" onclick="toggleMenu()">☰</button>
+    <!-- Fondo animado eléctrico -->
+    <canvas id="electric-canvas" aria-hidden="true"></canvas>
+    <div class="ambient-vignette" aria-hidden="true"></div>
 
-    <div id="sideMenu" class="side-menu">
-        <a href="javascript:void(0)" class="close-btn" onclick="toggleMenu()">&times;</a>
-        <a href="index.html">🏠 Inicio</a>
-        <a href="../pestañas/comandos.html">🛠️ Comandos</a>
-        <a href="../pestañas/apis.html">🕹️ APIs </a>
-        <a href="../pestañas/Personalizar.html">✨ Personalizar</a>
-        <a href="../pestañas/juegos.html">🎮 Juegos</a>
-        <a href="../pestañas/donaciones.html">💰 Donaciones</a>
-    </div>
+    <!-- Barra superior -->
+    <header class="topbar">
+        <button class="menu-btn" onclick="toggleMenu()" aria-label="Abrir menú de navegación">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                <line x1="3" y1="6" x2="21" y2="6"></line>
+                <line x1="3" y1="12" x2="21" y2="12"></line>
+                <line x1="3" y1="18" x2="21" y2="18"></line>
+            </svg>
+            <span>Menú</span>
+        </button>
 
-    <header>
-        <h1>VINCULA TU DISPOSITIVO</h1>
-        <p>Conecta tu WhatsApp a Raphael-WA-BOT de forma rápida y segura.</p>
+        <span class="brand-mini">RAPHAEL // VINCULAR</span>
+
+        <div class="status-badge">
+            <span class="status-dot"></span>
+            <span>En Línea</span>
+        </div>
     </header>
 
-    <div class="container">
-        <div class="donation-card">
+    <!-- Overlay y Menú Lateral -->
+    <div id="menuOverlay" class="menu-overlay" onclick="closeMenu()"></div>
+
+    <aside id="sideMenu" class="side-menu" aria-label="Navegación principal">
+        <div class="side-menu-header">
+            <span class="side-menu-title">NAVEGACIÓN</span>
+            <button class="close-btn" onclick="closeMenu()" aria-label="Cerrar menú">&times;</button>
+        </div>
+
+        <nav class="side-nav">
+            <a href="index.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                Inicio
+            </a>
+            <a href="../pestañas/comandos.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" y1="19" x2="20" y2="19"/></svg>
+                Comandos
+            </a>
+            <a href="../pestañas/apis.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                APIs
+            </a>
+            <a href="../pestañas/vincular.html" class="active">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+                Vincular
+            </a>
+            <a href="../pestañas/Personalizar.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9c.26.604.852.997 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                Personalizar
+            </a>
+            <a href="../pestañas/juegos.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="6" y1="12" x2="10" y2="12"/><line x1="8" y1="10" x2="8" y2="14"/><line x1="15" y1="13" x2="15.01" y2="13"/><line x1="18" y1="11" x2="18.01" y2="11"/><rect x="2" y="6" width="20" height="12" rx="4"/></svg>
+                Juegos
+            </a>
+            <a href="../pestañas/donaciones.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+                Donaciones
+            </a>
+            <a href="../pestañas/statusnumber.html">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                Ban Check
+            </a>
+        </nav>
+    </aside>
+
+    <!-- Contenido Principal -->
+    <main>
+        <section class="page-hero glass">
+            <div class="hero-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                </svg>
+            </div>
+            <span class="hero-kicker">Device Pairing</span>
+            <h1>VINCULA TU DISPOSITIVO</h1>
+            <p>Conecta tu WhatsApp a Raphael-WA-BOT de forma rápida y segura.</p>
+        </section>
+
+        <section class="link-card glass">
             <h3>Selecciona el método de vinculación</h3>
-            
+
             <div class="method-buttons">
-                <button class="method-btn" onclick="showMethod('qr')">Código QR</button>
-                <button class="method-btn" onclick="showMethod('code')">Código Numérico</button>
+                <button id="btn-qr" class="btn btn-primary" onclick="showMethod('qr')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><path d="M14 14h3v3h-3z"/><path d="M20 14h1v7h-7v-1"/></svg>
+                    Código QR
+                </button>
+                <button id="btn-code" class="btn btn-glass" onclick="showMethod('code')">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                    Código Numérico
+                </button>
             </div>
 
             <div id="qr-section" class="auth-box">
                 <div id="qr-content">
-                    <p style="color: #38bdf8; font-weight: 500;">🔄 Conectando con el servidor...</p>
+                    <p class="status-text">Conectando con el servidor...</p>
                 </div>
             </div>
 
             <div id="code-section" class="auth-box" style="display: none;">
-                <p style="color: #94a3b8; margin-bottom: 15px; font-weight: 500;">🔢 Ingresa tu número con código de país</p>
+                <p class="auth-hint">Ingresa tu número con código de país</p>
                 <input type="text" id="phone-input" class="phone-input" placeholder="Ej: 584123456789">
-                <button class="method-btn" onclick="requestPairingCode()">Obtener Código</button>
-                <div id="display-code" style="margin-top: 20px; font-size: 1.3rem; color: #38bdf8; font-weight: bold;"></div>
+                <button class="btn btn-primary btn-request" onclick="requestPairingCode()">Obtener Código</button>
+                <div id="display-code"></div>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
 
     <footer>
         <p>&copy; 2026 RAPHAEL-WA-BOT ° Hecho y Desarrollado Por Ares Arcane.©</p>
     </footer>
 
     <script>
-        const SOCKET_URL = "https://tu-vps-ip-o-dominio.com:3000"; 
-        const socket = io(SOCKET_URL, { autoConnect: false });
+        /* --- Control del Menú Lateral --- */
+        const sideMenu = document.getElementById("sideMenu");
+        const menuOverlay = document.getElementById("menuOverlay");
 
         function toggleMenu() {
-            const menu = document.getElementById("sideMenu");
-            if (menu.style.width === "250px") {
-                menu.style.width = "0";
-            } else {
-                menu.style.width = "250px";
-            }
+            const isOpen = sideMenu.classList.toggle("open");
+            menuOverlay.classList.toggle("active", isOpen);
         }
+
+        function closeMenu() {
+            sideMenu.classList.remove("open");
+            menuOverlay.classList.remove("active");
+        }
+
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "Escape") closeMenu();
+        });
+
+        /* --- Lógica de Vinculación (Socket.IO + Pairing Code) --- */
+        const SOCKET_URL = "https://tu-vps-ip-o-dominio.com:3000";
+        const socket = io(SOCKET_URL, { autoConnect: false });
 
         function showMethod(method) {
             const qrSection = document.getElementById('qr-section');
             const codeSection = document.getElementById('code-section');
-            
+            const btnQr = document.getElementById('btn-qr');
+            const btnCode = document.getElementById('btn-code');
+
             if (method === 'qr') {
                 qrSection.style.display = 'flex';
                 codeSection.style.display = 'none';
+                btnQr.className = 'btn btn-primary';
+                btnCode.className = 'btn btn-glass';
                 if (!socket.connected) socket.connect();
             } else {
                 qrSection.style.display = 'none';
                 codeSection.style.display = 'flex';
+                btnQr.className = 'btn btn-glass';
+                btnCode.className = 'btn btn-primary';
                 if (socket.connected) socket.disconnect();
             }
         }
 
         socket.on('connect', () => {
-            document.getElementById('qr-content').innerHTML = '<p style="color: #38bdf8;">Esperando código QR del bot...</p>';
+            document.getElementById('qr-content').innerHTML = '<p class="status-text">Esperando código QR del bot...</p>';
         });
 
         socket.on('qr', (qrImageSrc) => {
-            document.getElementById('qr-content').innerHTML = `<img src="${qrImageSrc}" alt="Código QR de WhatsApp" style="max-width: 200px; border-radius: 8px; box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);">`;
+            document.getElementById('qr-content').innerHTML = `<img src="${qrImageSrc}" alt="Código QR de WhatsApp" style="max-width: 210px; border-radius: 12px; border: 1px solid rgba(56, 189, 248, 0.4); box-shadow: 0 0 24px rgba(0, 168, 255, 0.28);">`;
         });
 
         socket.on('disconnect', () => {
-            document.getElementById('qr-content').innerHTML = '<p style="color: #f43f5e;">Desconectado del servidor.</p>';
+            document.getElementById('qr-content').innerHTML = '<p class="status-text error">Desconectado del servidor.</p>';
         });
 
         function requestPairingCode() {
@@ -294,7 +711,7 @@
                 return;
             }
 
-            displayDiv.innerHTML = "⏳ Solicitando código...";
+            displayDiv.innerHTML = '<span class="status-text">Solicitando código...</span>';
 
             fetch(`${SOCKET_URL}/pairing-code`, {
                 method: 'POST',
@@ -304,25 +721,172 @@
             .then(response => response.json())
             .then(data => {
                 if (data.code) {
-                    displayDiv.innerHTML = `🔑 Tu código es: <span style="color: #c084fc; background: #070913; padding: 6px 12px; border-radius: 6px; border: 1px solid #c084fc;">${data.code}</span>`;
+                    displayDiv.innerHTML = `Tu código es:<span class="code-pill">${data.code}</span>`;
                 } else {
-                    displayDiv.innerHTML = `<span style="color: #f43f5e;">Error al generar el código.</span>`;
+                    displayDiv.innerHTML = `<span class="status-text error">Error al generar el código.</span>`;
                 }
             })
             .catch(error => {
                 console.error("Error:", error);
-                displayDiv.innerHTML = `<span style="color: #f43f5e;">No se pudo conectar con la VPS.</span>`;
+                displayDiv.innerHTML = `<span class="status-text error">No se pudo conectar con la VPS.</span>`;
             });
         }
 
-        document.addEventListener("click", function(event) {
-            const menu = document.getElementById("sideMenu");
-            const menuBtn = document.querySelector(".menu-btn");
-            
-            if (menu.style.width === "250px" && !menu.contains(event.target) && !menuBtn.contains(event.target)) {
-                menu.style.width = "0";
+        /* --- Fondo Eléctrico Azul en Canvas --- */
+        const canvas = document.getElementById("electric-canvas");
+        const ctx = canvas.getContext("2d");
+
+        let width, height, dpr;
+        let bolts = [];
+        let conduits = [];
+
+        function resizeCanvas() {
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            initConduits();
+        }
+
+        function initConduits() {
+            conduits = [];
+            const count = width < 768 ? 4 : 6;
+            for (let i = 0; i < count; i++) {
+                const yBase = (height / (count + 1)) * (i + 1);
+                conduits.push({
+                    yBase,
+                    amplitude: 28 + Math.random() * 45,
+                    frequency: 0.002 + Math.random() * 0.0025,
+                    phase: Math.random() * Math.PI * 2,
+                    speed: 0.004 + Math.random() * 0.006,
+                    pulsePos: Math.random(),
+                    pulseSpeed: 0.0018 + Math.random() * 0.0025
+                });
             }
-        });
+        }
+
+        function buildLightningPath(x1, y1, x2, y2, displace) {
+            if (displace < 6) {
+                return [{ x: x1, y: y1 }, { x: x2, y: y2 }];
+            }
+            const midX = (x1 + x2) / 2 + (Math.random() - 0.5) * displace;
+            const midY = (y1 + y2) / 2 + (Math.random() - 0.5) * displace;
+            const left = buildLightningPath(x1, y1, midX, midY, displace * 0.55);
+            const right = buildLightningPath(midX, midY, x2, y2, displace * 0.55);
+            return left.slice(0, -1).concat(right);
+        }
+
+        function spawnBolt() {
+            const fromLeft = Math.random() > 0.5;
+            const startX = fromLeft ? -20 : width + 20;
+            const startY = Math.random() * height;
+            const endX = fromLeft ? width * (0.45 + Math.random() * 0.6) : width * (Math.random() * 0.55);
+            const endY = startY + (Math.random() - 0.5) * 320;
+
+            const mainPath = buildLightningPath(startX, startY, endX, endY, 110);
+            const branches = [];
+
+            const branchCount = 1 + Math.floor(Math.random() * 2);
+            for (let i = 0; i < branchCount; i++) {
+                const idx = Math.floor(mainPath.length * (0.25 + Math.random() * 0.5));
+                const origin = mainPath[idx];
+                if (origin) {
+                    const bx = origin.x + (Math.random() - 0.5) * 200;
+                    const by = origin.y + (Math.random() - 0.5) * 180;
+                    branches.push(buildLightningPath(origin.x, origin.y, bx, by, 55));
+                }
+            }
+
+            bolts.push({
+                path: mainPath,
+                branches,
+                alpha: 0.95,
+                decay: 0.018 + Math.random() * 0.02
+            });
+        }
+
+        function drawPath(points, lineWidth, strokeStyle, glowBlur, glowColor) {
+            if (points.length < 2) return;
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (let i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i].x, points[i].y);
+            }
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = strokeStyle;
+            ctx.shadowBlur = glowBlur;
+            ctx.shadowColor = glowColor;
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        let lastBoltTime = 0;
+
+        function animate(timestamp) {
+            ctx.clearRect(0, 0, width, height);
+
+            for (const c of conduits) {
+                c.phase += c.speed;
+                c.pulsePos = (c.pulsePos + c.pulseSpeed) % 1;
+
+                ctx.beginPath();
+                const step = 28;
+                const pts = [];
+                for (let x = -step; x <= width + step; x += step) {
+                    const y = c.yBase
+                        + Math.sin(x * c.frequency + c.phase) * c.amplitude
+                        + Math.cos(x * c.frequency * 2.1 - c.phase * 1.4) * (c.amplitude * 0.3);
+                    pts.push({ x, y });
+                    if (x === -step) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+
+                ctx.strokeStyle = "rgba(14, 165, 233, 0.14)";
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                const pulseCenter = Math.floor(c.pulsePos * (pts.length - 1));
+                const segStart = Math.max(0, pulseCenter - 4);
+                const segEnd = Math.min(pts.length - 1, pulseCenter + 4);
+                const segment = pts.slice(segStart, segEnd + 1);
+
+                drawPath(segment, 2.2, "rgba(56, 189, 248, 0.65)", 16, "#00a8ff");
+                drawPath(segment, 1, "rgba(224, 242, 254, 0.85)", 6, "#38bdf8");
+            }
+
+            if (timestamp - lastBoltTime > 1600 + Math.random() * 2200) {
+                spawnBolt();
+                lastBoltTime = timestamp;
+            }
+
+            for (let i = bolts.length - 1; i >= 0; i--) {
+                const b = bolts[i];
+                const flicker = b.alpha * (0.75 + Math.random() * 0.25);
+
+                drawPath(b.path, 3, `rgba(0, 168, 255, ${flicker * 0.45})`, 22, "#00a8ff");
+                drawPath(b.path, 1.2, `rgba(224, 242, 254, ${flicker * 0.9})`, 8, "#38bdf8");
+
+                for (const br of b.branches) {
+                    drawPath(br, 1.6, `rgba(14, 165, 233, ${flicker * 0.35})`, 14, "#00a8ff");
+                    drawPath(br, 0.7, `rgba(186, 230, 253, ${flicker * 0.7})`, 4, "#38bdf8");
+                }
+
+                b.alpha -= b.decay;
+                if (b.alpha <= 0) {
+                    bolts.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+        spawnBolt();
+        requestAnimationFrame(animate);
     </script>
 </body>
 </html>
