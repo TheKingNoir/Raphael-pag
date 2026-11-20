@@ -4,130 +4,612 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zona de Juegos - Raphael-WA-BOT</title>
-    
+
     <link rel="icon" type="image/jpeg" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
     <link rel="apple-touch-icon" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
 
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: #0b0f19; color: #e2e8f0; line-height: 1.6; }
-
-        /* 🔙 Botón Volver */
-        .back-btn { 
-            position: fixed; top: 20px; left: 20px; background: #111827; color: white; border: none; padding: 2px; cursor: pointer; border-radius: 10px; z-index: 1000; text-decoration: none; display: flex; align-items: center;
-            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%; animation: neonGradient 6s ease infinite;
-        }
-        .back-btn-content { background-color: #111827; padding: 6px 14px; border-radius: 8px; transition: background-color 0.2s; }
-        .back-btn:hover .back-btn-content { background-color: #374151; }
-
-        .neon-border {
-            position: relative; width: 130px; height: 130px; margin: 0 auto 20px; padding: 2px; border-radius: 20px; 
-            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%; animation: neonGradient 6s ease infinite;
-            display: flex; justify-content: center; align-items: center;
-        }
-        .header-img { width: 100%; height: 100%; object-fit: cover; border-radius: 18px; background-color: #0b0f19; }
-
-        @keyframes neonGradient {
-            0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; }
+        :root {
+            --bg-black: #030508;
+            --electric-blue: #00a8ff;
+            --electric-cyan: #38bdf8;
+            --electric-deep: #0284c7;
+            --glass-bg: rgba(10, 16, 28, 0.48);
+            --glass-bg-hover: rgba(14, 24, 42, 0.65);
+            --glass-border: rgba(148, 210, 255, 0.14);
+            --glass-border-hover: rgba(56, 189, 248, 0.45);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
         }
 
-        header { padding: 40px 20px; text-align: center; border-bottom: 2px solid #4f46e5; }
-        header h1 { 
-            font-size: 2.8rem; font-weight: 800; text-transform: uppercase;
-            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%;
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; animation: neonGradient 6s ease infinite;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        .section-title { text-align: center; font-size: 1.8rem; color: #fff; margin: 30px 0; text-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
-        .container { max-width: 650px; margin: 0 auto 40px; padding: 20px; }
-        
-        /* 🎮 Nueva Tarjeta compacta en horizontal */
-        .game-card {
-            background-color: #111827; 
-            border-radius: 12px; 
-            padding: 15px; 
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Fondo eléctrico */
+        #electric-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 0%, #071226 0%, #030508 65%, #000000 100%);
+        }
+
+        .ambient-vignette {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 40%, transparent 25%, rgba(0, 0, 0, 0.72) 100%);
+        }
+
+        /* Glassmorphism base */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(18px) saturate(140%);
+            -webkit-backdrop-filter: blur(18px) saturate(140%);
+            border: 1px solid var(--glass-border);
+            box-shadow:
+                0 20px 45px rgba(0, 0, 0, 0.65),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        /* Barra superior fija */
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            padding: 0 24px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            border: 1px solid #374151;
-            margin-bottom: 20px;
+            justify-content: space-between;
+            z-index: 950;
+            background: rgba(3, 5, 8, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        /* Imagen lateral sin bordes neón */
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(15, 23, 42, 0.6);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+            padding: 9px 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+        }
+
+        .back-btn:hover {
+            border-color: var(--glass-border-hover);
+            background: rgba(20, 32, 54, 0.8);
+            color: #ffffff;
+        }
+
+        .back-btn:active {
+            transform: scale(0.97);
+        }
+
+        .brand-mini {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.14em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            display: none;
+        }
+
+        @media (min-width: 640px) {
+            .brand-mini {
+                display: block;
+            }
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 14px;
+            border-radius: 999px;
+            background: rgba(10, 16, 28, 0.65);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--text-main);
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: #22c55e;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);
+            animation: pulseDot 2.4s ease-in-out infinite;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.55; transform: scale(0.85); }
+        }
+
+        /* Contenedor Principal */
+        main {
+            max-width: 760px;
+            margin: 0 auto;
+            padding: 106px 20px 60px 20px;
+        }
+
+        /* Tarjeta Hero */
+        .page-hero {
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 40px;
+        }
+
+        .page-hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 16%;
+            right: 16%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.75), transparent);
+        }
+
+        .logo-frame {
+            width: 118px;
+            height: 118px;
+            margin: 0 auto 20px auto;
+            padding: 5px;
+            border-radius: 20px;
+            background: linear-gradient(145deg, rgba(56, 189, 248, 0.35), rgba(15, 23, 42, 0.4));
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 168, 255, 0.16);
+        }
+
+        .logo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            display: block;
+            background: #05080f;
+        }
+
+        .hero-kicker {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--electric-cyan);
+            margin-bottom: 8px;
+        }
+
+        .page-hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.9rem, 5vw, 2.8rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .page-hero p {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Encabezado de sección */
+        .section-header {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.45rem;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: -0.01em;
+        }
+
+        .section-sub {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.74rem;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        /* Tarjeta de Juego Compacta Horizontal */
+        .games-list {
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .game-card {
+            border-radius: 18px;
+            padding: 18px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+        }
+
+        .game-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.45), transparent);
+            opacity: 0;
+            transition: opacity 0.22s ease;
+        }
+
+        .game-card:hover {
+            transform: translateY(-3px);
+            background: var(--glass-bg-hover);
+            border-color: var(--glass-border-hover);
+        }
+
+        .game-card:hover::after {
+            opacity: 1;
+        }
+
         .game-img-container {
             flex-shrink: 0;
-            width: 90px;
-            height: 90px;
-            border-radius: 8px;
+            width: 96px;
+            height: 96px;
+            border-radius: 12px;
             overflow: hidden;
-            background-color: #1f2937;
+            background-color: #05080f;
+            border: 1px solid rgba(56, 189, 248, 0.22);
         }
+
         .game-img {
             width: 100%;
             height: 100%;
             object-fit: cover;
+            display: block;
         }
 
-        /* Contenido al lado de la imagen */
         .game-info {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            min-width: 0;
         }
 
-        .game-title { 
-            font-size: 1.1rem; 
-            font-weight: bold; 
-            margin-bottom: 5px; 
-            color: #fff; 
+        .game-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 4px;
+            letter-spacing: 0.02em;
         }
 
         .game-desc {
-            font-size: 0.85rem;
-            color: #9ca3af;
-            margin-bottom: 10px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 12px;
         }
 
-        .api-btn { 
-            background: #1f2937; color: white; border: none; padding: 0; border-radius: 20px; font-weight: bold; font-size: 0.85rem; cursor: pointer;
-            background: linear-gradient(270deg, #ff073a, #00f0ff, #39ff14, #ffe600, #ff073a); background-size: 400% 400%; animation: neonGradient 6s ease infinite;
-            text-decoration: none; display: inline-block; width: fit-content;
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            width: fit-content;
+            padding: 8px 16px;
+            border-radius: 9px;
+            background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%);
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 0.84rem;
+            font-weight: 500;
+            border: 1px solid rgba(125, 211, 252, 0.55);
+            box-shadow: 0 6px 18px rgba(2, 132, 199, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            transition: transform 0.18s ease, box-shadow 0.2s ease;
         }
-        .api-btn-content { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); padding: 6px 16px; border-radius: 18px; display: block; transition: background 0.2s; }
-        .api-btn:hover .api-btn-content { background: linear-gradient(135deg, #4f46e5 0%, #9333ea 100%); }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 22px rgba(14, 165, 233, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        footer {
+            margin-top: 64px;
+            padding: 28px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            background: rgba(3, 5, 8, 0.65);
+            backdrop-filter: blur(12px);
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 540px) {
+            .page-hero {
+                padding: 32px 20px;
+            }
+            .game-card {
+                padding: 15px;
+                gap: 14px;
+            }
+            .game-img-container {
+                width: 82px;
+                height: 82px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Botón para volver con borde neón original -->
-    <a href="index.html" class="back-btn"><span class="back-btn-content">Volver</span></a>
+    <!-- Fondo animado eléctrico -->
+    <canvas id="electric-canvas" aria-hidden="true"></canvas>
+    <div class="ambient-vignette" aria-hidden="true"></div>
 
-    <header>
-        <!-- Primera foto con marco neón original -->
-        <div class="neon-border"><img src="https://files.yuki-wabot.my.id/cdn/czIqrdU1.jpeg" alt="Logo Bot" class="header-img"></div>
-        <!-- Título con neón original -->
-        <h1>ZONA DE JUEGOS</h1>
-        <p>Explora tus juegos favoritos y contenido interactivo.</p>
+    <!-- Barra superior -->
+    <header class="topbar">
+        <a href="index.html" class="back-btn">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Volver</span>
+        </a>
+
+        <span class="brand-mini">RAPHAEL // JUEGOS</span>
+
+        <div class="status-badge">
+            <span class="status-dot"></span>
+            <span>En Línea</span>
+        </div>
     </header>
 
-    <h2 class="section-title">Elige Tu Juego</h2>
+    <main>
+        <section class="page-hero glass">
+            <div class="logo-frame">
+                <img src="https://files.yuki-wabot.my.id/cdn/czIqrdU1.jpeg" alt="Logo Zona de Juegos">
+            </div>
+            <span class="hero-kicker">Interactive Hub</span>
+            <h1>ZONA DE JUEGOS</h1>
+            <p>Explora tus juegos favoritos y contenido interactivo.</p>
+        </section>
 
-    <div class="container">
-        <!-- Tarjeta de Minecraft compacta (imagen a un lado, descripción y botón al otro, sin bordes neón) -->
-        <div class="game-card">
-            <div class="game-img-container">
-                <img src="https://files.yuki-wabot.my.id/cdn/jZlymkt3.jpeg" alt="Minecraft" class="game-img">
-            </div>
-            <div class="game-info">
-                <div class="game-title">MINECRAFT</div>
-                <div class="game-desc">Servidor disponible para java y bedrock.</div>
-                <a href="minecraft.html" class="api-btn">
-                    <span class="api-btn-content">Ir al Servidor</span>
-                </a>
-            </div>
+        <div class="section-header">
+            <h2 class="section-title">Elige Tu Juego</h2>
+            <span class="section-sub">Servidores Activos</span>
         </div>
-    </div>
 
+        <div class="games-list">
+            <article class="game-card glass">
+                <div class="game-img-container">
+                    <img src="https://files.yuki-wabot.my.id/cdn/jZlymkt3.jpeg" alt="Minecraft" class="game-img">
+                </div>
+                <div class="game-info">
+                    <h3 class="game-title">MINECRAFT</h3>
+                    <p class="game-desc">Servidor disponible para Java y Bedrock.</p>
+                    <a href="minecraft.html" class="btn-primary">
+                        Ir al Servidor &rarr;
+                    </a>
+                </div>
+            </article>
+        </div>
+    </main>
+
+    <footer>
+        <p>Raphael-WA-BOT - Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        /* --- Fondo Eléctrico Azul en Canvas --- */
+        const canvas = document.getElementById("electric-canvas");
+        const ctx = canvas.getContext("2d");
+
+        let width, height, dpr;
+        let bolts = [];
+        let conduits = [];
+
+        function resizeCanvas() {
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            initConduits();
+        }
+
+        function initConduits() {
+            conduits = [];
+            const count = width < 768 ? 4 : 6;
+            for (let i = 0; i < count; i++) {
+                const yBase = (height / (count + 1)) * (i + 1);
+                conduits.push({
+                    yBase,
+                    amplitude: 28 + Math.random() * 45,
+                    frequency: 0.002 + Math.random() * 0.0025,
+                    phase: Math.random() * Math.PI * 2,
+                    speed: 0.004 + Math.random() * 0.006,
+                    pulsePos: Math.random(),
+                    pulseSpeed: 0.0018 + Math.random() * 0.0025
+                });
+            }
+        }
+
+        function buildLightningPath(x1, y1, x2, y2, displace) {
+            if (displace < 6) {
+                return [{ x: x1, y: y1 }, { x: x2, y: y2 }];
+            }
+            const midX = (x1 + x2) / 2 + (Math.random() - 0.5) * displace;
+            const midY = (y1 + y2) / 2 + (Math.random() - 0.5) * displace;
+            const left = buildLightningPath(x1, y1, midX, midY, displace * 0.55);
+            const right = buildLightningPath(midX, midY, x2, y2, displace * 0.55);
+            return left.slice(0, -1).concat(right);
+        }
+
+        function spawnBolt() {
+            const fromLeft = Math.random() > 0.5;
+            const startX = fromLeft ? -20 : width + 20;
+            const startY = Math.random() * height;
+            const endX = fromLeft ? width * (0.45 + Math.random() * 0.6) : width * (Math.random() * 0.55);
+            const endY = startY + (Math.random() - 0.5) * 320;
+
+            const mainPath = buildLightningPath(startX, startY, endX, endY, 110);
+            const branches = [];
+
+            const branchCount = 1 + Math.floor(Math.random() * 2);
+            for (let i = 0; i < branchCount; i++) {
+                const idx = Math.floor(mainPath.length * (0.25 + Math.random() * 0.5));
+                const origin = mainPath[idx];
+                if (origin) {
+                    const bx = origin.x + (Math.random() - 0.5) * 200;
+                    const by = origin.y + (Math.random() - 0.5) * 180;
+                    branches.push(buildLightningPath(origin.x, origin.y, bx, by, 55));
+                }
+            }
+
+            bolts.push({
+                path: mainPath,
+                branches,
+                alpha: 0.95,
+                decay: 0.018 + Math.random() * 0.02
+            });
+        }
+
+        function drawPath(points, lineWidth, strokeStyle, glowBlur, glowColor) {
+            if (points.length < 2) return;
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (let i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i].x, points[i].y);
+            }
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = strokeStyle;
+            ctx.shadowBlur = glowBlur;
+            ctx.shadowColor = glowColor;
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        let lastBoltTime = 0;
+
+        function animate(timestamp) {
+            ctx.clearRect(0, 0, width, height);
+
+            for (const c of conduits) {
+                c.phase += c.speed;
+                c.pulsePos = (c.pulsePos + c.pulseSpeed) % 1;
+
+                ctx.beginPath();
+                const step = 28;
+                const pts = [];
+                for (let x = -step; x <= width + step; x += step) {
+                    const y = c.yBase
+                        + Math.sin(x * c.frequency + c.phase) * c.amplitude
+                        + Math.cos(x * c.frequency * 2.1 - c.phase * 1.4) * (c.amplitude * 0.3);
+                    pts.push({ x, y });
+                    if (x === -step) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+
+                ctx.strokeStyle = "rgba(14, 165, 233, 0.14)";
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                const pulseCenter = Math.floor(c.pulsePos * (pts.length - 1));
+                const segStart = Math.max(0, pulseCenter - 4);
+                const segEnd = Math.min(pts.length - 1, pulseCenter + 4);
+                const segment = pts.slice(segStart, segEnd + 1);
+
+                drawPath(segment, 2.2, "rgba(56, 189, 248, 0.65)", 16, "#00a8ff");
+                drawPath(segment, 1, "rgba(224, 242, 254, 0.85)", 6, "#38bdf8");
+            }
+
+            if (timestamp - lastBoltTime > 1600 + Math.random() * 2200) {
+                spawnBolt();
+                lastBoltTime = timestamp;
+            }
+
+            for (let i = bolts.length - 1; i >= 0; i--) {
+                const b = bolts[i];
+                const flicker = b.alpha * (0.75 + Math.random() * 0.25);
+
+                drawPath(b.path, 3, `rgba(0, 168, 255, ${flicker * 0.45})`, 22, "#00a8ff");
+                drawPath(b.path, 1.2, `rgba(224, 242, 254, ${flicker * 0.9})`, 8, "#38bdf8");
+
+                for (const br of b.branches) {
+                    drawPath(br, 1.6, `rgba(14, 165, 233, ${flicker * 0.35})`, 14, "#00a8ff");
+                    drawPath(br, 0.7, `rgba(186, 230, 253, ${flicker * 0.7})`, 4, "#38bdf8");
+                }
+
+                b.alpha -= b.decay;
+                if (b.alpha <= 0) {
+                    bolts.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+        spawnBolt();
+        requestAnimationFrame(animate);
+    </script>
 </body>
 </html>
