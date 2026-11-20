@@ -331,61 +331,10 @@
             margin: 0 auto;
         }
 
-        /* Barra fija de categorías (Glassmorphism) */
-        .category-nav {
-            position: sticky;
-            top: 70px;
-            z-index: 900;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 8px;
-            padding: 14px 20px;
-            background: rgba(5, 9, 17, 0.72);
-            backdrop-filter: blur(18px) saturate(140%);
-            -webkit-backdrop-filter: blur(18px) saturate(140%);
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            border-bottom: 1px solid rgba(148, 210, 255, 0.12);
-        }
-
-        .cat-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            background: rgba(15, 23, 42, 0.55);
-            color: var(--text-muted);
-            padding: 8px 14px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-size: 0.84rem;
-            font-weight: 500;
-            border: 1px solid var(--glass-border);
-            transition: all 0.2s ease;
-        }
-
-        .cat-btn svg {
-            width: 15px;
-            height: 15px;
-            stroke: currentColor;
-            opacity: 0.85;
-        }
-
-        .cat-btn:hover {
-            background: rgba(14, 165, 233, 0.14);
-            border-color: var(--glass-border-hover);
-            color: #ffffff;
-            transform: translateY(-1px);
-            box-shadow: 0 6px 18px rgba(0, 168, 255, 0.15);
-        }
-
-        .cat-btn:hover svg {
-            color: var(--electric-cyan);
-        }
-
         /* Contenedor de categorías */
         .container {
             max-width: 1040px;
-            margin: 40px auto 60px auto;
+            margin: 8px auto 60px auto;
             padding: 0 20px;
             display: flex;
             flex-direction: column;
@@ -395,7 +344,7 @@
         .category-section {
             border-radius: 20px;
             padding: 28px;
-            scroll-margin-top: 150px;
+            scroll-margin-top: 90px;
             position: relative;
             overflow: hidden;
             transition: border-color 0.25s ease, background 0.25s ease;
@@ -633,19 +582,6 @@
             <p>Explora todas las categorías y herramientas disponibles para Raphael-WA-BOT</p>
         </section>
     </div>
-
-    <!-- Menú de Categorías Superior Fijo -->
-    <nav class="category-nav" aria-label="Categorías de comandos">
-        <a href="../cmds/economia.html" class="cat-btn">Economía</a>
-        <a href="../cmds/gacha.html" class="cat-btn">Gacha</a>
-        <a href="../cmds/descargas.html" class="cat-btn">Descargas</a>
-        <a href="../cmds/perfiles.html" class="cat-btn">Perfiles</a>
-        <a href="../cmds/grupos.html" class="cat-btn">Grupos</a>
-        <a href="../cmds/sockets.html" class="cat-btn">Sockets</a>
-        <a href="../cmds/stickers.html" class="cat-btn">Stickers</a>
-        <a href="../cmds/utilidades.html" class="cat-btn">Utilidades</a>
-        <a href="../cmds/anime.html" class="cat-btn">Anime</a>
-    </nav>
 
     <!-- Secciones de Categorías -->
     <main class="container">
