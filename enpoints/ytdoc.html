@@ -4,145 +4,474 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Documentación API YouTube - Raphael-WA-BOT</title>
+
     <link rel="icon" type="image/jpeg" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
+    <link rel="apple-touch-icon" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
+
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: #0b0f19; color: #e2e8f0; line-height: 1.6; padding: 20px; }
-        
-        .doc-container { max-width: 900px; margin: 0 auto; padding: 20px; position: relative; }
-        
-        /* Botón Volver */
-        .back-button {
+        :root {
+            --bg-black: #030508;
+            --electric-blue: #00a8ff;
+            --electric-cyan: #38bdf8;
+            --electric-deep: #0284c7;
+            --glass-bg: rgba(10, 16, 28, 0.48);
+            --glass-bg-hover: rgba(14, 24, 42, 0.65);
+            --glass-border: rgba(148, 210, 255, 0.14);
+            --glass-border-hover: rgba(56, 189, 248, 0.45);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Fondo eléctrico */
+        #electric-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 0%, #071226 0%, #030508 65%, #000000 100%);
+        }
+
+        .ambient-vignette {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 40%, transparent 25%, rgba(0, 0, 0, 0.72) 100%);
+        }
+
+        /* Glassmorphism base */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(18px) saturate(140%);
+            -webkit-backdrop-filter: blur(18px) saturate(140%);
+            border: 1px solid var(--glass-border);
+            box-shadow:
+                0 20px 45px rgba(0, 0, 0, 0.65),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        /* Barra superior fija */
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 950;
+            background: rgba(3, 5, 8, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .back-btn {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background-color: #1f2937;
-            color: #93c5fd;
-            padding: 8px 16px;
-            border-radius: 8px;
+            background: rgba(15, 23, 42, 0.6);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+            padding: 9px 15px;
+            border-radius: 10px;
             text-decoration: none;
+            font-size: 0.88rem;
             font-weight: 500;
-            font-size: 0.9rem;
-            margin-bottom: 25px;
-            border: 1px solid #374151;
-            transition: background-color 0.2s, color 0.2s;
-        }
-        .back-button:hover {
-            background-color: #374151;
-            color: #60a5fa;
+            transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
         }
 
-        .doc-header { text-align: center; margin-bottom: 40px; }
-        .doc-logo { width: 90px; height: 90px; object-fit: cover; border-radius: 15px; border: 2px solid #ef4444; margin-bottom: 15px; }
-        .doc-title { font-size: 2.2rem; color: #fff; margin-bottom: 10px; }
-        .doc-subtitle { color: #9ca3af; font-size: 1rem; }
+        .back-btn:hover {
+            border-color: var(--glass-border-hover);
+            background: rgba(20, 32, 54, 0.8);
+            color: #ffffff;
+        }
+
+        .back-btn:active {
+            transform: scale(0.97);
+        }
+
+        .brand-mini {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.14em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            display: none;
+        }
+
+        @media (min-width: 640px) {
+            .brand-mini {
+                display: block;
+            }
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 14px;
+            border-radius: 999px;
+            background: rgba(10, 16, 28, 0.65);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--text-main);
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: #22c55e;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);
+            animation: pulseDot 2.4s ease-in-out infinite;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.55; transform: scale(0.85); }
+        }
+
+        /* Contenedor Principal */
+        .doc-container {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 106px 20px 60px 20px;
+        }
+
+        /* Cabecera Hero */
+        .doc-hero {
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 34px;
+        }
+
+        .doc-hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 16%;
+            right: 16%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.75), transparent);
+        }
+
+        .logo-frame {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 18px auto;
+            padding: 4px;
+            border-radius: 18px;
+            background: linear-gradient(145deg, rgba(56, 189, 248, 0.35), rgba(15, 23, 42, 0.4));
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 25px rgba(0, 168, 255, 0.16);
+        }
+
+        .logo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 14px;
+            display: block;
+            background: #05080f;
+        }
+
+        .hero-kicker {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--electric-cyan);
+            margin-bottom: 8px;
+        }
+
+        .doc-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.7rem, 4.5vw, 2.5rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .doc-subtitle {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        /* Tarjetas de Endpoints */
+        .endpoints-list {
+            display: flex;
+            flex-direction: column;
+            gap: 22px;
+        }
 
         .endpoint-card {
-            background-color: #111827;
-            border: 1px solid #1f2937;
-            border-radius: 12px;
-            padding: 24px;
-            margin-bottom: 25px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border-radius: 20px;
+            padding: 26px;
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.25s ease, background 0.25s ease;
         }
 
-        .endpoint-title { font-size: 1.25rem; font-weight: bold; color: #f3f4f6; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-        
+        .endpoint-card:hover {
+            border-color: rgba(56, 189, 248, 0.32);
+        }
+
+        .endpoint-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffffff;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
         .method-get {
-            background-color: rgba(16, 185, 129, 0.15);
+            font-family: 'JetBrains Mono', monospace;
+            background: rgba(16, 185, 129, 0.14);
             color: #34d399;
-            padding: 3px 8px;
+            padding: 3px 9px;
             border-radius: 6px;
-            font-size: 0.8rem;
-            border: 1px solid rgba(52, 211, 153, 0.3);
+            font-size: 0.75rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            border: 1px solid rgba(52, 211, 153, 0.35);
         }
 
-        /* Contenedor del URL con botón de copiar */
+        .field-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .field-label.strong {
+            color: var(--text-main);
+            margin-top: 14px;
+        }
+
+        /* Caja de URL / Header con botón copiar */
         .url-box {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #1f2937;
-            padding: 10px 14px;
-            border-radius: 8px;
-            border: 1px solid #374151;
-            margin-bottom: 15px;
-            gap: 10px;
+            gap: 12px;
+            background: rgba(5, 9, 18, 0.7);
+            padding: 11px 14px;
+            border-radius: 10px;
+            border: 1px solid rgba(148, 210, 255, 0.12);
+            margin-bottom: 14px;
         }
 
         .endpoint-url {
-            font-family: monospace;
-            color: #60a5fa;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--electric-cyan);
             word-break: break-all;
-            font-size: 0.95rem;
+            font-size: 0.86rem;
+        }
+
+        .endpoint-header {
+            color: #93c5fd;
+            font-size: 0.84rem;
         }
 
         .copy-btn {
-            background-color: #374151;
-            color: #e2e8f0;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            font-weight: 600;
-            display: flex;
+            display: inline-flex;
             align-items: center;
-            gap: 5px;
+            gap: 6px;
+            background: rgba(15, 23, 42, 0.8);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+            padding: 6px 12px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.78rem;
+            font-weight: 500;
             white-space: nowrap;
-            transition: background-color 0.2s, color 0.2s;
+            transition: all 0.2s ease;
         }
+
+        .copy-btn svg {
+            width: 14px;
+            height: 14px;
+        }
+
         .copy-btn:hover {
-            background-color: #4b5563;
-            color: #fff;
+            border-color: var(--glass-border-hover);
+            background: rgba(20, 34, 58, 0.9);
+            color: #ffffff;
         }
+
         .copy-btn.copied {
-            background-color: #10b981;
-            color: #fff;
+            background: rgba(16, 185, 129, 0.22);
+            border-color: rgba(52, 211, 153, 0.5);
+            color: #34d399;
         }
 
-        .params-list { list-style: none; margin-bottom: 15px; }
-        .params-list li { font-size: 0.9rem; color: #9ca3af; margin-bottom: 5px; }
-        .params-list code { color: #f472b6; font-family: monospace; }
+        /* Lista de parámetros */
+        .params-list {
+            list-style: none;
+            margin: 10px 0 16px 0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
 
+        .params-list li {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .params-list code {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--electric-cyan);
+            background: rgba(14, 165, 233, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.22);
+            padding: 2px 7px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            margin-right: 4px;
+        }
+
+        .param-note {
+            color: var(--text-dim);
+            font-style: italic;
+        }
+
+        /* Bloque de código */
         pre {
-            background: #030712;
-            padding: 15px;
-            border-radius: 8px;
+            background: rgba(3, 6, 12, 0.85);
+            padding: 16px;
+            border-radius: 10px;
             overflow-x: auto;
             color: #34d399;
-            font-family: monospace;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            line-height: 1.55;
+            border: 1px solid rgba(148, 210, 255, 0.1);
+        }
+
+        footer {
+            margin-top: 64px;
+            padding: 28px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            background: rgba(3, 5, 8, 0.65);
+            backdrop-filter: blur(12px);
             font-size: 0.85rem;
-            border: 1px solid #1f2937;
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 600px) {
+            .doc-hero {
+                padding: 30px 20px;
+            }
+            .endpoint-card {
+                padding: 20px 18px;
+            }
+            .url-box {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .copy-btn {
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="doc-container">
-        <!-- Botón de Volver -->
-        <a href="../pestañas/apis.html" class="back-button">
-            ⬅️ Volver
+    <!-- Fondo animado eléctrico -->
+    <canvas id="electric-canvas" aria-hidden="true"></canvas>
+    <div class="ambient-vignette" aria-hidden="true"></div>
+
+    <!-- Barra superior -->
+    <header class="topbar">
+        <a href="../pestañas/apis.html" class="back-btn">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Volver</span>
         </a>
 
-        <div class="doc-header">
-            <!-- Puedes cambiar este logo si deseas uno específico para YouTube -->
-            <img src="https://files.yuki-wabot.my.id/cdn/czIqrdU1.jpeg" alt="API YouTube Logo" class="doc-logo">
-            <h1 class="doc-title">▶️ Documentación API YouTube</h1>
-            <p class="doc-subtitle">Guía de integración para el buscador, extractor de metadatos y descargas multimedia de YouTube.</p>
-        </div>
+        <span class="brand-mini">RAPHAEL // DOCS YT</span>
 
-        <!-- Endpoint 1 -->
-        <div class="endpoint-card">
-            <div class="endpoint-title">
-                <span class="method-get">GET</span> Verificar estado de la API 📊
+        <div class="status-badge">
+            <span class="status-dot"></span>
+            <span>En Línea</span>
+        </div>
+    </header>
+
+    <main class="doc-container">
+        <section class="doc-hero glass">
+            <div class="logo-frame">
+                <img src="https://files.yuki-wabot.my.id/cdn/czIqrdU1.jpeg" alt="API YouTube Logo">
             </div>
-            <div class="url-box">
-                <span class="endpoint-url" id="url-1">https://yt-api.raphaelbot.com/health</span>
-                <button class="copy-btn" onclick="copyToClipboard('url-1', this)">📋 Copiar</button>
-            </div>
-            <p style="font-size: 0.9rem; color: #9ca3af; margin-bottom: 8px;">Ejemplo de resultado:</p>
-            <pre>{
+            <span class="hero-kicker">Referencia Técnica</span>
+            <h1 class="doc-title">DOCUMENTACIÓN API YOUTUBE</h1>
+            <p class="doc-subtitle">Guía de integración para el buscador, extractor de metadatos y descargas multimedia de YouTube.</p>
+        </section>
+
+        <div class="endpoints-list">
+
+            <!-- Endpoint 1 -->
+            <article class="endpoint-card glass">
+                <div class="endpoint-title">
+                    <span class="method-get">GET</span>
+                    <span>Verificar estado de la API</span>
+                </div>
+                <div class="url-box">
+                    <span class="endpoint-url" id="url-1">https://yt-api.raphaelbot.com/health</span>
+                    <button class="copy-btn" onclick="copyToClipboard('url-1', this)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copiar
+                    </button>
+                </div>
+                <p class="field-label">Ejemplo de resultado:</p>
+                <pre>{
   "status": "OK",
   "message": "API de YouTube Scraper funcionando",
   "endpoints": {
@@ -158,32 +487,39 @@
     ]
   }
 }</pre>
-        </div>
+            </article>
 
-        <!-- Endpoint 2 -->
-        <div class="endpoint-card">
-            <div class="endpoint-title">
-                <span class="method-get">GET</span> Buscar videos en YouTube 🔎
-            </div>
-            <div class="url-box">
-                <span class="endpoint-url" id="url-2">https://yt-api.raphaelbot.com/search?query=[TEXTO]</span>
-                <button class="copy-btn" onclick="copyToClipboard('url-2', this)">📋 Copiar</button>
-            </div>
-            
-            <p style="font-size: 0.9rem; color: #f3f4f6; margin-bottom: 5px; font-weight: bold;">Headers requeridos:</p>
-            <div class="url-box">
-                <span class="endpoint-url" id="header-1" style="color: #c084fc; font-size: 0.85rem;">x-api-key: [TU_API_KEY]</span>
-                <button class="copy-btn" onclick="copyToClipboard('header-1', this)">📋 Copiar</button>
-            </div>
-            
-            <ul class="params-list">
-                <li><code>[TEXTO]</code> = Lo que quieres buscar (Ej: Bad Bunny)</li>
-                <li><code>[TU_API_KEY]</code> = Tu clave secreta (Ej: 8affc894-...)</li>
-                <li>*(Opcional en query params: <code>?query=[TEXTO]&apiKey=[TU_API_KEY]</code>)*</li>
-            </ul>
+            <!-- Endpoint 2 -->
+            <article class="endpoint-card glass">
+                <div class="endpoint-title">
+                    <span class="method-get">GET</span>
+                    <span>Buscar videos en YouTube</span>
+                </div>
+                <div class="url-box">
+                    <span class="endpoint-url" id="url-2">https://yt-api.raphaelbot.com/search?query=[TEXTO]</span>
+                    <button class="copy-btn" onclick="copyToClipboard('url-2', this)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copiar
+                    </button>
+                </div>
 
-            <p style="font-size: 0.9rem; color: #9ca3af; margin-bottom: 8px;">Ejemplo de resultado:</p>
-            <pre>{
+                <p class="field-label strong">Headers requeridos:</p>
+                <div class="url-box">
+                    <span class="endpoint-url endpoint-header" id="header-1">x-api-key: [TU_API_KEY]</span>
+                    <button class="copy-btn" onclick="copyToClipboard('header-1', this)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copiar
+                    </button>
+                </div>
+
+                <ul class="params-list">
+                    <li><code>[TEXTO]</code> Lo que quieres buscar (Ej: Bad Bunny)</li>
+                    <li><code>[TU_API_KEY]</code> Tu clave secreta (Ej: 8affc894-...)</li>
+                    <li class="param-note">(Opcional en query params: <code>?query=[TEXTO]&amp;apiKey=[TU_API_KEY]</code>)</li>
+                </ul>
+
+                <p class="field-label">Ejemplo de resultado:</p>
+                <pre>{
   "success": true,
   "results": [
     {
@@ -194,30 +530,37 @@
     }
   ]
 }</pre>
-        </div>
+            </article>
 
-        <!-- Endpoint 3 -->
-        <div class="endpoint-card">
-            <div class="endpoint-title">
-                <span class="method-get">GET</span> Obtener Metadata de un Video 🎬
-            </div>
-            <div class="url-box">
-                <span class="endpoint-url" id="url-3">https://yt-api.raphaelbot.com/metadata?url=[URL_VIDEO]</span>
-                <button class="copy-btn" onclick="copyToClipboard('url-3', this)">📋 Copiar</button>
-            </div>
+            <!-- Endpoint 3 -->
+            <article class="endpoint-card glass">
+                <div class="endpoint-title">
+                    <span class="method-get">GET</span>
+                    <span>Obtener Metadata de un Video</span>
+                </div>
+                <div class="url-box">
+                    <span class="endpoint-url" id="url-3">https://yt-api.raphaelbot.com/metadata?url=[URL_VIDEO]</span>
+                    <button class="copy-btn" onclick="copyToClipboard('url-3', this)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copiar
+                    </button>
+                </div>
 
-            <p style="font-size: 0.9rem; color: #f3f4f6; margin-bottom: 5px; font-weight: bold;">Headers requeridos:</p>
-            <div class="url-box">
-                <span class="endpoint-url" id="header-2" style="color: #c084fc; font-size: 0.85rem;">x-api-key: [TU_API_KEY]</span>
-                <button class="copy-btn" onclick="copyToClipboard('header-2', this)">📋 Copiar</button>
-            </div>
+                <p class="field-label strong">Headers requeridos:</p>
+                <div class="url-box">
+                    <span class="endpoint-url endpoint-header" id="header-2">x-api-key: [TU_API_KEY]</span>
+                    <button class="copy-btn" onclick="copyToClipboard('header-2', this)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copiar
+                    </button>
+                </div>
 
-            <ul class="params-list">
-                <li><code>[URL_VIDEO]</code> = URL completa del video de YouTube (Ej: https://www.youtube.com/watch?v=dQw4w9WgXcQ)</li>
-            </ul>
+                <ul class="params-list">
+                    <li><code>[URL_VIDEO]</code> URL completa del video de YouTube (Ej: https://www.youtube.com/watch?v=dQw4w9WgXcQ)</li>
+                </ul>
 
-            <p style="font-size: 0.9rem; color: #9ca3af; margin-bottom: 8px;">Ejemplo de resultado:</p>
-            <pre>{
+                <p class="field-label">Ejemplo de resultado:</p>
+                <pre>{
   "success": true,
   "data": {
     "title": "Título del Video",
@@ -227,30 +570,37 @@
     "author": "Nombre del Canal"
   }
 }</pre>
-        </div>
+            </article>
 
-        <!-- Endpoint 4 -->
-        <div class="endpoint-card">
-            <div class="endpoint-title">
-                <span class="method-get">GET</span> Obtener Metadata de un Canal 📺
-            </div>
-            <div class="url-box">
-                <span class="endpoint-url" id="url-4">https://yt-api.raphaelbot.com/channel?channel=[CANAL]</span>
-                <button class="copy-btn" onclick="copyToClipboard('url-4', this)">📋 Copiar</button>
-            </div>
+            <!-- Endpoint 4 -->
+            <article class="endpoint-card glass">
+                <div class="endpoint-title">
+                    <span class="method-get">GET</span>
+                    <span>Obtener Metadata de un Canal</span>
+                </div>
+                <div class="url-box">
+                    <span class="endpoint-url" id="url-4">https://yt-api.raphaelbot.com/channel?channel=[CANAL]</span>
+                    <button class="copy-btn" onclick="copyToClipboard('url-4', this)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copiar
+                    </button>
+                </div>
 
-            <p style="font-size: 0.9rem; color: #f3f4f6; margin-bottom: 5px; font-weight: bold;">Headers requeridos:</p>
-            <div class="url-box">
-                <span class="endpoint-url" id="header-3" style="color: #c084fc; font-size: 0.85rem;">x-api-key: [TU_API_KEY]</span>
-                <button class="copy-btn" onclick="copyToClipboard('header-3', this)">📋 Copiar</button>
-            </div>
+                <p class="field-label strong">Headers requeridos:</p>
+                <div class="url-box">
+                    <span class="endpoint-url endpoint-header" id="header-3">x-api-key: [TU_API_KEY]</span>
+                    <button class="copy-btn" onclick="copyToClipboard('header-3', this)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copiar
+                    </button>
+                </div>
 
-            <ul class="params-list">
-                <li><code>[CANAL]</code> = URL del canal o @handle (Ej: @youtube o https://www.youtube.com/@youtube)</li>
-            </ul>
+                <ul class="params-list">
+                    <li><code>[CANAL]</code> URL del canal o @handle (Ej: @youtube o https://www.youtube.com/@youtube)</li>
+                </ul>
 
-            <p style="font-size: 0.9rem; color: #9ca3af; margin-bottom: 8px;">Ejemplo de resultado:</p>
-            <pre>{
+                <p class="field-label">Ejemplo de resultado:</p>
+                <pre>{
   "success": true,
   "data": {
     "channelName": "Nombre del Canal",
@@ -258,76 +608,252 @@
     "avatar": "https://.../avatar.jpg"
   }
 }</pre>
+            </article>
+
+            <!-- Endpoint 5 -->
+            <article class="endpoint-card glass">
+                <div class="endpoint-title">
+                    <span class="method-get">GET</span>
+                    <span>Descargar Audio MP3</span>
+                </div>
+                <div class="url-box">
+                    <span class="endpoint-url" id="url-5">https://yt-api.raphaelbot.com/ytmp3?url=[URL_VIDEO]&amp;quality=[CALIDAD]</span>
+                    <button class="copy-btn" onclick="copyToClipboard('url-5', this)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copiar
+                    </button>
+                </div>
+
+                <p class="field-label strong">Headers requeridos:</p>
+                <div class="url-box">
+                    <span class="endpoint-url endpoint-header" id="header-4">x-api-key: [TU_API_KEY]</span>
+                    <button class="copy-btn" onclick="copyToClipboard('header-4', this)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copiar
+                    </button>
+                </div>
+
+                <ul class="params-list">
+                    <li><code>[URL_VIDEO]</code> URL del video de YouTube</li>
+                    <li><code>[CALIDAD]</code> Calidad del audio en kbps (Opcional, por defecto: 128)</li>
+                </ul>
+
+                <p class="field-label">Ejemplo de resultado:</p>
+                <pre>El archivo MP3 (descarga directa)</pre>
+            </article>
+
+            <!-- Endpoint 6 -->
+            <article class="endpoint-card glass">
+                <div class="endpoint-title">
+                    <span class="method-get">GET</span>
+                    <span>Descargar Video MP4</span>
+                </div>
+                <div class="url-box">
+                    <span class="endpoint-url" id="url-6">https://yt-api.raphaelbot.com/ytmp4?url=[URL_VIDEO]&amp;quality=[CALIDAD]</span>
+                    <button class="copy-btn" onclick="copyToClipboard('url-6', this)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copiar
+                    </button>
+                </div>
+
+                <p class="field-label strong">Headers requeridos:</p>
+                <div class="url-box">
+                    <span class="endpoint-url endpoint-header" id="header-5">x-api-key: [TU_API_KEY]</span>
+                    <button class="copy-btn" onclick="copyToClipboard('header-5', this)">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                        Copiar
+                    </button>
+                </div>
+
+                <ul class="params-list">
+                    <li><code>[URL_VIDEO]</code> URL del video de YouTube</li>
+                    <li><code>[CALIDAD]</code> Calidad del video p.ej. 360, 720, 1080 (Opcional, por defecto: 360)</li>
+                </ul>
+
+                <p class="field-label">Ejemplo de resultado:</p>
+                <pre>El archivo MP4 (descarga directa)</pre>
+            </article>
+
         </div>
+    </main>
 
-        <!-- Endpoint 5 -->
-        <div class="endpoint-card">
-            <div class="endpoint-title">
-                <span class="method-get">GET</span> Descargar Audio MP3 🎵
-            </div>
-            <div class="url-box">
-                <span class="endpoint-url" id="url-5">https://yt-api.raphaelbot.com/ytmp3?url=[URL_VIDEO]&quality=[CALIDAD]</span>
-                <button class="copy-btn" onclick="copyToClipboard('url-5', this)">📋 Copiar</button>
-            </div>
-
-            <p style="font-size: 0.9rem; color: #f3f4f6; margin-bottom: 5px; font-weight: bold;">Headers requeridos:</p>
-            <div class="url-box">
-                <span class="endpoint-url" id="header-4" style="color: #c084fc; font-size: 0.85rem;">x-api-key: [TU_API_KEY]</span>
-                <button class="copy-btn" onclick="copyToClipboard('header-4', this)">📋 Copiar</button>
-            </div>
-
-            <ul class="params-list">
-                <li><code>[URL_VIDEO]</code> = URL del video de YouTube</li>
-                <li><code>[CALIDAD]</code> = Calidad del audio en kbps (Opcional, por defecto: 128)</li>
-            </ul>
-
-            <p style="font-size: 0.9rem; color: #9ca3af; margin-bottom: 8px;">Ejemplo de resultado:</p>
-            <pre>El archivo MP3 (descarga directa)</pre>
-        </div>
-
-        <!-- Endpoint 6 -->
-        <div class="endpoint-card">
-            <div class="endpoint-title">
-                <span class="method-get">GET</span> Descargar Video MP4 🎥
-            </div>
-            <div class="url-box">
-                <span class="endpoint-url" id="url-6">https://yt-api.raphaelbot.com/ytmp4?url=[URL_VIDEO]&quality=[CALIDAD]</span>
-                <button class="copy-btn" onclick="copyToClipboard('url-6', this)">📋 Copiar</button>
-            </div>
-
-            <p style="font-size: 0.9rem; color: #f3f4f6; margin-bottom: 5px; font-weight: bold;">Headers requeridos:</p>
-            <div class="url-box">
-                <span class="endpoint-url" id="header-5" style="color: #c084fc; font-size: 0.85rem;">x-api-key: [TU_API_KEY]</span>
-                <button class="copy-btn" onclick="copyToClipboard('header-5', this)">📋 Copiar</button>
-            </div>
-
-            <ul class="params-list">
-                <li><code>[URL_VIDEO]</code> = URL del video de YouTube</li>
-                <li><code>[CALIDAD]</code> = Calidad del video p.ej. 360, 720, 1080 (Opcional, por defecto: 360)</li>
-            </ul>
-
-            <p style="font-size: 0.9rem; color: #9ca3af; margin-bottom: 8px;">Ejemplo de resultado:</p>
-            <pre>El archivo MP4 (descarga directa)</pre>
-        </div>
-
-    </div>
+    <footer>
+        <p>Raphael-WA-BOT - Todos los derechos reservados.</p>
+    </footer>
 
     <script>
+        /* --- Copiar al portapapeles --- */
         function copyToClipboard(elementId, btnElement) {
             const textToCopy = document.getElementById(elementId).innerText;
             navigator.clipboard.writeText(textToCopy).then(() => {
-                const originalText = btnElement.innerHTML;
-                btnElement.innerHTML = "✅ ¡Copiado!";
+                const originalHTML = btnElement.innerHTML;
+                btnElement.innerText = "Copiado";
                 btnElement.classList.add("copied");
-                
+
                 setTimeout(() => {
-                    btnElement.innerHTML = originalText;
+                    btnElement.innerHTML = originalHTML;
                     btnElement.classList.remove("copied");
                 }, 2000);
             }).catch(err => {
                 console.error('Error al copiar: ', err);
             });
         }
+
+        /* --- Fondo Eléctrico Azul en Canvas --- */
+        const canvas = document.getElementById("electric-canvas");
+        const ctx = canvas.getContext("2d");
+
+        let width, height, dpr;
+        let bolts = [];
+        let conduits = [];
+
+        function resizeCanvas() {
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            initConduits();
+        }
+
+        function initConduits() {
+            conduits = [];
+            const count = width < 768 ? 4 : 6;
+            for (let i = 0; i < count; i++) {
+                const yBase = (height / (count + 1)) * (i + 1);
+                conduits.push({
+                    yBase,
+                    amplitude: 28 + Math.random() * 45,
+                    frequency: 0.002 + Math.random() * 0.0025,
+                    phase: Math.random() * Math.PI * 2,
+                    speed: 0.004 + Math.random() * 0.006,
+                    pulsePos: Math.random(),
+                    pulseSpeed: 0.0018 + Math.random() * 0.0025
+                });
+            }
+        }
+
+        function buildLightningPath(x1, y1, x2, y2, displace) {
+            if (displace < 6) {
+                return [{ x: x1, y: y1 }, { x: x2, y: y2 }];
+            }
+            const midX = (x1 + x2) / 2 + (Math.random() - 0.5) * displace;
+            const midY = (y1 + y2) / 2 + (Math.random() - 0.5) * displace;
+            const left = buildLightningPath(x1, y1, midX, midY, displace * 0.55);
+            const right = buildLightningPath(midX, midY, x2, y2, displace * 0.55);
+            return left.slice(0, -1).concat(right);
+        }
+
+        function spawnBolt() {
+            const fromLeft = Math.random() > 0.5;
+            const startX = fromLeft ? -20 : width + 20;
+            const startY = Math.random() * height;
+            const endX = fromLeft ? width * (0.45 + Math.random() * 0.6) : width * (Math.random() * 0.55);
+            const endY = startY + (Math.random() - 0.5) * 320;
+
+            const mainPath = buildLightningPath(startX, startY, endX, endY, 110);
+            const branches = [];
+
+            const branchCount = 1 + Math.floor(Math.random() * 2);
+            for (let i = 0; i < branchCount; i++) {
+                const idx = Math.floor(mainPath.length * (0.25 + Math.random() * 0.5));
+                const origin = mainPath[idx];
+                if (origin) {
+                    const bx = origin.x + (Math.random() - 0.5) * 200;
+                    const by = origin.y + (Math.random() - 0.5) * 180;
+                    branches.push(buildLightningPath(origin.x, origin.y, bx, by, 55));
+                }
+            }
+
+            bolts.push({
+                path: mainPath,
+                branches,
+                alpha: 0.95,
+                decay: 0.018 + Math.random() * 0.02
+            });
+        }
+
+        function drawPath(points, lineWidth, strokeStyle, glowBlur, glowColor) {
+            if (points.length < 2) return;
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (let i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i].x, points[i].y);
+            }
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = strokeStyle;
+            ctx.shadowBlur = glowBlur;
+            ctx.shadowColor = glowColor;
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        let lastBoltTime = 0;
+
+        function animate(timestamp) {
+            ctx.clearRect(0, 0, width, height);
+
+            for (const c of conduits) {
+                c.phase += c.speed;
+                c.pulsePos = (c.pulsePos + c.pulseSpeed) % 1;
+
+                ctx.beginPath();
+                const step = 28;
+                const pts = [];
+                for (let x = -step; x <= width + step; x += step) {
+                    const y = c.yBase
+                        + Math.sin(x * c.frequency + c.phase) * c.amplitude
+                        + Math.cos(x * c.frequency * 2.1 - c.phase * 1.4) * (c.amplitude * 0.3);
+                    pts.push({ x, y });
+                    if (x === -step) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+
+                ctx.strokeStyle = "rgba(14, 165, 233, 0.14)";
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                const pulseCenter = Math.floor(c.pulsePos * (pts.length - 1));
+                const segStart = Math.max(0, pulseCenter - 4);
+                const segEnd = Math.min(pts.length - 1, pulseCenter + 4);
+                const segment = pts.slice(segStart, segEnd + 1);
+
+                drawPath(segment, 2.2, "rgba(56, 189, 248, 0.65)", 16, "#00a8ff");
+                drawPath(segment, 1, "rgba(224, 242, 254, 0.85)", 6, "#38bdf8");
+            }
+
+            if (timestamp - lastBoltTime > 1600 + Math.random() * 2200) {
+                spawnBolt();
+                lastBoltTime = timestamp;
+            }
+
+            for (let i = bolts.length - 1; i >= 0; i--) {
+                const b = bolts[i];
+                const flicker = b.alpha * (0.75 + Math.random() * 0.25);
+
+                drawPath(b.path, 3, `rgba(0, 168, 255, ${flicker * 0.45})`, 22, "#00a8ff");
+                drawPath(b.path, 1.2, `rgba(224, 242, 254, ${flicker * 0.9})`, 8, "#38bdf8");
+
+                for (const br of b.branches) {
+                    drawPath(br, 1.6, `rgba(14, 165, 233, ${flicker * 0.35})`, 14, "#00a8ff");
+                    drawPath(br, 0.7, `rgba(186, 230, 253, ${flicker * 0.7})`, 4, "#38bdf8");
+                }
+
+                b.alpha -= b.decay;
+                if (b.alpha <= 0) {
+                    bolts.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+        spawnBolt();
+        requestAnimationFrame(animate);
     </script>
 </body>
 </html>
