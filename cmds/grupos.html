@@ -196,3 +196,520 @@
             place-items: center;
             background: rgba(14, 165, 233, 0.1);
             border: 1px solid rgba(56, 189, 248, 0.25);
+            color: var(--electric-cyan);
+        }
+
+        .hero-kicker {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--electric-cyan);
+            margin-bottom: 8px;
+        }
+
+        .page-hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.9rem, 4.5vw, 2.7rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .page-hero p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .page-hero p em {
+            color: #cbd5e1;
+            font-style: normal;
+            font-weight: 500;
+        }
+
+        /* Buscador de comandos */
+        .search-bar-wrap {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 22px;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 240px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 16px;
+            border-radius: 12px;
+            background: rgba(10, 16, 28, 0.55);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid var(--glass-border);
+            transition: border-color 0.2s ease;
+        }
+
+        .search-box:focus-within {
+            border-color: var(--glass-border-hover);
+        }
+
+        .search-box svg {
+            width: 17px;
+            height: 17px;
+            color: var(--text-dim);
+            flex-shrink: 0;
+        }
+
+        .search-box input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92rem;
+        }
+
+        .search-box input::placeholder {
+            color: var(--text-dim);
+        }
+
+        .cmd-count {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            padding: 9px 14px;
+            border-radius: 10px;
+            background: rgba(10, 16, 28, 0.5);
+            border: 1px solid var(--glass-border);
+        }
+
+        /* Grilla y tarjetas de comandos */
+        .commands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 16px;
+        }
+
+        .command-card {
+            border-radius: 16px;
+            padding: 20px 22px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease;
+        }
+
+        .command-card::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.45), transparent);
+            opacity: 0;
+            transition: opacity 0.22s ease;
+        }
+
+        .command-card:hover {
+            transform: translateY(-3px);
+            background: var(--glass-bg-hover);
+            border-color: var(--glass-border-hover);
+        }
+
+        .command-card:hover::after {
+            opacity: 1;
+        }
+
+        .cmd-header {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .command-card code {
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--electric-cyan);
+            background: rgba(14, 165, 233, 0.12);
+            border: 1px solid rgba(56, 189, 248, 0.24);
+            padding: 3px 9px;
+            border-radius: 6px;
+            font-weight: 500;
+            font-size: 0.94rem;
+        }
+
+        .command-usage {
+            font-family: 'JetBrains Mono', monospace;
+            color: #93c5fd;
+            font-size: 0.8rem;
+        }
+
+        .command-usage:empty {
+            display: none;
+        }
+
+        .command-card p {
+            margin-top: 12px;
+            color: var(--text-main);
+            font-size: 0.93rem;
+        }
+
+        .command-aliases {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.77rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+        }
+
+        .command-aliases span {
+            color: var(--text-dim);
+            margin-right: 4px;
+        }
+
+        .no-results {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            border-radius: 16px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 28px 20px;
+            background: rgba(3, 5, 8, 0.65);
+            backdrop-filter: blur(12px);
+            color: var(--text-dim);
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 600px) {
+            .page-hero {
+                padding: 30px 20px;
+            }
+            .container {
+                padding-top: 94px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Fondo animado eléctrico -->
+    <canvas id="electric-canvas" aria-hidden="true"></canvas>
+    <div class="ambient-vignette" aria-hidden="true"></div>
+
+    <!-- Barra superior -->
+    <header class="topbar">
+        <a href="../pestañas/comandos.html" class="back-btn">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Volver</span>
+        </a>
+
+        <span class="brand-mini">RAPHAEL // GRUPOS</span>
+
+        <div class="status-badge">
+            <span class="status-dot"></span>
+            <span>En Línea</span>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="page-hero glass">
+            <div class="hero-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+            </div>
+            <span class="hero-kicker">Categoría de Comandos</span>
+            <h1>Grupos</h1>
+            <p>Comandos de <em>Grupo</em> para administrar y moderar.</p>
+        </section>
+
+        <!-- Buscador rápido -->
+        <div class="search-bar-wrap">
+            <div class="search-box">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                </svg>
+                <input type="text" id="cmdSearch" placeholder="Buscar comando o alias (ej. antilinks, kick, welcome...)" autocomplete="off">
+            </div>
+            <div class="cmd-count" id="cmdCount">32 comandos</div>
+        </div>
+
+        <div class="commands-grid" id="commandsGrid">
+
+            <div class="command-card glass"><div class="cmd-header"><code>alerts</code><span class="command-usage">&lt;on|off&gt;</span></div><p>Activar o desactivar las alertas del grupo.</p><div class="command-aliases"><span>Alias:</span> alerts, alertas</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>antilinks</code><span class="command-usage">&lt;on|off&gt;</span></div><p>Activar o desactivar el anti-enlaces.</p><div class="command-aliases"><span>Alias:</span> antilink, antilinks, antienlaces</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>antistatus</code><span class="command-usage">&lt;on|off&gt;</span></div><p>Activar o desactivar el anti-estados.</p><div class="command-aliases"><span>Alias:</span> antistatus, antiestados</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>bot</code><span class="command-usage">&lt;on|off&gt;</span></div><p>Activar o desactivar el bot en el grupo.</p><div class="command-aliases"><span>Alias:</span> bot</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>economy</code><span class="command-usage">&lt;on|off&gt;</span></div><p>Activar o desactivar los comandos de economía.</p><div class="command-aliases"><span>Alias:</span> economy, economia</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>gacha</code><span class="command-usage">&lt;on|off&gt;</span></div><p>Activar o desactivar los comandos de gacha.</p><div class="command-aliases"><span>Alias:</span> gacha, rpg</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>nsfw</code><span class="command-usage">&lt;on|off&gt;</span></div><p>Activar o desactivar los comandos NSFW.</p><div class="command-aliases"><span>Alias:</span> nsfw</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>adminonly</code><span class="command-usage">&lt;on|off&gt;</span></div><p>Permitir que solo los admins puedan usar los comandos.</p><div class="command-aliases"><span>Alias:</span> adminonly, onlyadmin</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>welcome</code><span class="command-usage">&lt;on|off&gt;</span></div><p>Activar o desactivar la bienvenida.</p><div class="command-aliases"><span>Alias:</span> welcome, bienvenida</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>goodbye</code><span class="command-usage">&lt;on|off&gt;</span></div><p>Activar o desactivar la despedida.</p><div class="command-aliases"><span>Alias:</span> goodbye, despedida</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>setwelcome</code><span class="command-usage">&lt;value&gt;</span></div><p>Establecer un mensaje de bienvenida personalizado.</p><div class="command-aliases"><span>Alias:</span> setwelcome</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>setgoodbye</code><span class="command-usage">&lt;value&gt;</span></div><p>Establecer un mensaje de despedida personalizado.</p><div class="command-aliases"><span>Alias:</span> setgoodbye</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>close</code><span class="command-usage">&lt;time&gt;</span></div><p>Cerrar el grupo para que solo los admins puedan enviar mensajes.</p><div class="command-aliases"><span>Alias:</span> close, cerrar</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>open</code><span class="command-usage">&lt;time&gt;</span></div><p>Abrir el grupo para que todos puedan enviar mensajes.</p><div class="command-aliases"><span>Alias:</span> open, abrir</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>groupinfo</code><span class="command-usage"></span></div><p>Ver la información del grupo.</p><div class="command-aliases"><span>Alias:</span> gp, groupinfo</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>setgpbanner</code><span class="command-usage">&lt;cite / image&gt;</span></div><p>Cambiar la imagen del grupo.</p><div class="command-aliases"><span>Alias:</span> setgpbanner</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>setgpname</code><span class="command-usage">&lt;value&gt;</span></div><p>Cambiar el nombre del grupo.</p><div class="command-aliases"><span>Alias:</span> setgpname</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>setgpdesc</code><span class="command-usage">&lt;value&gt;</span></div><p>Cambiar la descripción del grupo.</p><div class="command-aliases"><span>Alias:</span> setgpdesc</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>setgpstatus</code><span class="command-usage">&lt;text|cite&gt; ...</span></div><p>Publicar un estado en el grupo.</p><div class="command-aliases"><span>Alias:</span> setgpstatus</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>kick</code><span class="command-usage">&lt;mention|función&gt;</span></div><p>Expulsar a un usuario del grupo.</p><div class="command-aliases"><span>Alias:</span> kick, ban, bang</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>promote</code><span class="command-usage">&lt;mention&gt;</span></div><p>Ascender a un usuario a administrador.</p><div class="command-aliases"><span>Alias:</span> promote, promover</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>demote</code><span class="command-usage">&lt;mention&gt;</span></div><p>Descender a un usuario de administrador.</p><div class="command-aliases"><span>Alias:</span> demote, degradar</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>warn</code><span class="command-usage">&lt;mention / reason&gt;</span></div><p>Darle una advertencia a un miembro del grupo.</p><div class="command-aliases"><span>Alias:</span> warn</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>warns</code><span class="command-usage">&lt;mention&gt;</span></div><p>Ver todas las advertencias de un miembro del grupo.</p><div class="command-aliases"><span>Alias:</span> warns</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>delwarn</code><span class="command-usage">&lt;mention / number|all&gt;</span></div><p>Eliminar una advertencia de un miembro del grupo.</p><div class="command-aliases"><span>Alias:</span> delwarn</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>setwarnlimit</code><span class="command-usage">&lt;number&gt;</span></div><p>Establecer el límite de advertencias del grupo.</p><div class="command-aliases"><span>Alias:</span> setwarnlimit</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>tag</code><span class="command-usage">&lt;text&gt;</span></div><p>Mencionar a todos los usuarios del grupo.</p><div class="command-aliases"><span>Alias:</span> hidetag, tag, tagall, todos</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>link</code><span class="command-usage"></span></div><p>Obtener el enlace del grupo.</p><div class="command-aliases"><span>Alias:</span> link</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>revoke</code><span class="command-usage"></span></div><p>Restablecer el enlace del grupo.</p><div class="command-aliases"><span>Alias:</span> revoke, restablecer</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>msgcount</code><span class="command-usage">&lt;mention / days&gt;</span></div><p>Obtener el conteo de mensajes de un usuario.</p><div class="command-aliases"><span>Alias:</span> count, mensajes, messages, msgcount</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>topcount</code><span class="command-usage">&lt;days&gt;</span></div><p>Ver el top de usuarios con más mensajes en el grupo.</p><div class="command-aliases"><span>Alias:</span> topcount, topmensajes, topmsgcount, topmessages</div></div>
+
+            <div class="command-card glass"><div class="cmd-header"><code>topinactive</code><span class="command-usage">&lt;days&gt;</span></div><p>Ver el top de usuarios más inactivos del grupo.</p><div class="command-aliases"><span>Alias:</span> topinactive, topinactivos, topinactiveusers</div></div>
+
+        </div>
+
+        <div class="no-results glass" id="noResults">
+            No se encontraron comandos que coincidan con tu búsqueda.
+        </div>
+    </main>
+
+    <footer>
+        <p>Raphael-WA-BOT - Todos los derechos reservados.</p>
+    </footer>
+
+    <script>
+        /* --- Buscador de Comandos --- */
+        const searchInput = document.getElementById("cmdSearch");
+        const cards = Array.from(document.querySelectorAll(".command-card"));
+        const cmdCount = document.getElementById("cmdCount");
+        const noResults = document.getElementById("noResults");
+
+        searchInput.addEventListener("input", () => {
+            const query = searchInput.value.trim().toLowerCase();
+            let visible = 0;
+
+            cards.forEach((card) => {
+                const match = card.textContent.toLowerCase().includes(query);
+                card.style.display = match ? "" : "none";
+                if (match) visible++;
+            });
+
+            cmdCount.textContent = `${visible} ${visible === 1 ? "comando" : "comandos"}`;
+            noResults.style.display = visible === 0 ? "block" : "none";
+        });
+
+        /* --- Fondo Eléctrico Azul en Canvas --- */
+        const canvas = document.getElementById("electric-canvas");
+        const ctx = canvas.getContext("2d");
+
+        let width, height, dpr;
+        let bolts = [];
+        let conduits = [];
+
+        function resizeCanvas() {
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            initConduits();
+        }
+
+        function initConduits() {
+            conduits = [];
+            const count = width < 768 ? 4 : 6;
+            for (let i = 0; i < count; i++) {
+                const yBase = (height / (count + 1)) * (i + 1);
+                conduits.push({
+                    yBase,
+                    amplitude: 28 + Math.random() * 45,
+                    frequency: 0.002 + Math.random() * 0.0025,
+                    phase: Math.random() * Math.PI * 2,
+                    speed: 0.004 + Math.random() * 0.006,
+                    pulsePos: Math.random(),
+                    pulseSpeed: 0.0018 + Math.random() * 0.0025
+                });
+            }
+        }
+
+        function buildLightningPath(x1, y1, x2, y2, displace) {
+            if (displace < 6) {
+                return [{ x: x1, y: y1 }, { x: x2, y: y2 }];
+            }
+            const midX = (x1 + x2) / 2 + (Math.random() - 0.5) * displace;
+            const midY = (y1 + y2) / 2 + (Math.random() - 0.5) * displace;
+            const left = buildLightningPath(x1, y1, midX, midY, displace * 0.55);
+            const right = buildLightningPath(midX, midY, x2, y2, displace * 0.55);
+            return left.slice(0, -1).concat(right);
+        }
+
+        function spawnBolt() {
+            const fromLeft = Math.random() > 0.5;
+            const startX = fromLeft ? -20 : width + 20;
+            const startY = Math.random() * height;
+            const endX = fromLeft ? width * (0.45 + Math.random() * 0.6) : width * (Math.random() * 0.55);
+            const endY = startY + (Math.random() - 0.5) * 320;
+
+            const mainPath = buildLightningPath(startX, startY, endX, endY, 110);
+            const branches = [];
+
+            const branchCount = 1 + Math.floor(Math.random() * 2);
+            for (let i = 0; i < branchCount; i++) {
+                const idx = Math.floor(mainPath.length * (0.25 + Math.random() * 0.5));
+                const origin = mainPath[idx];
+                if (origin) {
+                    const bx = origin.x + (Math.random() - 0.5) * 200;
+                    const by = origin.y + (Math.random() - 0.5) * 180;
+                    branches.push(buildLightningPath(origin.x, origin.y, bx, by, 55));
+                }
+            }
+
+            bolts.push({
+                path: mainPath,
+                branches,
+                alpha: 0.95,
+                decay: 0.018 + Math.random() * 0.02
+            });
+        }
+
+        function drawPath(points, lineWidth, strokeStyle, glowBlur, glowColor) {
+            if (points.length < 2) return;
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (let i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i].x, points[i].y);
+            }
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = strokeStyle;
+            ctx.shadowBlur = glowBlur;
+            ctx.shadowColor = glowColor;
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        let lastBoltTime = 0;
+
+        function animate(timestamp) {
+            ctx.clearRect(0, 0, width, height);
+
+            for (const c of conduits) {
+                c.phase += c.speed;
+                c.pulsePos = (c.pulsePos + c.pulseSpeed) % 1;
+
+                ctx.beginPath();
+                const step = 28;
+                const pts = [];
+                for (let x = -step; x <= width + step; x += step) {
+                    const y = c.yBase
+                        + Math.sin(x * c.frequency + c.phase) * c.amplitude
+                        + Math.cos(x * c.frequency * 2.1 - c.phase * 1.4) * (c.amplitude * 0.3);
+                    pts.push({ x, y });
+                    if (x === -step) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+
+                ctx.strokeStyle = "rgba(14, 165, 233, 0.14)";
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                const pulseCenter = Math.floor(c.pulsePos * (pts.length - 1));
+                const segStart = Math.max(0, pulseCenter - 4);
+                const segEnd = Math.min(pts.length - 1, pulseCenter + 4);
+                const segment = pts.slice(segStart, segEnd + 1);
+
+                drawPath(segment, 2.2, "rgba(56, 189, 248, 0.65)", 16, "#00a8ff");
+                drawPath(segment, 1, "rgba(224, 242, 254, 0.85)", 6, "#38bdf8");
+            }
+
+            if (timestamp - lastBoltTime > 1600 + Math.random() * 2200) {
+                spawnBolt();
+                lastBoltTime = timestamp;
+            }
+
+            for (let i = bolts.length - 1; i >= 0; i--) {
+                const b = bolts[i];
+                const flicker = b.alpha * (0.75 + Math.random() * 0.25);
+
+                drawPath(b.path, 3, `rgba(0, 168, 255, ${flicker * 0.45})`, 22, "#00a8ff");
+                drawPath(b.path, 1.2, `rgba(224, 242, 254, ${flicker * 0.9})`, 8, "#38bdf8");
+
+                for (const br of b.branches) {
+                    drawPath(br, 1.6, `rgba(14, 165, 233, ${flicker * 0.35})`, 14, "#00a8ff");
+                    drawPath(br, 0.7, `rgba(186, 230, 253, ${flicker * 0.7})`, 4, "#38bdf8");
+                }
+
+                b.alpha -= b.decay;
+                if (b.alpha <= 0) {
+                    bolts.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+        spawnBolt();
+        requestAnimationFrame(animate);
+    </script>
+</body>
+</html>
