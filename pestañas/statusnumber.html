@@ -4,58 +4,239 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Estado de Número - Raphael-WA-BOT</title>
-    
+
     <link rel="icon" type="image/jpeg" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
     <link rel="apple-touch-icon" href="https://files.yuki-wabot.my.id/cdn/o4L8InXt.jpeg">
 
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
-        body { background-color: #0b0f19; color: #e2e8f0; line-height: 1.6; }
+    <!-- Tipografías -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 
-        /* 🔙 Estilos del Botón de Regresar */
-        .back-btn {
+    <style>
+        :root {
+            --bg-black: #030508;
+            --electric-blue: #00a8ff;
+            --electric-cyan: #38bdf8;
+            --electric-deep: #0284c7;
+            --glass-bg: rgba(10, 16, 28, 0.48);
+            --glass-bg-hover: rgba(14, 24, 42, 0.65);
+            --glass-border: rgba(148, 210, 255, 0.14);
+            --glass-border-hover: rgba(56, 189, 248, 0.45);
+            --text-main: #f1f5f9;
+            --text-muted: #94a3b8;
+            --text-dim: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: var(--text-main);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Fondo eléctrico */
+        #electric-canvas {
             position: fixed;
-            top: 20px;
-            left: 20px;
-            background: #1f2937;
-            color: #e2e8f0;
-            border: 1px solid #374151;
-            padding: 10px 16px;
-            font-size: 0.95rem;
-            cursor: pointer;
-            border-radius: 8px;
-            z-index: 1000;
-            text-decoration: none;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 0%, #071226 0%, #030508 65%, #000000 100%);
+        }
+
+        .ambient-vignette {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            pointer-events: none;
+            background: radial-gradient(circle at 50% 40%, transparent 25%, rgba(0, 0, 0, 0.72) 100%);
+        }
+
+        /* Glassmorphism base */
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(18px) saturate(140%);
+            -webkit-backdrop-filter: blur(18px) saturate(140%);
+            border: 1px solid var(--glass-border);
+            box-shadow:
+                0 20px 45px rgba(0, 0, 0, 0.65),
+                inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        /* Barra superior fija */
+        .topbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            padding: 0 24px;
             display: flex;
             align-items: center;
-            gap: 6px;
-            transition: background 0.2s, border-color 0.2s;
+            justify-content: space-between;
+            z-index: 950;
+            background: rgba(3, 5, 8, 0.65);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
+
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(15, 23, 42, 0.6);
+            color: var(--text-main);
+            border: 1px solid var(--glass-border);
+            padding: 9px 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-size: 0.88rem;
+            font-weight: 500;
+            transition: border-color 0.2s ease, background 0.2s ease, transform 0.15s ease;
+        }
+
         .back-btn:hover {
-            background: #374151;
-            border-color: #6366f1;
-            color: #fff;
+            border-color: var(--glass-border-hover);
+            background: rgba(20, 32, 54, 0.8);
+            color: #ffffff;
         }
 
-        header { padding: 40px 20px; text-align: center; border-bottom: 2px solid #4f46e5; }
-        header h1 { font-size: 2.5rem; font-weight: 800; color: #fff; margin-bottom: 10px; }
-        header p { color: #9ca3af; }
-
-        .container { 
-            max-width: 650px; 
-            margin: 40px auto; 
-            padding: 20px; 
+        .back-btn:active {
+            transform: scale(0.97);
         }
 
-        .check-card { 
-            background-color: #111827; 
-            border: 1px solid #1f2937; 
-            border-radius: 14px; 
-            padding: 30px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.4); 
+        .brand-mini {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.8rem;
+            letter-spacing: 0.14em;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            display: none;
+        }
+
+        @media (min-width: 640px) {
+            .brand-mini {
+                display: block;
+            }
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 7px 14px;
+            border-radius: 999px;
+            background: rgba(10, 16, 28, 0.65);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--text-main);
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background-color: #22c55e;
+            box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);
+            animation: pulseDot 2.4s ease-in-out infinite;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.55; transform: scale(0.85); }
+        }
+
+        /* Contenedor Principal */
+        main {
+            max-width: 680px;
+            margin: 0 auto;
+            padding: 106px 20px 60px 20px;
+        }
+
+        /* Cabecera Hero */
+        .page-hero {
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            margin-bottom: 28px;
+        }
+
+        .page-hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 16%;
+            right: 16%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.75), transparent);
+        }
+
+        .hero-icon {
+            width: 52px;
+            height: 52px;
+            margin: 0 auto 16px auto;
+            border-radius: 14px;
+            display: grid;
+            place-items: center;
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            color: var(--electric-cyan);
+        }
+
+        .hero-kicker {
+            display: inline-block;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--electric-cyan);
+            margin-bottom: 8px;
+        }
+
+        .page-hero h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 4.8vw, 2.6rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            color: #ffffff;
+            margin-bottom: 10px;
+        }
+
+        .page-hero p {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        /* Tarjeta de Verificación */
+        .check-card {
+            border-radius: 22px;
+            padding: 32px 28px;
             display: flex;
             flex-direction: column;
             gap: 20px;
+            position: relative;
+            overflow: hidden;
         }
 
         .form-group {
@@ -65,120 +246,383 @@
         }
 
         .form-label {
-            font-size: 0.95rem;
-            color: #f3f4f6;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1rem;
+            color: #ffffff;
             font-weight: 600;
         }
 
+        .form-label svg {
+            width: 17px;
+            height: 17px;
+            color: var(--electric-cyan);
+            flex-shrink: 0;
+        }
+
         .form-input {
-            background-color: #1f2937;
-            border: 1px solid #374151;
-            border-radius: 10px;
-            padding: 12px 16px;
-            color: #fff;
-            font-size: 1rem;
+            width: 100%;
+            background: rgba(5, 9, 18, 0.68);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 13px 16px;
+            color: var(--text-main);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.98rem;
             outline: none;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .form-input::placeholder {
+            color: var(--text-dim);
         }
 
         .form-input:focus {
-            border-color: #6366f1;
+            border-color: var(--glass-border-hover);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.12);
         }
 
         .check-btn {
-            background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); 
-            color: white; 
-            border: none;
-            padding: 12px; 
-            border-radius: 10px; 
-            font-weight: bold; 
-            font-size: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            width: 100%;
+            min-height: 46px;
+            padding: 12px 20px;
+            border-radius: 12px;
+            background: linear-gradient(180deg, #0ea5e9 0%, #0284c7 100%);
+            color: #ffffff;
+            border: 1px solid rgba(125, 211, 252, 0.55);
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.94rem;
             cursor: pointer;
-            box-shadow: 0 4px 10px rgba(99, 102, 241, 0.3);
-            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 24px rgba(2, 132, 199, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            transition: transform 0.18s ease, box-shadow 0.2s ease;
         }
 
         .check-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 6px 15px rgba(168, 85, 247, 0.4);
+            box-shadow: 0 12px 30px rgba(14, 165, 233, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
         }
 
-        /* 📱 Caja de Resultado */
+        .check-btn:active {
+            transform: translateY(0) scale(0.98);
+        }
+
+        /* Caja de Resultado */
         .result-box {
-            margin-top: 15px;
-            padding: 15px;
-            border-radius: 10px;
-            background: #1f2937;
-            border: 1px solid #374151;
+            padding: 16px 18px;
+            border-radius: 12px;
+            background: rgba(5, 9, 18, 0.72);
+            border: 1px solid rgba(148, 210, 255, 0.14);
             display: none;
             text-align: center;
+            font-size: 0.92rem;
             font-weight: 500;
+            line-height: 1.5;
         }
 
         .result-box.active {
             display: block;
         }
+
+        .result-box.success {
+            border-color: rgba(52, 211, 153, 0.4);
+            background: rgba(16, 185, 129, 0.1);
+            color: #34d399;
+        }
+
+        .result-box.error {
+            border-color: rgba(248, 113, 113, 0.4);
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+        }
+
+        .result-box.loading {
+            border-color: rgba(56, 189, 248, 0.3);
+            color: var(--electric-cyan);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+        }
+
+        footer {
+            margin-top: 64px;
+            padding: 28px 20px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            background: rgba(3, 5, 8, 0.65);
+            backdrop-filter: blur(12px);
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+
+        @media (max-width: 540px) {
+            .page-hero {
+                padding: 32px 20px;
+            }
+            .check-card {
+                padding: 24px 18px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- 🔙 Botón de regresar -->
-    <a href="index.html" class="back-btn">←</a>
+    <!-- Fondo animado eléctrico -->
+    <canvas id="electric-canvas" aria-hidden="true"></canvas>
+    <div class="ambient-vignette" aria-hidden="true"></div>
 
-    <header>
-        <h1>VERIFICADOR DE NÚMERO</h1>
-        <p>Comprueba el estado de un número en WhatsApp de forma rápida.</p>
+    <!-- Barra superior -->
+    <header class="topbar">
+        <a href="index.html" class="back-btn">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>Volver</span>
+        </a>
+
+        <span class="brand-mini">RAPHAEL // BAN CHECK</span>
+
+        <div class="status-badge">
+            <span class="status-dot"></span>
+            <span>En Línea</span>
+        </div>
     </header>
 
-    <div class="container">
-        <div class="check-card">
-            <div class="form-group">
-                <label class="form-label" for="phoneNumber">Ingresa tu número de teléfono</label>
-                <input type="text" id="phoneNumber" class="form-input" placeholder="Ej: +521234567890">
+    <main>
+        <section class="page-hero glass">
+            <div class="hero-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                </svg>
             </div>
-            
-            <button class="check-btn" onclick="checkNumberStatus()">Verificar Estado</button>
+            <span class="hero-kicker">WhatsApp Status Lookup</span>
+            <h1>VERIFICADOR DE NÚMERO</h1>
+            <p>Comprueba el estado de un número en WhatsApp de forma rápida.</p>
+        </section>
+
+        <section class="check-card glass">
+            <div class="form-group">
+                <label class="form-label" for="phoneNumber">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+                    Ingresa tu número de teléfono
+                </label>
+                <input type="text" id="phoneNumber" class="form-input" placeholder="Ej: +521234567890" autocomplete="off">
+            </div>
+
+            <button class="check-btn" onclick="checkNumberStatus()">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                Verificar Estado
+            </button>
 
             <div id="resultBox" class="result-box">
                 <span id="resultText">Esperando consulta...</span>
             </div>
-        </div>
-    </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Raphael-WA-BOT - Todos los derechos reservados.</p>
+    </footer>
 
     <script>
+        /* --- Lógica de Verificación de Número --- */
         async function checkNumberStatus() {
             const input = document.getElementById("phoneNumber").value.trim();
             const resultBox = document.getElementById("resultBox");
             const resultText = document.getElementById("resultText");
 
             if (!input) {
-                resultBox.className = "result-box active";
-                resultText.style.color = "#f87171";
-                resultText.innerHTML = "⚠️ Por favor, ingresa un número de teléfono válido.";
+                resultBox.className = "result-box active error";
+                resultText.innerHTML = "Por favor, ingresa un número de teléfono válido.";
                 return;
             }
 
-            resultBox.className = "result-box active";
-            resultText.style.color = "#9ca3af";
-            resultText.innerHTML = "⏳ Consultando el estado en el servidor...";
+            resultBox.className = "result-box active loading";
+            resultText.innerHTML = "Consultando el estado en el servidor...";
 
             try {
-                // 🌐 Recuerda cambiar "https://tu-servidor.com" por la URL real de tu backend
+                // Recuerda cambiar "https://tu-servidor.com" por la URL real de tu backend
                 const response = await fetch(`https://tu-servidor.com/api/check-number?phone=${encodeURIComponent(input)}`);
                 const data = await response.json();
 
                 if (data.exists) {
-                    resultText.style.color = "#34d399";
-                    resultText.innerHTML = `✅ El número <strong>${input}</strong> está activo y registrado en WhatsApp.`;
+                    resultBox.className = "result-box active success";
+                    resultText.innerHTML = `El número <strong>${input}</strong> está activo y registrado en WhatsApp.`;
                 } else {
-                    resultText.style.color = "#f87171";
-                    resultText.innerHTML = `❌ El número <strong>${input}</strong> no está registrado o se encuentra suspendido/inactivo.`;
+                    resultBox.className = "result-box active error";
+                    resultText.innerHTML = `El número <strong>${input}</strong> no está registrado o se encuentra suspendido/inactivo.`;
                 }
             } catch (error) {
-                resultText.style.color = "#f87171";
-                resultText.innerHTML = "❌ Ocurrió un error al conectar con el servidor de consultas.";
+                resultBox.className = "result-box active error";
+                resultText.innerHTML = "Ocurrió un error al conectar con el servidor de consultas.";
             }
         }
+
+        document.getElementById("phoneNumber").addEventListener("keypress", function(e) {
+            if (e.key === "Enter") checkNumberStatus();
+        });
+
+        /* --- Fondo Eléctrico Azul en Canvas --- */
+        const canvas = document.getElementById("electric-canvas");
+        const ctx = canvas.getContext("2d");
+
+        let width, height, dpr;
+        let bolts = [];
+        let conduits = [];
+
+        function resizeCanvas() {
+            dpr = Math.min(window.devicePixelRatio || 1, 2);
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width * dpr;
+            canvas.height = height * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            initConduits();
+        }
+
+        function initConduits() {
+            conduits = [];
+            const count = width < 768 ? 4 : 6;
+            for (let i = 0; i < count; i++) {
+                const yBase = (height / (count + 1)) * (i + 1);
+                conduits.push({
+                    yBase,
+                    amplitude: 28 + Math.random() * 45,
+                    frequency: 0.002 + Math.random() * 0.0025,
+                    phase: Math.random() * Math.PI * 2,
+                    speed: 0.004 + Math.random() * 0.006,
+                    pulsePos: Math.random(),
+                    pulseSpeed: 0.0018 + Math.random() * 0.0025
+                });
+            }
+        }
+
+        function buildLightningPath(x1, y1, x2, y2, displace) {
+            if (displace < 6) {
+                return [{ x: x1, y: y1 }, { x: x2, y: y2 }];
+            }
+            const midX = (x1 + x2) / 2 + (Math.random() - 0.5) * displace;
+            const midY = (y1 + y2) / 2 + (Math.random() - 0.5) * displace;
+            const left = buildLightningPath(x1, y1, midX, midY, displace * 0.55);
+            const right = buildLightningPath(midX, midY, x2, y2, displace * 0.55);
+            return left.slice(0, -1).concat(right);
+        }
+
+        function spawnBolt() {
+            const fromLeft = Math.random() > 0.5;
+            const startX = fromLeft ? -20 : width + 20;
+            const startY = Math.random() * height;
+            const endX = fromLeft ? width * (0.45 + Math.random() * 0.6) : width * (Math.random() * 0.55);
+            const endY = startY + (Math.random() - 0.5) * 320;
+
+            const mainPath = buildLightningPath(startX, startY, endX, endY, 110);
+            const branches = [];
+
+            const branchCount = 1 + Math.floor(Math.random() * 2);
+            for (let i = 0; i < branchCount; i++) {
+                const idx = Math.floor(mainPath.length * (0.25 + Math.random() * 0.5));
+                const origin = mainPath[idx];
+                if (origin) {
+                    const bx = origin.x + (Math.random() - 0.5) * 200;
+                    const by = origin.y + (Math.random() - 0.5) * 180;
+                    branches.push(buildLightningPath(origin.x, origin.y, bx, by, 55));
+                }
+            }
+
+            bolts.push({
+                path: mainPath,
+                branches,
+                alpha: 0.95,
+                decay: 0.018 + Math.random() * 0.02
+            });
+        }
+
+        function drawPath(points, lineWidth, strokeStyle, glowBlur, glowColor) {
+            if (points.length < 2) return;
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            for (let i = 1; i < points.length; i++) {
+                ctx.lineTo(points[i].x, points[i].y);
+            }
+            ctx.lineWidth = lineWidth;
+            ctx.strokeStyle = strokeStyle;
+            ctx.shadowBlur = glowBlur;
+            ctx.shadowColor = glowColor;
+            ctx.stroke();
+            ctx.restore();
+        }
+
+        let lastBoltTime = 0;
+
+        function animate(timestamp) {
+            ctx.clearRect(0, 0, width, height);
+
+            for (const c of conduits) {
+                c.phase += c.speed;
+                c.pulsePos = (c.pulsePos + c.pulseSpeed) % 1;
+
+                ctx.beginPath();
+                const step = 28;
+                const pts = [];
+                for (let x = -step; x <= width + step; x += step) {
+                    const y = c.yBase
+                        + Math.sin(x * c.frequency + c.phase) * c.amplitude
+                        + Math.cos(x * c.frequency * 2.1 - c.phase * 1.4) * (c.amplitude * 0.3);
+                    pts.push({ x, y });
+                    if (x === -step) ctx.moveTo(x, y);
+                    else ctx.lineTo(x, y);
+                }
+
+                ctx.strokeStyle = "rgba(14, 165, 233, 0.14)";
+                ctx.lineWidth = 1;
+                ctx.stroke();
+
+                const pulseCenter = Math.floor(c.pulsePos * (pts.length - 1));
+                const segStart = Math.max(0, pulseCenter - 4);
+                const segEnd = Math.min(pts.length - 1, pulseCenter + 4);
+                const segment = pts.slice(segStart, segEnd + 1);
+
+                drawPath(segment, 2.2, "rgba(56, 189, 248, 0.65)", 16, "#00a8ff");
+                drawPath(segment, 1, "rgba(224, 242, 254, 0.85)", 6, "#38bdf8");
+            }
+
+            if (timestamp - lastBoltTime > 1600 + Math.random() * 2200) {
+                spawnBolt();
+                lastBoltTime = timestamp;
+            }
+
+            for (let i = bolts.length - 1; i >= 0; i--) {
+                const b = bolts[i];
+                const flicker = b.alpha * (0.75 + Math.random() * 0.25);
+
+                drawPath(b.path, 3, `rgba(0, 168, 255, ${flicker * 0.45})`, 22, "#00a8ff");
+                drawPath(b.path, 1.2, `rgba(224, 242, 254, ${flicker * 0.9})`, 8, "#38bdf8");
+
+                for (const br of b.branches) {
+                    drawPath(br, 1.6, `rgba(14, 165, 233, ${flicker * 0.35})`, 14, "#00a8ff");
+                    drawPath(br, 0.7, `rgba(186, 230, 253, ${flicker * 0.7})`, 4, "#38bdf8");
+                }
+
+                b.alpha -= b.decay;
+                if (b.alpha <= 0) {
+                    bolts.splice(i, 1);
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+        spawnBolt();
+        requestAnimationFrame(animate);
     </script>
 </body>
 </html>
